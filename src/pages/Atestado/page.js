@@ -22,12 +22,9 @@ const Atestado = () => {
     const handleSubmit = (e) => {  
         e.preventDefault();  
         console.log(formData);  
-        // Add logic to handle form submission  
 
-        // Show success message
         setSuccessMessage('Formulário enviado com sucesso!');
 
-        // Clear form inputs
         setFormData({  
             aluno: '',  
             turma: '',  
@@ -38,7 +35,6 @@ const Atestado = () => {
             justificativa: '',  
         });
 
-        // Hide success message after 3 seconds
         setTimeout(() => {
             setSuccessMessage('');
         }, 3000);
