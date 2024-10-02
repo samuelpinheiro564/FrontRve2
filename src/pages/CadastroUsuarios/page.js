@@ -9,13 +9,19 @@ const UserRegistration = () => {
     const [curso,setCurso] = useState('');
     const [senha,setSenha] = useState('');
     const [telefone,setTelefone] = useState('');
+const [dados,setDados] = useState([]);
 const [edit, setEdit] = useState(false);
 const [userType, setUserType] = useState('');
 const [abrirCard, setAbrirCard] = useState(false);
 const [listarUsers, setListarUsers] = useState(false);
 const [itemSelecionado, setItemSelecionado] = useState(null); 
 
- 
+const ListUsers =()=>{
+  AllUsers().then((res)=>{
+    setDados(res);
+  })
+
+}
 
   const handleItemClick = (item) => {  
     setItemSelecionado(item); // Define o item selecionado  
@@ -167,7 +173,7 @@ const [itemSelecionado, setItemSelecionado] = useState(null);
               </tr>  
             </thead>  
             <tbody>  
-              {AllUsers.map(item => (  
+              {ListUsers.map(item => (  
                 <tr key={item.nif} onClick={() => handleItemClick(item)} style={{ cursor: 'pointer' }}>  
                   <td>{item.nif}</td>  
                   <td>{item.nome}</td>  
