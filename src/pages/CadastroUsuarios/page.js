@@ -11,9 +11,33 @@ const UserRegistration = () => {
     const [editingIndex, setEditingIndex] = useState(null);
     const [cards, setCards] = useState([]);
 
+    // Lista de NIFs cadastrados com seus respectivos nomes
+    const registeredNifs = [
+        { nif: '123456789', nome: 'João Silva' },
+        { nif: '987654321', nome: 'Maria Oliveira' },
+        { nif: '123123123', nome: 'Pedro Santos' },
+
+    ];
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        if (name === 'telefone') {
+            setFormData({ ...formData, [name]: formatPhoneNumber(value) });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
+    };
+
+    const handleNifChange = (e) => {
+        const { value } = e.target;
+        setFormData({ ...formData, nif: value });
+        fetchUserName(value); 
+    };
+
+    const fetchUserName = (nif) => {
+        const user = registeredNifs.find(user => user.nif === nif);
+        const userName = user ? user.nome : ''; 
+        setFormData((prevData) => ({ ...prevData, nome: userName }));
     };
 
     const handleSubmit = (e) => {
@@ -81,9 +105,9 @@ const UserRegistration = () => {
                         name="nif"
                         placeholder="NIF"
                         value={formData.nif}
-                        onChange={handleChange}
+                        onChange={handleNifChange}
                         onInput={handleInput}
-                        maxLength="15"
+                        maxLength="12"
                         required
                         className="input"
                     />
@@ -97,6 +121,7 @@ const UserRegistration = () => {
                         maxLength="100"
                         required
                         className="input"
+                        readOnly 
                     />
                     <input
                         type="email"
