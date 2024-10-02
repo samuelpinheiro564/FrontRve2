@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const URL =  ' https://1102-201-63-78-210.ngrok-free.app'
 
-const Login = async (Nif) => {
+const LoginUser = async (Nif) => {
     try {
         const resposta = await axios.get(`${URL}/usuarios/:${Nif}`);
         return resposta.data;
@@ -37,4 +37,4 @@ const CriarUser = async () => {
         }
     }
 
-    export {Login, CriarUser, EditarUser, DeleteUser};
+    export {LoginUser, CriarUser, EditarUser, DeleteUser};

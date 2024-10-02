@@ -1,33 +1,46 @@
-import React, { useState } from 'react';
-import styles from './styles.modules.css';
+import React, { useEffect, useState } from 'react';
+import './styles.css';
+import {LoginUser} from '../../server/server';	
 
-const LoginAdim = () => {
+const Login = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const [userType, setUserType] = useState('');
+    const  [Nif, setNif] = useState('');
+    const [userNotPassword, setUserNotPassword] = useState(false);
+
+    useEffect(() => {
+    if(userType === 'aluno' || userType === 'secretaria' ) {
+      console.log('Não precisa de senha');
+    }else if(userType === 'docente' || userType === 'admin' ){
+      console.log('Precisa de senha');
+      LoginUser(Nif)
+    }
+
+    }, [userType,Nif]);
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
 
     return (
-        <div className={styles.container}>
-            <header className={styles.header}>
-                <h1 className={styles.title}>Login</h1>
+        <div className='container'>
+            <header className='header'>
+                <h1 className='title'>Login</h1>
             </header>
-            <form className={styles.form}>
+            <form className='form'>
                 <input
                     type="text"
                     placeholder="Nome"
                     required
-                    className={styles.input}
+                    className='input'
                     maxLength={50}
                 />
                 <select
                     value={userType}
                     onChange={(e) => setUserType(e.target.value)}
                     required
-                    className={styles.input} // Classe CSS para select
+                    className='input' 
                 >
                     <option value="" disabled>Tipo de Usuario Administrador</option>
                     <option value="admin">Administrador</option>
@@ -39,14 +52,14 @@ const LoginAdim = () => {
                     type="email"
                     placeholder="Email"
                     required
-                    className={styles.input}
+                    className='input'
                     maxLength={100}
                 />
                 <input
                     type="number"
                     placeholder="Nif"
                     required
-                    className={styles.input}
+                    className='input'
                     maxLength={9}
                 />
                 <div style={{ position: 'relative' }}>
@@ -54,7 +67,7 @@ const LoginAdim = () => {
                         type={showPassword ? "text" : "password"}
                         placeholder="Senha"
                         required
-                        className={styles.input}
+                        className='input'
                         maxLength={50}
                     />
                     <span
@@ -72,7 +85,7 @@ const LoginAdim = () => {
                 </div>
                 <button
                     type="submit"
-                    className={styles.button}
+                    className='button'
                 >
                     Entrar
                 </button>
@@ -81,4 +94,4 @@ const LoginAdim = () => {
     );
 };
 
-export default LoginAdim;
+export default Login;
