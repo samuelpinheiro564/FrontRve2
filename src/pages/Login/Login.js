@@ -7,7 +7,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [userType, setUserType] = useState('');
     const  [Nif, setNif] = useState('');
-    const [userNotPassword, setUserNotPassword] = useState(false);
+
 
     useEffect(() => {
     if(userType === 'aluno' || userType === 'secretaria' ) {
@@ -61,6 +61,8 @@ const Login = () => {
                     required
                     className='input'
                     maxLength={9}
+                    value={Nif}
+                    onChange={(e) => setNif(e.target.value)}
                 />
                 <div style={{ position: 'relative' }}>
                     <input

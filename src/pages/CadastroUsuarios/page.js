@@ -1,197 +1,207 @@
-import React, { useState } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
 import "../CadastroUsuarios/styles.modules.css";
+import { CriarUser, EditarUser,DeleteUser,AllUsers} from "../../Data/server";
 
 const UserRegistration = () => {
-    const [formData, setFormData] = useState({ nif: '', email: '', curso: '', senha: '', telefone: '', nome: '' });
-    const [showForm, setShowForm] = useState(false);
-    const [showCards, setShowCards] = useState(true);
-    const [showPassword, setShowPassword] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
-    const [editingIndex, setEditingIndex] = useState(null);
-    const [cards, setCards] = useState([]);
+ const [nif,setNif] = useState('');
+    const [nome,setNome] = useState('');
+    const [email,setEmail] = useState('');
+    const [curso,setCurso] = useState('');
+    const [senha,setSenha] = useState('');
+    const [telefone,setTelefone] = useState('');
+const [edit, setEdit] = useState(false);
+const [userType, setUserType] = useState('');
+const [abrirCard, setAbrirCard] = useState(false);
+const [listarUsers, setListarUsers] = useState(false);
+const [itemSelecionado, setItemSelecionado] = useState(null); 
 
-    // Lista de NIFs cadastrados com seus respectivos nomes
-    const registeredNifs = [
-        { nif: '123456789', nome: 'João Silva' },
-        { nif: '987654321', nome: 'Maria Oliveira' },
-        { nif: '123123123', nome: 'Pedro Santos' },
+ 
 
-    ];
+  const handleItemClick = (item) => {  
+    setItemSelecionado(item); // Define o item selecionado  
+    setAbrirCard(true); // Abre o card  
+  };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        if (name === 'telefone') {
-            setFormData({ ...formData, [name]: formatPhoneNumber(value) });
-        } else {
-            setFormData({ ...formData, [name]: value });
-        }
-    };
+  const fecharCard = () => {  
+    setAbrirCard(false); // Fecha o card  
+    setItemSelecionado(null); // Limpa a seleção  
+  }; 
 
-    const handleNifChange = (e) => {
-        const { value } = e.target;
-        setFormData({ ...formData, nif: value });
-        fetchUserName(value); 
-    };
+  const HandleEnviar = (e) => {
+      if (
+        nif === "" ||
+        nome === "" ||
+        email === "" ||
+        curso === "" ||
+        senha === "" ||
+        telefone === ""
+      ) {
+        console.log("Preencha todos os campos");
+      } else {
+        alert('Usuario criado com sucesso')
+        CriarUser(nif, nome, email, curso, senha, telefone);
+        setEdit(false);
+      }
+  };
 
-    const fetchUserName = (nif) => {
-        const user = registeredNifs.find(user => user.nif === nif);
-        const userName = user ? user.nome : ''; 
-        setFormData((prevData) => ({ ...prevData, nome: userName }));
-    };
+  const HandleEditar = (e) => {
+    setAbrirCard(true);
+    if (
+      nif !== "" ||
+      nome !== "" ||
+      email !== "" ||
+      curso !== "" ||
+      senha !== "" ||
+      telefone !== ""
+    ) {
+      console.log("Preencha todos os campos");
+    } else {
+      alert('Usuario criado com sucesso')
+      EditarUser(nif, nome, email, curso, senha, telefone);
+      setEdit(true);
+    }
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (isEditing) {
-            const updatedCards = [...cards];
-            updatedCards[editingIndex] = formData;
-            setCards(updatedCards);
-            setIsEditing(false);
-            setEditingIndex(null);
-        } else {
-            setCards([...cards, formData]);
-        }
-        setFormData({ nif: '', email: '', curso: '', senha: '', telefone: '', nome: '' });
-        setShowForm(false);
-    };
 
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const formatPhoneNumber = (value) => {
-        if (!value) return value;
-        const phoneNumber = value.replace(/[^\d]/g, '');
-        const phoneNumberLength = phoneNumber.length;
-        if (phoneNumberLength < 4) return phoneNumber;
-        if (phoneNumberLength < 7) {
-            return `(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2)}`;
-        }
-        return `(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2, 7)}-${phoneNumber.slice(7, 11)}`;
-    };
-
-    const handleInput = (e) => {
-        const { value, maxLength } = e.target;
-        if (value.length > maxLength) {
-            e.target.value = value.slice(0, maxLength);
-        }
-    };
-
-    const handleDelete = (index) => {
-        const updatedCards = cards.filter((_, i) => i !== index);
-        setCards(updatedCards);
-    };
-
-    const handleEdit = (index) => {
-        setIsEditing(true);
-        setEditingIndex(index);
-        setFormData(cards[index]);
-        setShowForm(true);
-    };
-
-    return (
-        <div className="container">
-            <h1 className="title">Usuários</h1>
-            <button onClick={() => setShowForm(!showForm)} className="button">
-                {showForm ? 'Cancelar' : 'Cadastrar Usuário'}
-            </button>
-            <button onClick={() => setShowCards(!showCards)} className="button">
-                {showCards ? 'Ocultar Usuários' : 'Ver Usuários'}
-            </button>
-            {showForm && (
-                <form className="form" onSubmit={handleSubmit}>
-                    <input
-                        type="number"
-                        name="nif"
-                        placeholder="NIF"
-                        value={formData.nif}
-                        onChange={handleNifChange}
-                        onInput={handleInput}
-                        maxLength="12"
-                        required
-                        className="input"
-                    />
-                    <input
-                        type="text"
-                        name="nome"
-                        placeholder="Nome"
-                        value={formData.nome}
-                        onChange={handleChange}
-                        onInput={handleInput}
-                        maxLength="100"
-                        required
-                        className="input"
-                        readOnly 
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        onInput={handleInput}
-                        maxLength="100"
-                        required
-                        className="input"
-                    />
-                    <input
-                        type="text"
-                        name="curso"
-                        placeholder="Curso"
-                        value={formData.curso}
-                        onChange={handleChange}
-                        onInput={handleInput}
-                        maxLength="100"
-                        required
-                        className="input"
-                    />
-                    <div className="password-container">
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            name="senha"
-                            placeholder="Senha"
-                            value={formData.senha}
-                            onChange={handleChange}
-                            onInput={handleInput}
-                            maxLength="150"
-                            required
-                            className="input"
-                        />
-                        <span onClick={togglePasswordVisibility} className="password-toggle">
-                            {showPassword ? <FaEyeSlash /> : <FaEye />}
-                        </span>
-                    </div>
-                    <input
-                        type="text"
-                        name="telefone"
-                        placeholder="Telefone"
-                        value={formData.telefone}
-                        onChange={handleChange}
-                        onInput={handleInput}
-                        maxLength="15"
-                        required
-                        className="input"
-                    />
-                    <button type="submit" className="button">{isEditing ? 'Salvar' : 'Enviar'}</button>
-                </form>
-            )}
-            {showCards && (
-                <div className="cards-container">
-                    {cards.map((card, index) => (
-                        <div key={index} className="card">
-                            <p>NIF: {card.nif}</p>
-                            <p>Nome: {card.nome}</p>
-                            <p>Email: {card.email}</p>
-                            <p>Curso: {card.curso}</p>
-                            <p>Telefone: {card.telefone}</p>
-                            <button onClick={() => handleEdit(index)} className="button">Editar</button>
-                            <button onClick={() => handleDelete(index)} className="button">Excluir</button>
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
-    );
+  const HandleDelete = (e) => {
+    if (
+        nif !== "" ||
+        nome !== "" ||
+        email !== "" ||
+        curso !== "" ||
+        senha !== "" ||
+        telefone !== ""
+    ) {
+        console.log("Preencha todos os campos");
+    } else {
+        alert('Usuario criado com sucesso')
+        DeleteUser(nif, nome, email, curso, senha, telefone);
+        setEdit(false);
+    }
+  };
+  return (
+    <div className="container">
+      {listarUsers ? (
+        <form className="form">
+          <h1 className="title">Usuários</h1>
+          <input
+            type="number"
+            name="nif"
+            placeholder="NIF"
+            value={nif}
+            onChange={(e) => setNif(e.target.value)}
+            maxLength="12"
+            required
+            className="input"
+          />
+          <select 
+            className="input"
+            value={userType}
+            onChange={(e) => setUserType(e.target.value)}
+            required
+          >
+            <option value="" disabled>Selecione o Tipo de usuario</option>
+            <option value="admin">Administrador</option>
+            <option value="docente">Docente</option>
+          </select>
+          <input
+            type="text"
+            name="nome"
+            placeholder="Nome"
+            maxLength="100"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            required
+            className="input"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            maxLength="100"
+            required
+            className="input"
+          />
+          <input
+            type="text"
+            name="curso"
+            placeholder="Curso"
+            value={curso}
+            onChange={(e) => setCurso(e.target.value)}
+            maxLength="100"
+            required
+            className="input"
+          />
+          <input
+            name="senha"
+            placeholder="Senha"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            maxLength="150"
+            required
+            className="input"
+          />
+          <input
+            type="text"
+            name="telefone"
+            placeholder="Telefone"
+            value={telefone}
+            onChange={(e) => setTelefone(e.target.value)}
+            maxLength="15"
+            required
+            className="input"
+          />
+          <button className="button" onClick={HandleEnviar}>
+            Enviar
+          </button>
+        </form>
+      ) : (
+        <div>  
+          <table>  
+            <thead>  
+              <tr>  
+                <th>NIF</th>  
+                <th>Nome</th>  
+              </tr>  
+            </thead>  
+            <tbody>  
+              {AllUsers.map(item => (  
+                <tr key={item.nif} onClick={() => handleItemClick(item)} style={{ cursor: 'pointer' }}>  
+                  <td>{item.nif}</td>  
+                  <td>{item.nome}</td>  
+                </tr>  
+              ))}  
+            </tbody>  
+          </table>  
+          {abrirCard && itemSelecionado && (  
+            <div className="card" style={{  
+              border: '1px solid #ccc',  
+              padding: '16px',  
+              marginTop: '16px',  
+              borderRadius: '8px',  
+              backgroundColor: '#f9f9f9',  
+            }}>  
+              <h3>Detalhes do Item</h3>  
+              <p><strong>NIF:</strong> {itemSelecionado.nif}</p>  
+              <p><strong>Nome:</strong> {itemSelecionado.nome}</p>  
+              {/* Adicione mais campos aqui, se necessário */}  
+              <button onClick={fecharCard} style={{  
+                backgroundColor: '#007BFF',  
+                color: 'white',  
+                border: 'none',  
+                padding: '8px 12px',  
+                borderRadius: '4px',  
+                cursor: 'pointer',  
+              }}>  
+                Fechar  
+              </button>  
+            </div>  
+          )}  
+        </div>  
+      )}
+    </div>
+  );
 };
-
 export default UserRegistration;
