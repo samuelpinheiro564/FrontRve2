@@ -15,23 +15,34 @@ const Rve = () => {
     recomendacoes: '',
     assinatura: '',
     aspectos: [],
+    categorias: [], 
   });
 
-  const [submittedData, setSubmittedData] = useState(null); // Para armazenar os dados enviados
-  const [errors, setErrors] = useState({}); // Para armazenar os erros de validação
-  const [showData, setShowData] = useState(false); // Para controlar a exibição dos dados
-  const [comment, setComment] = useState(''); // Para armazenar o comentário do usuário
-  const [comments, setComments] = useState([]); // Para armazenar os comentários
+  const [submittedData, setSubmittedData] = useState(null); 
+  const [errors, setErrors] = useState({});
+  const [showData, setShowData] = useState(false);
+  const [comment, setComment] = useState(''); 
+  const [comments, setComments] = useState([]); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setFormData((prevState) => {
+      const newCategorias = checked
+        ? [...prevState.categorias, name]
+        : prevState.categorias.filter((categoria) => categoria !== name);
+      return { ...prevState, categorias: newCategorias };
+    });
+  };
+
   const validateForm = () => {
     const newErrors = {};
     Object.keys(formData).forEach(key => {
-      if (!formData[key] && key !== 'aspectos') {
+      if (!formData[key] && key !== 'aspectos' && key !== 'categorias') {
         newErrors[key] = 'Este campo é obrigatório';
       }
     });
@@ -42,8 +53,8 @@ const Rve = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      setSubmittedData(formData); // Armazenar os dados do formulário ao submeter
-      setFormData({ // Limpa o formulário
+      setSubmittedData(formData); 
+      setFormData({ 
         estudante: '',
         unidadeCurricular: '',
         autor: '',
@@ -56,6 +67,7 @@ const Rve = () => {
         recomendacoes: '',
         assinatura: '',
         aspectos: [],
+        categorias: [],
       });
       setErrors({});
     }
@@ -76,6 +88,18 @@ const Rve = () => {
       setComment('');
     }
   };
+
+  const categories = [  
+    "Aprendizagem",  
+    "Atitude/postura/comportamento",  
+    "Frequência",  
+    "Oficina/Segurança",  
+    "Relacionamento interpessoal",  
+    "Rendimento",  
+    "Saúde física",  
+    "Saúde mental",  
+    "Outras"  
+  ];  
 
   return (
     <div className="container">
@@ -137,6 +161,23 @@ const Rve = () => {
           {errors.assinatura && <span className="error">{errors.assinatura}</span>}
         </div>
 
+        <h2>Categorias:</h2>
+        <div className="form-group">
+          {categories.map((category) => (
+            <div key={category}>
+              <label>
+                <input
+                  type="checkbox"
+                  name={category}
+                  checked={formData.categorias.includes(category)}
+                  onChange={handleCheckboxChange}
+                />
+                {category}
+              </label>
+            </div>
+          ))}
+        </div>
+
         <button type="submit">Enviar</button>
       </form>
 
@@ -159,6 +200,7 @@ const Rve = () => {
               <p><strong>Descrição da Situação:</strong> {submittedData.descricaoSituacao}</p>
               <p><strong>Recomendações:</strong> {submittedData.recomendacoes}</p>
               <p><strong>Assinatura:</strong> {submittedData.assinatura}</p>
+              <p><strong>Categorias:</strong> {submittedData.categorias.join(', ')}</p>
             </div>
           )}
         </div>
