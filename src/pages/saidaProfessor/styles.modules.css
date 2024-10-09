@@ -1,0 +1,53 @@
+.container {  
+    background-color: #ffffff;  
+    padding: 20px;  
+    border-radius: 10px;  
+    max-width: 100%;  
+    margin: auto;  
+  }  
+  
+  h1, h2 {  
+    text-align: center;  
+  }  
+  
+  label {  
+    display: block;  
+    margin: 10px 0 5px;  
+  }  
+  
+  input, textarea {  
+    width: 100%;  
+    padding: 8px;  
+    margin-bottom: 10px;  
+    border: 1px solid #ccc;  
+    border-radius: 5px;  
+  }  
+  
+  button {  
+    background-color: #ff4d4d;  
+    color: white;  
+    border: none;  
+    padding: 10px;  
+    border-radius: 5px;  
+    cursor: pointer;  
+  }  
+  
+  button:hover {  
+    background-color: #ff1a1a;  
+  }  
+  
+  table {  
+    width: 100%;  
+    border-collapse: collapse;  
+    margin-top: 20px;  
+  }  
+  
+  th, td {  
+    border: 1px solid #ccc;  
+    padding: 10px;  
+    text-align: left;  
+  }  
+  
+  th {  
+    background-color: #e6e6e6;  
+  }
