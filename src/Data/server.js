@@ -112,6 +112,7 @@ const CriarAtestado = async (atestadoData) => {
         return response.data;  
     } catch (error) {  
         console.error('Erro ao criar atestado:', error);  
+        console.log(error)
         throw error;  
     }  
 };  
@@ -258,7 +259,6 @@ const DeleteForum = async (id) => {
     }  
 };  
 
-// Funções para gerenciar saídas  
 const CriarSaida = async (saidaData) => {  
     try {  
         const response = await axios.post(`${URL}/saida`, saidaData);  
