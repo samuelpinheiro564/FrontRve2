@@ -1,5 +1,6 @@
-import React, { useState } from 'react';  
-import '../Atestado/styles.modules.css';   
+import React, { useState, useEffect } from 'react';  
+import './styles.modules.css'; 
+import { CriarAtestado, AllAtestados, ObterAtestadoPorId, EditarAtestado, DeleteAtestado } from '../../Data/server';  
 
 const Atestado = () => {  
     const [formData, setFormData] = useState({  
@@ -11,6 +12,7 @@ const Atestado = () => {
         dataFinal: '',  
         justificativa: '',  
         imagem: null, 
+        cid: '', 
     });  
 
     const [successMessage, setSuccessMessage] = useState('');  
@@ -29,18 +31,17 @@ const Atestado = () => {
     const handleSubmit = (e) => {  
         e.preventDefault();  
 
-        if (!formData.aluno || !formData.turma || !formData.curso || !formData.ra || !formData.dataInicial || !formData.dataFinal || !formData.justificativa || !formData.imagem) {
+        if (!formData.aluno || !formData.turma || !formData.curso || !formData.ra || !formData.dataInicial || !formData.dataFinal || !formData.justificativa || !formData.imagem || !formData.cid) {
             setErrorMessage('Por favor, preencha todos os campos obrigatórios e anexe uma imagem.');
             return;
         }
 
-        console.log(formData);  
+        console.log('Form Data:', formData);  
 
         setSuccessMessage('Formulário enviado com sucesso!');
         setErrorMessage(''); 
 
-        
-        setCards([...cards, formData]);
+        setCards(prevCards => [...prevCards, formData]);
 
         setFormData({  
             aluno: '',  
@@ -51,12 +52,23 @@ const Atestado = () => {
             dataFinal: '',  
             justificativa: '',  
             imagem: null, 
+            cid: '', 
         });
 
         setTimeout(() => {
             setSuccessMessage('');
         }, 3000);
     };  
+
+    useEffect(() => {
+        return () => {
+            cards.forEach(card => {
+                if (card.imagem) {
+                    URL.revokeObjectURL(card.imagem);
+                }
+            });
+        };
+    }, [cards]);
 
     return (  
         <div className="container">  
@@ -94,6 +106,10 @@ const Atestado = () => {
                     <label>Justificativa:</label>  
                     <textarea name="justificativa" value={formData.justificativa} onChange={handleChange} />  
                 </div>  
+                <div className="input-group">  
+                    <label>CID:</label>  
+                    <input type="text" name="cid" value={formData.cid} onChange={handleChange} />  
+                </div>  
                 <div className="upload-group">  
                     <label>Imagem:</label>  
                     <input type="file" name="imagem" onChange={handleChange} />  
@@ -111,6 +127,7 @@ const Atestado = () => {
                         <p>Data Inicial: {card.dataInicial}</p>
                         <p>Data Final: {card.dataFinal}</p>
                         <p>Justificativa: {card.justificativa}</p>
+                        <p>CID: {card.cid}</p>
                         {card.imagem && (
                             <div>
                                 <img src={URL.createObjectURL(card.imagem)} alt="Imagem do Atestado" />
