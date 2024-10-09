@@ -299,7 +299,6 @@ const EditarSaida = async (id, saidaData) => {
     }  
 };  
 
-// Exporta todas as funções  
 export {   
     LoginUser,   
     CriarUser,   
