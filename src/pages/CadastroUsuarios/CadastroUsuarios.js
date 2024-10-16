@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../CadastroUsuarios/styles.modules.css";
-import { CriarUser, EditarUser, DeleteUser, AllUsers } from "../../Data/server";
+import { CriarUser, EditarUser, DeleteUser, AllUsers, LoginUser } from "../../Data/server";
 
 const UserRegistration = () => {
     const [nif, setNif] = useState('');
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
-    const [curso, setCurso] = useState('');
+    const[tipo,setTipo]= useState('');
     const [senha, setSenha] = useState('');
     const [telefone, setTelefone] = useState('');
     const [dados, setDados] = useState([]);
@@ -30,7 +30,7 @@ const UserRegistration = () => {
         setNif(item.nif);
         setNome(item.nome);
         setEmail(item.email);
-        setCurso(item.curso);
+        setTipo(item.tipo);
         setSenha(item.senha);
         setTelefone(item.telefone);
         setAbrirCard(true);
@@ -43,20 +43,31 @@ const UserRegistration = () => {
 
     const HandleEnviar = async (e) => {
         e.preventDefault();
-        if (nif && nome && email && curso && senha && telefone) {
-            await CriarUser(nif, nome, email, curso, senha, telefone);
+        const res = await LoginUser(nif);
+        if (res.length === 0) {
+            const user ={
+                nif: Number(nif),
+                nome: nome,
+                email: email,
+                senha: senha,
+                telefone: telefone,
+                tipo: tipo
+            }
+            await CriarUser(user);
             alert('Usuário criado com sucesso');
             resetForm();
-            ListUsers(); // Refresh the user list
         } else {
-            console.log("Preencha todos os campos");
+            alert("nif já cadastrado");
+            console.log("Usuário já cadastrado");
         }
+   
     };
 
     const HandleEditar = async (e) => {
         e.preventDefault();
-        if (nif && nome && email && curso && senha && telefone) {
-            await EditarUser(nif, nome, email, curso, senha, telefone);
+        if (nif && nome && email  && senha && telefone && tipo) {
+            const user = {nome, email, senha, telefone, tipo};
+            await EditarUser(nif,user);
             alert('Usuário editado com sucesso');
             resetForm();
             ListUsers(); // Refresh the user list
@@ -68,6 +79,7 @@ const UserRegistration = () => {
 
     const HandleDelete = async () => {
         if (itemSelecionado) {
+            console.log("Deletando usuário:", itemSelecionado.nif);
             await DeleteUser(itemSelecionado.nif);
             alert('Usuário deletado com sucesso');
             resetForm();
@@ -82,7 +94,7 @@ const UserRegistration = () => {
         setNif('');
         setNome('');
         setEmail('');
-        setCurso('');
+       setTipo('');
         setSenha('');
         setTelefone('');
         setItemSelecionado(null);
@@ -94,7 +106,7 @@ const UserRegistration = () => {
             <button onClick={() => setListarUsers(!listarUsers)}>
                 {listarUsers ? 'Cadastrar Usuário' : 'Listar Usuários'}
             </button>
-            {listarUsers ? (
+            {!listarUsers ? (
                 <form className="form" onSubmit={HandleEnviar}>
                     <h1 className="title">Cadastro de Usuário</h1>
                     <input
@@ -127,16 +139,7 @@ const UserRegistration = () => {
                         required
                         className="input"
                     />
-                    <input
-                        type="text"
-                        name="curso"
-                        placeholder="Curso"
-                        value={curso}
-                        onChange={(e) => setCurso(e.target.value)}
-                        maxLength="100"
-                        required
-                        className="input"
-                    />
+                   
                     <input
                         type="password"
                         name="senha"
@@ -157,7 +160,21 @@ const UserRegistration = () => {
                         required
                         className="input"
                     />
-                    <button type="submit" className="button">
+                           <select
+                         type="text"
+                            value={tipo}
+                            onChange={(e) => setTipo(e.target.value)}
+                            required
+                            className='input'
+
+                        >
+                            <option value="" disabled>Tipo de Usuario</option>
+                            <option value="aluno">Aluno</option>
+                            <option value="secretaria">Secretaria</option>
+                            <option value="docente">Docente</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    <button type="submit" className="button" >
                         Enviar
                     </button>
                 </form>
@@ -221,13 +238,13 @@ const UserRegistration = () => {
                                 />
                                 <input
                                     type="text"
-                                    name="curso"
-                                    placeholder="Curso"
-                                    value={curso}
-                                    onChange={(e) => setCurso(e.target.value)}
+                                    name="tipo"
+                                    placeholder="Tipo"
+                                    value={tipo}
+                                    onChange={(e) => setTipo(e.target.value)}
                                     maxLength="100"
                                     required
-                                    className="input"
+                                    className="input"   
                                 />
                                 <input
                                     type="password"
