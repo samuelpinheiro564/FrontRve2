@@ -297,6 +297,7 @@ const EditarSaida = async (id, saidaData) => {
         console.error(`Erro ao editar registro de saída com ID ${id}:`, error);  
         throw error;  
     }  
+
 };  
 
 export {   
@@ -329,4 +330,5 @@ export {
     AllSaida,  
     ObterSaidaPorId,  
     EditarSaida  
+
 };
