@@ -1,10 +1,10 @@
 import React from 'react';  
-import UserList from './components/UserList';  
+import Atestado from '../src/pages/Atestado/page';  
 
 function App() {  
   return (  
     <div className="App">  
-      <UserList />  
+      <Atestado />  
     </div>  
   );  
 }  
