@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import "../CadastroUsuarios/styles.modules.css";
 import { CriarUser, EditarUser, DeleteUser, AllUsers, LoginUser } from "../../Data/server";
@@ -9,41 +8,22 @@ const UserRegistration = () => {
     const [email, setEmail] = useState('');
     const[tipo,setTipo]= useState('');
     const [senha, setSenha] = useState('');
-
     const [telefone, setTelefone] = useState('');
-    const [userType, setUserType] = useState('');  
+    const [dados, setDados] = useState([]);
+    const [abrirCard, setAbrirCard] = useState(false);
+    const [itemSelecionado, setItemSelecionado] = useState(null);
+    const [listarUsers, setListarUsers] = useState(false);
 
-    const handleCriarUser = async (e) => {  
-        e.preventDefault();  
-        try {  
-            const user = {  
-                nif: Number(nif), // Converter para número aqui  
-                nome,  
-                email,  
-               // curso,  
-                senha,  
-                telefone,
-                userType  
-            };  
-            await CriarUser(user);  
-            alert('Usuário cadastrado com sucesso');  
-            // Limpar os campos após o cadastro  
-            fecharCard();  
-        } catch (error) {  
-            console.error('Erro ao criar usuário:', error);  
-            alert('Erro ao cadastrar usuário');  
-        }  
-    };  
+    useEffect(() => {
+        if (listarUsers) {
+            ListUsers();
+        }
+    }, [listarUsers]);
 
-    const fecharCard = () => {  
-        setNif('');  
-        setNome('');  
-        setEmail('');  
-    //    setCurso('');  
-        setSenha('');  
-        setTelefone('');  
-    };  
-
+    const ListUsers = async () => {
+        const res = await AllUsers();
+        setDados(res);
+    };
 
     const handleItemClick = (item) => {
         setItemSelecionado(item);
@@ -299,4 +279,3 @@ const UserRegistration = () => {
 };
 
 export default UserRegistration;
-
