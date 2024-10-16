@@ -1,125 +1,100 @@
 import React, { useState } from 'react';  
-import '../Atestado/styles.modules.css';   
+import './styles.modules.css';   
+import { CriarAtestado } from '../../Data/server';  
 
 const Atestado = () => {  
-    const [formData, setFormData] = useState({  
-        aluno: '',  
-        turma: '',  
-        curso: '',  
-        ra: '',  
-        dataInicial: '',  
-        dataFinal: '',  
-        justificativa: '',  
-        imagem: null, 
-    });  
-
+    const [aluno, setAluno] = useState('');  
+    const [turma, setTurma] = useState('');  
+    const [curso, setCurso] = useState('');  
+    const [dataInicial, setDataInicial] = useState('');  
+    const [dataFinal, setDataFinal] = useState('');  
+    const [ra,setRa]= useState('');
+    const [justificativa, setJustificativa] = useState('');  
+    const [imagem, setImagem] = useState(null);  
+    const [cid, setCid] = useState('');  
     const [successMessage, setSuccessMessage] = useState('');  
-    const [errorMessage, setErrorMessage] = useState(''); 
-    const [cards, setCards] = useState([]); 
+    const [errorMessage, setErrorMessage] = useState('');  
 
-    const handleChange = (e) => {  
-        const { name, value, type, files } = e.target;  
-        if (type === 'file') {
-            setFormData({ ...formData, [name]: files[0] });
-        } else {
-            setFormData({ ...formData, [name]: value });
-        }
-    };  
+    const handleSubmit = async (e) => {  
+        e.preventDefault(); // Impede o comportamento padrão do formulário  
 
-    const handleSubmit = (e) => {  
-        e.preventDefault();  
+        // Verificar se o campo "aluno" está vazio  
+        if (!aluno) {  
+            setErrorMessage('O campo Aluno é obrigatório');  
+            return; // Impede o envio do formulário  
+        }  
 
-        if (!formData.aluno || !formData.turma || !formData.curso || !formData.ra || !formData.dataInicial || !formData.dataFinal || !formData.justificativa || !formData.imagem) {
-            setErrorMessage('Por favor, preencha todos os campos obrigatórios e anexe uma imagem.');
-            return;
-        }
+        try {   
 
-        console.log(formData);  
-
-        setSuccessMessage('Formulário enviado com sucesso!');
-        setErrorMessage(''); 
-
-        
-        setCards([...cards, formData]);
-
-        setFormData({  
-            aluno: '',  
-            turma: '',  
-            curso: '',  
-            ra: '',  
-            dataInicial: '',  
-            dataFinal: '',  
-            justificativa: '',  
-            imagem: null, 
-        });
-
-        setTimeout(() => {
-            setSuccessMessage('');
-        }, 3000);
+            const atest ={aluno,curso,turma,ra,dataInicial,dataFinal,justificativa,imagem,cid}
+            await CriarAtestado(atest);  
+            setSuccessMessage('Usuário cadastrado com sucesso');  
+            setErrorMessage('');   
+         
+            // Limpar os campos após o cadastro  
+            setAluno('');  
+            setTurma('');  
+            setCurso('');  
+            setDataInicial('');  
+            setDataFinal('');  
+            setJustificativa('');  
+            setImagem(null);  
+            setCid('');  
+        } catch (error) {  
+            console.error('Erro ao criar atestado:', error);  
+            setErrorMessage(error.response?.data?.error || 'Ocorreu um erro ao criar o atestado');   
+            setTimeout(() => {  
+                setErrorMessage('');  
+            }, 3000);  
+        }  
     };  
 
     return (  
         <div className="container">  
             <h1>Atestado</h1>  
-            {successMessage && <p className="success-message">{successMessage}</p>}
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            {successMessage && <p className="success-message">{successMessage}</p>}  
+            {errorMessage && <p className="error-message">{errorMessage}</p>}  
             <form onSubmit={handleSubmit}>  
                 <div className="input-group">  
                     <label>Aluno:</label>  
-                    <input type="text" name="aluno" value={formData.aluno} onChange={handleChange} />  
+                    <input type="text" name="aluno" value={aluno} onChange={(e) => setAluno(e.target.value)} required />  
                 </div>  
                 <div className="input-group">  
                     <label>Turma:</label>  
-                    <input type="text" name="turma" value={formData.turma} onChange={handleChange} />  
+                    <input type="text" name="turma" value={turma} onChange={(e) => setTurma(e.target.value)} />  
                 </div>  
                 <div className="input-group">  
                     <label>Curso:</label>  
-                    <input type="text" name="curso" value={formData.curso} onChange={handleChange} />  
+                    <input type="text" name="curso" value={curso} onChange={(e) => setCurso(e.target.value)} />  
                 </div>  
                 <div className="input-group">  
-                    <label>RA:</label>  
-                    <input type="text" name="ra" value={formData.ra} onChange={handleChange} />  
+                    <label>Ra:</label>  
+                    <input type="text" name="curso" value={ra} onChange={(e) => setRa(e.target.value)} />  
                 </div>  
                 <div className="date-group">  
                     <div className="input-group">  
-                        <label>Data inicial</label>  
-                        <input type="date" name="dataInicial" value={formData.dataInicial} onChange={handleChange} />  
+                        <label>Data inicial:</label>  
+                        <input type="date" name="dataInicial" value={dataInicial} onChange={(e) => setDataInicial(e.target.value)} />  
                     </div>  
                     <div className="input-group">  
-                        <label>Data final</label>  
-                        <input type="date" name="dataFinal" value={formData.dataFinal} onChange={handleChange} />  
+                        <label>Data final:</label>  
+                        <input type="date" name="dataFinal" value={dataFinal} onChange={(e) => setDataFinal(e.target.value)} />  
                     </div>  
                 </div>  
                 <div className="input-group">  
                     <label>Justificativa:</label>  
-                    <textarea name="justificativa" value={formData.justificativa} onChange={handleChange} />  
+                    <textarea name="justificativa" value={justificativa} onChange={(e) => setJustificativa(e.target.value)} />  
+                </div>  
+                <div className="input-group">  
+                    <label>CID:</label>  
+                    <input type="text" name="cid" value={cid} onChange={(e) => setCid(e.target.value)} />  
                 </div>  
                 <div className="upload-group">  
                     <label>Imagem:</label>  
-                    <input type="file" name="imagem" onChange={handleChange} />  
+                    <input type="file" name="imagem" onChange={(e) => setImagem(e.target.files[0])} />  
                 </div>  
                 <button type="submit">Enviar</button>  
             </form>  
-
-            <div className="cards-container">
-                {cards.map((card, index) => (
-                    <div key={index} className="card">
-                        <h2>{card.aluno}</h2>
-                        <p>Turma: {card.turma}</p>
-                        <p>Curso: {card.curso}</p>
-                        <p>RA: {card.ra}</p>
-                        <p>Data Inicial: {card.dataInicial}</p>
-                        <p>Data Final: {card.dataFinal}</p>
-                        <p>Justificativa: {card.justificativa}</p>
-                        {card.imagem && (
-                            <div>
-                                <img src={URL.createObjectURL(card.imagem)} alt="Imagem do Atestado" />
-                                <a href={URL.createObjectURL(card.imagem)} download="imagem_atestado">Baixar Imagem</a>
-                            </div>
-                        )}
-                    </div>
-                ))}
-            </div>
         </div>  
     );  
 };  
