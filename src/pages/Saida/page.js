@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './styles.modules.css'; // Adjusted the path
+import './styles.modules.css'; 
 import { CriarSaida, AllSaida, ObterSaidaPorId, EditarSaida, DeletarSaida } from '../../Data/server';
 
 const App = () => {
@@ -22,12 +22,42 @@ const App = () => {
         fetchSaidaRecords();
     }, []);
 
+    useEffect(() => {
+        if (editId) {
+            fetchSaidaById(editId);
+        }
+    }, [editId]);
+
     const fetchSaidaRecords = async () => {
         try {
+            console.log("Fetching all records...");
             const records = await AllSaida();
+            console.log("Records fetched:", records);
             setHistorico(records);
         } catch (error) {
             console.error("Error fetching records:", error);
+        }
+    };
+
+    const fetchSaidaById = async (id) => {
+        try {
+            console.log(`Fetching record with id: ${id}`);
+            const response = await ObterSaidaPorId(id);
+            console.log("Record fetched for edit:", response);
+            setFormData({
+                nomealuno: response.nomealuno,
+                curso: response.curso,
+                turma: response.turma,
+                alunora: response.alunora,
+                data: response.datasaida,
+                horasaida: response.horasaida,
+                maioridade: response.maioridade ? 'true' : 'false',
+                justificativa: response.justificativa,
+                assinaturaProf: response.assinaturaprof,
+                assinaturaAnaq: response.assinaturaanaq,
+            });
+        } catch (error) {
+            console.error("Error fetching record for edit:", error);
         }
     };
 
@@ -35,54 +65,56 @@ const App = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (!formData.data) {
-            alert("A data de saída deve ser preenchida.");
-            return;
-        }
-
+    const handleSubmit = async (e) => {  
+        e.preventDefault();  
+    
+        if (!formData.data) {  
+            alert("A data de saída deve ser preenchida.");  
+            return;  
+        }  
+    
         const submissionData = {  
             ...formData,  
             datasaida: formData.data,  
             horasaida: formData.horasaida,  
+            assinaturaanaq: formData.assinaturaAnaq, 
+            assinaturaprof: formData.assinaturaProf,  
         };  
-
-        if (editId) {  
-            await EditarSaida(editId, submissionData);  
-            setEditId(null);  
-        } else {  
-            await CriarSaida(submissionData);  
+    
+        try {  
+            if (editId) {  
+                console.log(`Editing record with id: ${editId}`);
+                await EditarSaida(editId, submissionData);  
+                setEditId(null);  
+            } else {  
+                console.log("Creating new record...");
+                await CriarSaida(submissionData);  
+            }  
+            fetchSaidaRecords();  
+            setFormData({  
+                nomealuno: '',  
+                curso: '',  
+                turma: '',  
+                alunora: '',  
+                data: '',  
+                horasaida: '',  
+                maioridade: '',  
+                justificativa: '',  
+                assinaturaProf: '',  
+                assinaturaAnaq: '',  
+            });  
+        } catch (error) {  
+            console.error("Error submitting form:", error);  
         }  
+    };
 
-        fetchSaidaRecords();  
-
-        setFormData({  
-            nomealuno: '',  
-            curso: '',  
-            turma: '',  
-            alunora: '',  
-            data: '',  
-            horasaida: '',  
-            maioridade: '',  
-            justificativa: '',  
-            assinaturaProf: '',  
-            assinaturaAnaq: '',  
-        });  
-    };  
-
-    const handleEdit = async (id) => {  
-        const response = await ObterSaidaPorId(id);  
-        setFormData({  
-            ...response,  
-            maioridade: response.maioridade ? 'true' : 'false'  
-        });  
+    const handleEdit = (id) => {  
         setEditId(id);  
-    };  
+    };
 
     const handleDelete = async (id) => {
         try {
+            console.log(`Deleting record with id: ${id}`);
             await DeletarSaida(id);
             fetchSaidaRecords();
         } catch (error) {
@@ -99,28 +131,28 @@ const App = () => {
         <div className="container">  
             <h1>JUSTIFICATIVA SAÍDA</h1>  
             <form onSubmit={handleSubmit}>  
-                <input type="text" name="nomealuno" placeholder="Aluno" value={formData.nomealuno} onChange={handleChange} />  
-                <input type="text" name="curso" placeholder="Curso" value={formData.curso} onChange={handleChange} />  
-                <input type="text" name="turma" placeholder="Turma" value={formData.turma} onChange={handleChange} />  
-                <input type="text" name="alunora" placeholder="RA" value={formData.alunora} onChange={handleChange} />  
+                <input type="text" name="nomealuno" placeholder="Aluno" value={formData.nomealuno} onChange={handleChange} required />  
+                <input type="text" name="curso" placeholder="Curso" value={formData.curso} onChange={handleChange} required />  
+                <input type="text" name="turma" placeholder="Turma" value={formData.turma} onChange={handleChange} required />  
+                <input type="text" name="alunora" placeholder="RA" value={formData.alunora} onChange={handleChange} required />  
 
                 <div>  
                     <label>Maior de Idade:</label>  
                     <label>  
-                        <input type="radio" name="maioridade" value="true" onChange={handleChange} checked={formData.maioridade === 'true'} /> Sim  
+                        <input type="radio" name="maioridade" value="true" onChange={handleChange} checked={formData.maioridade === 'true'} required /> Sim  
                     </label>  
                     <label>  
-                        <input type="radio" name="maioridade" value="false" onChange={handleChange} checked={formData.maioridade === 'false'} /> Não  
+                        <input type="radio" name="maioridade" value="false" onChange={handleChange} checked={formData.maioridade === 'false'} required /> Não  
                     </label>  
                 </div>  
 
-                <input type="date" name="data" value={formData.data} onChange={handleChange} />  
-                <input type="time" name="horasaida" value={formData.horasaida} onChange={handleChange} />  
+                <input type="date" name="data" value={formData.data} onChange={handleChange} required />  
+                <input type="time" name="horasaida" value={formData.horasaida} onChange={handleChange} required />  
 
-                <textarea name="justificativa" placeholder="Justificativa" value={formData.justificativa} onChange={handleChange}></textarea>  
+                <textarea name="justificativa" placeholder="Justificativa" value={formData.justificativa} onChange={handleChange} required></textarea>  
 
-                <input type="text" name="assinaturaProf" placeholder="Assinatura do professor" value={formData.assinaturaProf} onChange={handleChange} />  
-                <input type="text" name="assinaturaAnaq" placeholder="Assinatura do analista de qualidade" value={formData.assinaturaAnaq} onChange={handleChange} />  
+                <input type="text" name="assinaturaProf" placeholder="Assinatura do professor" value={formData.assinaturaProf} onChange={handleChange} required />  
+                <input type="text" name="assinaturaAnaq" placeholder="Assinatura do analista de qualidade" value={formData.assinaturaAnaq} onChange={handleChange} required />  
                 <button type="submit">{editId ? 'Editar Saída' : 'Enviar Saída'}</button>  
             </form>  
 
@@ -128,7 +160,13 @@ const App = () => {
             <table>  
                 <thead>  
                     <tr>  
+                        <th>Nome do Aluno</th>
+                        <th>Curso</th>
+                        <th>Turma</th>
+                        <th>RA</th>
+                        <th>Maioridade</th>
                         <th>Data/Hora da Saída</th>  
+                        <th>Justificativa</th>
                         <th>Assinatura do Professor</th>  
                         <th>Assinatura do Analista</th>  
                         <th>Ações</th>  
@@ -137,9 +175,15 @@ const App = () => {
                 <tbody>  
                     {historico.map((item) => (  
                         <tr key={item.id}>  
+                            <td>{item.nomealuno}</td>
+                            <td>{item.curso}</td>
+                            <td>{item.turma}</td>
+                            <td>{item.alunora}</td>
+                            <td>{item.maioridade ? 'Sim' : 'Não'}</td>
                             <td>{`${formatarData(item.datasaida)} ${item.horasaida}`}</td>  
-                            <td>{item.assinaturaProf ? item.assinaturaProf : "Não disponível"}</td>  
-                            <td>{item.assinaturaAnaq ? item.assinaturaAnaq : "Não disponível"}</td>  
+                            <td>{item.justificativa}</td>
+                            <td>{item.assinaturaProf}</td>  
+                            <td>{item.assinaturaAnaq}</td>  
                             <td>
                                 <button onClick={() => handleEdit(item.id)}>Editar</button>
                                 <button onClick={() => handleDelete(item.id)}>Deletar</button>
