@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles.modules.css"; // Import the CSS file
+import "./styles.modules.css"; 
 import Sidebar from "../Sidebar/page";
 
 const CategoriaAdmin = () => {
@@ -8,8 +8,6 @@ const CategoriaAdmin = () => {
       <Sidebar />
       <div className="container">
         <div className="banner">
-          {" "}
-          {/* Nova div para a faixa */}
           <h1>SENAI</h1>
         </div>
         <h2>Categorias</h2>
