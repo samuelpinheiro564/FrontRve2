@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Cadastrousuarios from './pages/CadastroUsuarios/CadastroUsuarios';
+import Rve from '../src/pages/Rve/Rve'
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-
-    <Cadastrousuarios />
+<Rve/>
   </React.StrictMode>
 );

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';  
-import { CriarRve } from '../../Data/server';
+import React, { useState, useEffect } from 'react';  
+import { CriarRve, CriarCampoTexto,ObterCampoTextoPorId,getCampostextoRve } from '../../Data/server';
 import '../Rve/styles.css';  
 
 const Rve = () => {  
@@ -12,13 +12,50 @@ const Rve = () => {
   const [motivo, setMotivo] = useState('');
   const [orientacoesEstudante, setOrientacoesEstudante] = useState('');
   const [descricaoOcorrido, setDescricaoOcorrido] = useState('');
-  const [docentesEnvolvidos, setDocentesEnvolvidos] = useState('');
-  const [assinaturas, setAssinaturas] = useState('');
+  const [docentesEnvolvidos, setDocentesEnvolvidos] = useState([]);
+  const [assinaturas, setAssinaturas] = useState([]);
   const [elogios, setElogios] = useState('');
   const [dificuldades, setDificuldades] = useState('');
   const [presenca, setPresenca] = useState('');
-  const [categorias, setCategorias] = useState('');  
+  const [categorias, setCategorias] = useState(''); 
+  const [id, setId] = useState(null);
+const [nifusuario, setNifUsuario] = useState('');
+const [campotexto, setCampoTexto] = useState('');
+const [mensagens, setMensagens] = useState(false);
+ const [camposTexto, setCamposTexto] = useState([]);
+ const [idRVE, setIdRVE] = useState(null);
 
+const GerarIdCampo = () => {
+    setId(Math.floor(Math.random() * 10000));
+    };
+    const gerarIdRve = () => {  
+       setIdRVE(Math.floor(Math.random() * 100000));  
+    };
+
+const handleEnviarMensagem = async (e) => {
+    GerarIdCampo();
+e.preventDefault();
+try {
+    
+const CampoTexto1 = {
+id:Number(id),
+nifusuario:Number(nifusuario),
+campotexto
+};
+console.log(CampoTexto1);
+const AllComents = await ObterCampoTextoPorId(Number(id));
+console.log(AllComents);
+if(AllComents ==  null){
+if (true) { // Replace with the actual condition
+ CriarCampoTexto(CampoTexto1);
+alert('Campo de texto cadastrado com sucesso');
+setCampoTexto('');
+}
+}}
+catch (error) {
+console.error('Erro ao criar campo de texto:', error);
+}
+} 
   const categories = [  
     'Aprendizagem',  
     'Atitude/postura/comportamento',  
@@ -30,11 +67,14 @@ const Rve = () => {
     'Saúde mental',  
     'Outras',  
   ];
-  
+
+
   const handleCriarRVE = async (e) => {  
+    gerarIdRve();
     e.preventDefault();  
     try {  
       const rve = { 
+        idRVE:Number(idRVE),
         autor,
         estudante,
         curso,
@@ -44,15 +84,16 @@ const Rve = () => {
         motivo,
         orientacoesEstudante,
         descricaoOcorrido,
-        docentesEnvolvidos,
-        assinaturas,
-        elogios,
-        dificuldades,
-        presenca,
-        categorias
+        docentesEnvolvidos:Array(docentesEnvolvidos),
+        assinaturas:Array(Boolean(assinaturas)),   
+        presenca
       };  
+      console.log(idRVE);
+      console.log(rve);
       await CriarRve(rve);  
+      console.log(idRVE);
       alert('Usuário cadastrado com sucesso');  
+      setMensagens(true);
       // Limpar os campos após o cadastro  
       setAutor('');
       setEstudante('');
@@ -74,16 +115,26 @@ const Rve = () => {
       alert('Erro ao cadastrar usuário');  
     }  
   };  
-  
-  //const formatDate = (dateString) => {  
-   // const options = { day: '2-digit', month: '2-digit', year: 'numeric' };  
-   // return new Date(dateString).toLocaleDateString('pt-BR', options);  
- // };  
+  console.log(idRVE);
+useEffect(() => {
+  const fetchCamposTexto = async () => {
+    if (mensagens === true) {
+      console.log(Number(idRVE));
+      const res = await getCampostextoRve(Number(idRVE));
+      console.log(camposTexto);
+      
+      setCamposTexto(res);
+    }
+  }
+  if (mensagens === true) {
+    fetchCamposTexto();
+  }
+}, [mensagens, idRVE, camposTexto]);
 
   return (  
     <div className="container">  
       <h1>Registro de vida escolar</h1> 
-      <form onSubmit={handleCriarRVE}>
+      { !mensagens ?  <form onSubmit={handleCriarRVE}>
         <div>
           <input  
             type="text"  
@@ -251,7 +302,39 @@ const Rve = () => {
         <button 
           type="submit"
         >Criar RVE</button>
+      </form> : 
+      <div>
+        <h2>Campos de texto</h2>
+        {camposTexto.map((campoTexto, index) => (
+          <div key={index}>
+            <p>{campoTexto.campotexto}</p>
+          </div>
+        ))}
+      <form onSubmit={handleEnviarMensagem}>
+        <div>
+          <input  
+            type="text"  
+            name="nifusuario"  
+            placeholder="nifusuario"  
+            value={nifusuario}  
+            onChange={(e) => setNifUsuario(e.target.value)}  
+            className="input"  
+          />  
+        </div>
+        <div>
+          <input  
+            type="text"  
+            name="campotexto"  
+            placeholder="campotexto"  
+            value={campotexto}  
+            onChange={(e) => setCampoTexto(e.target.value)}  
+            className="input"  
+          />  
+        </div>
+        <button type="submit" onClick={handleEnviarMensagem}>Enviar Mensagem</button>
       </form>
+      </div>
+      }
     </div>  
   );  
 };  

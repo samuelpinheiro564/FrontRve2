@@ -75,16 +75,6 @@ const AllRve = async () => {
     }
 };
 
-const ObterRvePorId = async (id) => {
-    try {
-        const response = await axios.get(`${URL}/rve/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error(`Erro ao buscar registro RVE com ID ${id}:`, error);
-        throw error;
-    }
-};
-
 const EditarRve = async (id, rveData) => {
     try {
         const response = await axios.put(`${URL}/rve/${id}`, rveData);
@@ -206,6 +196,16 @@ const DeleteCampoTexto = async (id) => {
         throw error;
     }
 };
+const getCampostextoRve = async (id) => {
+    try {
+        const response = await axios.get(`${URL}/camposTextoRve/${id}`);
+        return response.data;
+    }
+    catch (error) {
+        console.error(`Erro ao buscar campo de texto com ID ${id}:`, error);
+        throw error;
+    }
+};
 
 // Funções para gerenciar fóruns
 const CriarForum = async (forumData) => {
@@ -316,7 +316,6 @@ export {
     AllUsers,
     CriarRve,
     AllRve,
-    ObterRvePorId,
     EditarRve,
     DeleteRve,
     CriarAtestado,
@@ -338,5 +337,6 @@ export {
     AllSaida,
     ObterSaidaPorId,
     EditarSaida,
-    DeletarSaida
+    DeletarSaida,
+    getCampostextoRve
 };
