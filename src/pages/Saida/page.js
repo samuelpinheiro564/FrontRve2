@@ -127,7 +127,7 @@ const App = () => {
                 <input type="text" name="nomealuno" placeholder="Aluno" value={formData.nomealuno} onChange={handleChange} required />  
                 <input type="text" name="curso" placeholder="Curso" value={formData.curso} onChange={handleChange} required />  
                 <input type="text" name="turma" placeholder="Turma" value={formData.turma} onChange={handleChange} required />  
-                <input type="text" name="alunora" placeholder="RA" value={formData.alunora} onChange={handleChange} required />  
+                <input className="RA" type="number" name="alunora" placeholder="RA" value={formData.alunora} onChange={handleChange} required />  
 
                 <div>  
                     <label>Maior de Idade:</label>  
