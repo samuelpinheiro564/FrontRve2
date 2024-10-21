@@ -308,6 +308,58 @@ const DeletarSaida = async (id) => {
     }
 };
 
+const CriarSaidaProfessor = async (saidaProfessorData) => {
+    try {
+        const response = await axios.post(`${URL}/saidaProfessor`, saidaProfessorData);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao criar registro de saída para professor:', error);
+        throw error;
+    }
+}
+
+const AllSaidaProfessor = async () => {
+    try {
+        const response = await axios.get(`${URL}/saidaProfessor`);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao buscar todos os registros de saída para professor:', error);
+        throw error;
+    }
+}
+
+const ObterSaidaProfessorPorId = async (id) => {
+    try {
+        const response = await axios.get(`${URL}/saidaProfessor/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao buscar registro de saída para professor com ID ${id}:`, error);
+        throw error;
+    }
+}
+
+const EditarSaidaProfessor = async (id, saidaProfessorData) => {
+    try {
+        const response = await axios.put(`${URL}/saidaProfessor/${id}`, saidaProfessorData);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao editar registro de saída para professor com ID ${id}:`, error);
+        throw error;
+    }
+}
+
+const DeletarSaidaProfessor = async (id) => {
+    try {
+        const response = await axios.delete(`${URL}/saidaProfessor/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao excluir registro de saída para professor com ID ${id}:`, error);
+        throw error;
+    }
+}
+
+
+
 export {
     LoginUser,
     CriarUser,
@@ -338,5 +390,10 @@ export {
     AllSaida,
     ObterSaidaPorId,
     EditarSaida,
-    DeletarSaida
+    DeletarSaida,
+    CriarSaidaProfessor,
+    AllSaidaProfessor,
+    ObterSaidaProfessorPorId,
+    EditarSaidaProfessor,
+    DeletarSaidaProfessor
 };
