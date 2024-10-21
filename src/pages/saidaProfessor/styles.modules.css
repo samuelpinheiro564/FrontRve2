@@ -1,169 +1,137 @@
-
 :root {
-  --primary-color: #6200ea;
-  --secondary-color: #;
-  --background-color: #f3e5f5;
-  --text-color: #37474f;
-  --primary-color: #d32f2f;
-  --secondary-color: #ff6659;
-  --success-color: #00c853;
-  --error-color: #d50000;
+  --primary-color: #ba1212;
+  --secondary-color: #c72838;
+  --text-color: #000;
+  --background-color: #f0f4f8;
+  --form-background: rgba(255, 255, 255, 0.1);
+  --input-background: rgba(255, 255, 255, 0.865);
 }
 
 body {
-  background-color: var(--background-color);
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: var(--text-color);
-  line-height: 1.6;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.RA {
-  width: 100%;
-  padding: 0.8rem;
-  margin-bottom: 1rem;
-  border: 2px solid var(--secondary-color);
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
 .container {
+  width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  background: var(--form-background);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   padding: 2rem;
+  box-shadow: 0 8px 32px rgba(255, 0, 0, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 h1, h2 {
+  color: #fff;
   text-align: center;
-  color: var(--primary-color);
-  text-transform: uppercase;
-  letter-spacing: 2px;
   margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 form {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  
+  display: grid;
+  gap: 1.5rem;
 }
 
-form:hover {
-  transform: translateY(-5px);
-  
-}
-
-input[type="text"],
-input[type="date"],
-input[type="time"],
-textarea {
+input, textarea, select {
   width: 100%;
-  padding: 0.8rem;
-  margin-bottom: 1rem;
-  border: 2px solid var(--secondary-color);
-  border-radius: 4px;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--input-background);
+  color: #000;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-input[type="text"]:focus,
-input[type="date"]:focus,
-input[type="time"]:focus,
-textarea:focus {
+input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(98, 0, 234, 0.1);
+  box-shadow: 0 0 0 2px rgb(0, 0, 0);
+  transform: scale(1.02);
+  
 }
 
 button {
-  background-color: var(--primary-color);
-  color: white;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
   border: none;
   padding: 1rem 2rem;
-  font-size: 1rem;
-  border-radius: 4px;
+  border-radius: 50px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 button:hover {
-  background-color: var(--secondary-color);
-  transform: scale(1.05);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 15px;
+  border-spacing: 0 15px; 
   margin-top: 2rem;
 }
 
-thead {
-  background-color: var(--primary-color);
-  color: white;
-}
-
 th, td {
-  padding: 1rem;
   text-align: left;
+  padding: 0.5rem;
+  background: var(--input-background);
+  color: #000000;
 }
 
-tbody tr {
-  background-color: white;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
+th {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-tbody tr:hover {
+tr {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+tr:hover {
   transform: scale(1.02);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Animação para novos itens adicionados */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-tbody tr:last-child {
-  animation: fadeIn 0.5s ease-out;
-}
-
-/* Estilo para os botões de ação na tabela */
-td button {
+.actions button {
   padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
-  font-size: 0.9rem;
+  margin: 0 0.5rem;
 }
 
-td button:first-child {
-  background-color: var(--success-color);
-}
-
-td button:last-child {
-  background-color: var(--error-color);
-}
-
-/* Estilo para o radio button */
 input[type="radio"] {
-  margin-right: 0.5rem;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  margin-right: 10px;
+  position: relative;
+  top: 4px;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-
-  form {
-    padding: 1rem;
-  }
-
-  table {
-    font-size: 0.9rem;
-  }
-
-  th, td {
-    padding: 0.5rem;
-  }
+input[type="radio"]:checked::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: #000000;
+  border-radius: 50%;
 }

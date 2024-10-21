@@ -7,7 +7,7 @@ const App = () => {
       nomeprofessor: '',
         curso: '',
         turma: '',
-        professorRA: '',
+        professorra: '',
         data: '',
         horasaida: '',
         justificativa: '',
@@ -87,7 +87,7 @@ const App = () => {
               nomeprofessor: '',  
                 curso: '',  
                 turma: '',  
-                professorRA: '',  
+                professorra: '',  
                 data: '',  
                 horasaida: '',  
                 justificativa: '',  
@@ -124,7 +124,7 @@ const App = () => {
                 <input type="text" name="nomeprofessor" placeholder="Professor" value={formData.nomeprofessor} onChange={handleChange} required />  
                 <input type="text" name="curso" placeholder="Curso" value={formData.curso} onChange={handleChange} required />  
                 <input type="text" name="turma" placeholder="Turma" value={formData.turma} onChange={handleChange} required />  
-                <input className="RA" type="number" name="professorRA" placeholder="RA" value={formData.professorra} onChange={handleChange} required />  
+                <input className="RA" type="number" name="professorra" placeholder="RA" value={formData.professorra} onChange={handleChange} required />  
 
                
 
