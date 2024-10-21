@@ -30,9 +30,7 @@ const App = () => {
 
     const fetchSaidaRecords = async () => {
         try {
-            console.log("Fetching all records...");
             const records = await AllSaida();
-            console.log("Records fetched:", records);
             setHistorico(records);
         } catch (error) {
             console.error("Error fetching records:", error);
@@ -41,14 +39,12 @@ const App = () => {
 
     const fetchSaidaById = async (id) => {
         try {
-            console.log(`Fetching record with id: ${id}`);
             const response = await ObterSaidaPorId(id);
-            console.log("Record fetched for edit:", response);
             setFormData({
                 nomealuno: response.nomealuno,
                 curso: response.curso,
                 turma: response.turma,
-                alunora: response.alunora,
+                alunora:Number(response.alunora),
                 data: response.datasaida,
                 horasaida: response.horasaida,
                 maioridade: response.maioridade ? 'true' : 'false',
@@ -83,11 +79,9 @@ const App = () => {
     
         try {  
             if (editId) {  
-                console.log(`Editing record with id: ${editId}`);
                 await EditarSaida(editId, submissionData);  
                 setEditId(null);  
             } else {  
-                console.log("Creating new record...");
                 await CriarSaida(submissionData);  
             }  
             fetchSaidaRecords();  
@@ -114,7 +108,6 @@ const App = () => {
 
     const handleDelete = async (id) => {
         try {
-            console.log(`Deleting record with id: ${id}`);
             await DeletarSaida(id);
             fetchSaidaRecords();
         } catch (error) {
@@ -182,8 +175,8 @@ const App = () => {
                             <td>{item.maioridade ? 'Sim' : 'Não'}</td>
                             <td>{`${formatarData(item.datasaida)} ${item.horasaida}`}</td>  
                             <td>{item.justificativa}</td>
-                            <td>{item.assinaturaProf}</td>  
-                            <td>{item.assinaturaAnaq}</td>  
+                            <td>{item.assinaturaprof}</td>  
+                            <td>{item.assinaturaanaq}</td>  
                             <td>
                                 <button onClick={() => handleEdit(item.id)}>Editar</button>
                                 <button onClick={() => handleDelete(item.id)}>Deletar</button>
