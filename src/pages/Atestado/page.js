@@ -8,12 +8,15 @@ const Atestado = () => {
     const [curso, setCurso] = useState('');  
     const [dataInicial, setDataInicial] = useState('');  
     const [dataFinal, setDataFinal] = useState('');  
-    const [ra,setRa]= useState('');
-    const [justificativa, setJustificativa] = useState('');  
     const [imagem, setImagem] = useState(null);  
     const [cid, setCid] = useState('');  
     const [successMessage, setSuccessMessage] = useState('');  
     const [errorMessage, setErrorMessage] = useState('');  
+
+
+    const handleFileChange = (e) => {
+        setImagem(e.target.files[0]);
+    };
 
     const handleSubmit = async (e) => {  
         e.preventDefault(); // Impede o comportamento padrão do formulário  
@@ -25,21 +28,14 @@ const Atestado = () => {
         }  
 
         try {   
-
-            const atest ={aluno,curso,turma,ra,dataInicial,dataFinal,justificativa,imagem,cid}
+            const atest = {aluno,curso,turma,dataInicial,dataFinal,imagem,cid};
+            console.log(atest)
             await CriarAtestado(atest);  
             setSuccessMessage('Usuário cadastrado com sucesso');  
             setErrorMessage('');   
          
             // Limpar os campos após o cadastro  
-            setAluno('');  
-            setTurma('');  
-            setCurso('');  
-            setDataInicial('');  
-            setDataFinal('');  
-            setJustificativa('');  
-            setImagem(null);  
-            setCid('');  
+ 
         } catch (error) {  
             console.error('Erro ao criar atestado:', error);  
             setErrorMessage(error.response?.data?.error || 'Ocorreu um erro ao criar o atestado');   
@@ -66,11 +62,7 @@ const Atestado = () => {
                 <div className="input-group">  
                     <label>Curso:</label>  
                     <input type="text" name="curso" value={curso} onChange={(e) => setCurso(e.target.value)} />  
-                </div>  
-                <div className="input-group">  
-                    <label>Ra:</label>  
-                    <input type="text" name="curso" value={ra} onChange={(e) => setRa(e.target.value)} />  
-                </div>  
+                </div>    
                 <div className="date-group">  
                     <div className="input-group">  
                         <label>Data inicial:</label>  
@@ -82,16 +74,12 @@ const Atestado = () => {
                     </div>  
                 </div>  
                 <div className="input-group">  
-                    <label>Justificativa:</label>  
-                    <textarea name="justificativa" value={justificativa} onChange={(e) => setJustificativa(e.target.value)} />  
-                </div>  
-                <div className="input-group">  
                     <label>CID:</label>  
                     <input type="text" name="cid" value={cid} onChange={(e) => setCid(e.target.value)} />  
                 </div>  
                 <div className="upload-group">  
                     <label>Imagem:</label>  
-                    <input type="file" name="imagem" onChange={(e) => setImagem(e.target.files[0])} />  
+                    <input type="file" name="imagem" onChange={handleFileChange} />  
                 </div>  
                 <button type="submit">Enviar</button>  
             </form>  
