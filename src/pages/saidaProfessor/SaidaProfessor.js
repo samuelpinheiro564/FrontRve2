@@ -43,7 +43,7 @@ const App = () => {
               nomeprofessor: response.nomeprofessor,
                 curso: response.curso,
                 turma: response.turma,
-                professorRA:Number(response.professorRA),
+                professorra:Number(response.professorra),
                 data: response.datasaida,
                 horasaida: response.horasaida,
                 justificativa: response.justificativa,
@@ -121,10 +121,10 @@ const App = () => {
         <div className="container">  
             <h1>JUSTIFICATIVA SAÍDA PROFESSOR</h1>  
             <form onSubmit={handleSubmit}>  
-                <input type="text" name="nomeprofessor" placeholder="Professor" value={formData.nomealuno} onChange={handleChange} required />  
+                <input type="text" name="nomeprofessor" placeholder="Professor" value={formData.nomeprofessor} onChange={handleChange} required />  
                 <input type="text" name="curso" placeholder="Curso" value={formData.curso} onChange={handleChange} required />  
                 <input type="text" name="turma" placeholder="Turma" value={formData.turma} onChange={handleChange} required />  
-                <input className="RA" type="number" name="professorRA" placeholder="RA" value={formData.professorRA} onChange={handleChange} required />  
+                <input className="RA" type="number" name="professorRA" placeholder="RA" value={formData.professorra} onChange={handleChange} required />  
 
                
 
@@ -159,7 +159,7 @@ const App = () => {
                             <td>{item.nomeprofessor}</td>
                             <td>{item.curso}</td>
                             <td>{item.turma}</td>
-                            <td>{item.professorRA}</td>
+                            <td>{item.professorra}</td>
                             <td>{`${formatarData(item.datasaida)} ${item.horasaida}`}</td>  
                             <td>{item.justificativa}</td>
                             <td>{item.assinaturaprof}</td>  
