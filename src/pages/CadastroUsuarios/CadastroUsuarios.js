@@ -1,281 +1,150 @@
-import React, { useState, useEffect } from "react";
-import "../CadastroUsuarios/styles.modules.css";
-import { CriarUser, EditarUser, DeleteUser, AllUsers, LoginUser } from "../../Data/server";
+import React, { useState, useEffect } from 'react';
+import { CriarAtestado, AllAtestados } from '../../Data/server';
 
-const UserRegistration = () => {
-    const [nif, setNif] = useState('');
-    const [nome, setNome] = useState('');
-    const [email, setEmail] = useState('');
-    const[tipo,setTipo]= useState('');
-    const [senha, setSenha] = useState('');
-    const [telefone, setTelefone] = useState('');
-    const [dados, setDados] = useState([]);
-    const [abrirCard, setAbrirCard] = useState(false);
-    const [itemSelecionado, setItemSelecionado] = useState(null);
-    const [listarUsers, setListarUsers] = useState(false);
+const Atestado = () => {
+    const [atestado, setAtestado] = useState([]);
+    const [nome_aluno, setNome_aluno] = useState('');
+    const [turma, setTurma] = useState('');
+    const [curso, setCurso] = useState('');
+    const [ra, setRa] = useState('');
+    const [data_inicial, setData_inicial] = useState('');
+    const [data_final, setData_final] = useState('');
+    const [imagem, setImagem] = useState(null);
+    const [cid, setCid] = useState('');
 
     useEffect(() => {
-        if (listarUsers) {
-            ListUsers();
-        }
-    }, [listarUsers]);
+        fetchAtestados();
+    }, []);
 
-    const ListUsers = async () => {
-        const res = await AllUsers();
-        setDados(res);
+    const fetchAtestados = async () => {
+        const allAtestados = await AllAtestados();
+        setAtestado(allAtestados);
     };
 
-    const handleItemClick = (item) => {
-        setItemSelecionado(item);
-        setNif(item.nif);
-        setNome(item.nome);
-        setEmail(item.email);
-        setTipo(item.tipo);
-        setSenha(item.senha);
-        setTelefone(item.telefone);
-        setAbrirCard(true);
-    };
-
-    const fecharCard = () => {
-        setAbrirCard(false);
-        setItemSelecionado(null);
-    };
-
-    const HandleEnviar = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await LoginUser(nif);
-        if (res.length === 0) {
-            const user ={
-                nif: Number(nif),
-                nome: nome,
-                email: email,
-                senha: senha,
-                telefone: telefone,
-                tipo: tipo
-            }
-            await CriarUser(user);
-            alert('Usuário criado com sucesso');
-            resetForm();
-        } else {
-            alert("nif já cadastrado");
-            console.log("Usuário já cadastrado");
-        }
-   
-    };
+        
+        const atest = {
+            nome_aluno,
+            turma,
+            curso,
+            ra,
+            data_inicial,
+            data_final,
+            imagem, // A imagem deve ser uma string Base64
+            cid
+        };
 
-    const HandleEditar = async (e) => {
-        e.preventDefault();
-        if (nif && nome && email  && senha && telefone && tipo) {
-            const user = {nome, email, senha, telefone, tipo};
-            await EditarUser(nif,user);
-            alert('Usuário editado com sucesso');
-            resetForm();
-            ListUsers(); // Refresh the user list
-            fecharCard();
-        } else {
-            console.log("Preencha todos os campos");
-        }
-    };
-
-    const HandleDelete = async () => {
-        if (itemSelecionado) {
-            console.log("Deletando usuário:", itemSelecionado.nif);
-            await DeleteUser(itemSelecionado.nif);
-            alert('Usuário deletado com sucesso');
-            resetForm();
-            ListUsers(); // Refresh the user list
-            fecharCard();
-        } else {
-            console.log("Nenhum usuário selecionado para deletar");
-        }
+        await CriarAtestado(atest);
+        resetForm();
+        fetchAtestados();
     };
 
     const resetForm = () => {
-        setNif('');
-        setNome('');
-        setEmail('');
-       setTipo('');
-        setSenha('');
-        setTelefone('');
-        setItemSelecionado(null);
-        setAbrirCard(false);
+        setNome_aluno('');
+        setTurma('');
+        setCurso('');
+        setRa('');
+        setData_inicial('');
+        setData_final('');
+        setImagem(null);
+        setCid('');
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagem(reader.result); // Converte a imagem para Base64
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
     return (
-        <div className="container">
-            <button onClick={() => setListarUsers(!listarUsers)}>
-                {listarUsers ? 'Cadastrar Usuário' : 'Listar Usuários'}
-            </button>
-            {!listarUsers ? (
-                <form className="form" onSubmit={HandleEnviar}>
-                    <h1 className="title">Cadastro de Usuário</h1>
-                    <input
-                        type="number"
-                        name="nif"
-                        placeholder="NIF"
-                        value={nif}
-                        onChange={(e) => setNif(e.target.value)}
-                        maxLength="12"
-                        required
-                        className="input"
-                    />
-                    <input
-                        type="text"
-                        name="nome"
-                        placeholder="Nome"
-                        value={nome}
-                        onChange={(e) => setNome(e.target.value)}
-                        maxLength="100"
-                        required
-                        className="input"
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        maxLength="100"
-                        required
-                        className="input"
-                    />
-                   
-                    <input
-                        type="password"
-                        name="senha"
-                        placeholder="Senha"
-                        value={senha}
-                        onChange={(e) => setSenha(e.target.value)}
-                        maxLength="150"
-                        required
-                        className="input"
-                    />
-                    <input
-                        type="text"
-                        name="telefone"
-                        placeholder="Telefone"
-                        value={telefone}
-                        onChange={(e) => setTelefone(e.target.value)}
-                        maxLength="15"
-                        required
-                        className="input"
-                    />
-                           <select
-                         type="text"
-                            value={tipo}
-                            onChange={(e) => setTipo(e.target.value)}
-                            required
-                            className='input'
+        <div>
+            <h1>Atestados</h1>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    name="nome_aluno"
+                    value={nome_aluno}
+                    onChange={(e) => setNome_aluno(e.target.value)}
+                    placeholder="Nome do Aluno"
+                    required
+                />
+                <input
+                    type="text"
+                    name="turma"
+                    value={turma}
+                    onChange={(e) => setTurma(e.target.value)}
+                    placeholder="Turma"
+                    required
+                />
+                <input
+                    type="text"
+                    name="curso"
+                    value={curso}
+                    onChange={(e) => setCurso(e.target.value)}
+                    placeholder="Curso"
+                    required
+                />
+                <input
+                    type="text"
+                    name="ra"
+                    value={ra}
+                    onChange={(e) => setRa(e.target.value)}
+                    placeholder="RA"
+                    required
+                />
+                <input
+                    type="date"
+                    name="data_inicial"
+                    value={data_inicial}
+                    onChange={(e) => setData_inicial(e.target.value)}
+                    required
+                />
+                <input
+                    type="date"
+                    name="data_final"
+                    value={data_final}
+                    onChange={(e) => setData_final(e.target.value)}
+                    required
+                />
+                <input
+                    type="file"
+                    name="imagem"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    required
+                />
+                <input
+                    type="text"
+                    name="cid"
+                    value={cid}
+                    onChange={(e) => setCid(e.target.value)}
+                    placeholder="CID"
+                    required
+                />
+                <button type="submit">Adicionar</button>
+            </form>
 
-                        >
-                            <option value="" disabled>Tipo de Usuario</option>
-                            <option value="aluno">Aluno</option>
-                            <option value="secretaria">Secretaria</option>
-                            <option value="docente">Docente</option>
-                            <option value="admin">Administrador</option>
-                        </select>
-                    <button type="submit" className="button" >
-                        Enviar
-                    </button>
-                </form>
-            ) : (
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>NIF</th>
-                                <th>Nome</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {dados.map(item => (
-                                <tr key={item.nif} onClick={() => handleItemClick(item)} style={{ cursor: 'pointer' }}>
-                                    <td>{item.nif}</td>
-                                    <td>{item.nome}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    {abrirCard && itemSelecionado && (
-                        <div className="card" style={{
-                            border: '1px solid #ccc',
-                            padding: '16px',
-                            marginTop: '16px',
-                            borderRadius: '8px',
-                            backgroundColor: '#f9f9f9',
-                        }}>
-                            <h3>Editar Usuário</h3>
-                            <form onSubmit={HandleEditar}>
-                                <input
-                                    type="number"
-                                    name="nif"
-                                    placeholder="NIF"
-                                    value={nif}
-                                    onChange={(e) => setNif(e.target.value)}
-                                    maxLength="12"
-                                    required
-                                    className="input"
-                                />
-                                <input
-                                    type="text"
-                                    name="nome"
-                                    placeholder="Nome"
-                                    value={nome}
-                                    onChange={(e) => setNome(e.target.value)}
-                                    maxLength="100"
-                                    required
-                                    className="input"
-                                />
-                                <input
-                                    type="email"
-                                    name="email"
-                                    placeholder="Email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    maxLength="100"
-                                    required
-                                    className="input"
-                                />
-                                <input
-                                    type="text"
-                                    name="tipo"
-                                    placeholder="Tipo"
-                                    value={tipo}
-                                    onChange={(e) => setTipo(e.target.value)}
-                                    maxLength="100"
-                                    required
-                                    className="input"   
-                                />
-                                <input
-                                    type="password"
-                                    name="senha"
-                                    placeholder="Senha"
-                                    value={senha}
-                                    onChange={(e) => setSenha(e.target.value)}
-                                    maxLength="150"
-                                    required
-                                    className="input"
-                                />
-                                <input
-                                    type="text"
-                                    name="telefone"
-                                    placeholder="Telefone"
-                                    value={telefone}
-                                    onChange={(e) => setTelefone(e.target.value)}
-                                    maxLength="15"
-                                    required
-                                    className="input"
-                                />
-                                <button type="submit" className="button">Salvar Alterações</button>
-                                <button type="button" className="button" onClick={HandleDelete}>Deletar</button>
-                                <button type="button" className="button" onClick={fecharCard}>Fechar</button>
-                            </form>
-                        </div>
-                    )}
-                </div>
-            )}
+            <h2>Lista de Atestados</h2>
+            <ul>
+                {atestado.map((atest, index) => (
+                    <li key={index}>
+                        <strong>Nome:</strong> {atest.nome_aluno} <br />
+                        <strong>Curso:</strong> {atest.curso} <br />
+                        <strong>Data Inicial:</strong> {atest.data_inicial} <br />
+                        <strong>Data Final:</strong> {atest.data_final} <br />
+                        <strong>CID:</strong> {atest.cid} <br />
+                        <img src={atest.imagem} alt="Atestado" style={{ maxWidth: '100px', maxHeight: '100px' }} />
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };
 
-export default UserRegistration;
+export default Atestado;
