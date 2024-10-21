@@ -1,170 +1,159 @@
 /* styles.modules.css */
 
 :root {
-  --primary-color: #6200ea;
-  --secondary-color: #b388ff;
-  --background-color: #f3e5f5;
-  --text-color: #37474f;
-  --primary-color: #d32f2f;
-  --secondary-color: #ff6659;
-  --success-color: #00c853;
-  --error-color: #d50000;
+  --primary-color: #ff0000;
+  --secondary-color: #f0f4f8;
+  --accent-color: #ffa500;
+  --text-color: #333;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 body {
-  background-color: var(--background-color);
   font-family: 'Roboto', sans-serif;
+  background-color: var(--secondary-color);
   color: var(--text-color);
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
 }
 
-.RA {
-  width: 100%;
-  padding: 0.8rem;
-  margin-bottom: 1rem;
-  border: 2px solid var(--secondary-color);
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
 .container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 2rem auto;
   padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
 }
 
 h1, h2 {
-  text-align: center;
   color: var(--primary-color);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 form {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  
-}
-
-form:hover {
-  transform: translateY(-5px);
-  
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 input[type="text"],
+input[type="number"],
 input[type="date"],
 input[type="time"],
 textarea {
   width: 100%;
   padding: 0.8rem;
-  margin-bottom: 1rem;
-  border: 2px solid var(--secondary-color);
+  border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
 }
 
-input[type="text"]:focus,
-input[type="date"]:focus,
-input[type="time"]:focus,
+input:focus,
 textarea:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(98, 0, 234, 0.1);
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+input[type="radio"] {
+  margin-right: 0.5rem;
 }
 
 button {
   background-color: var(--primary-color);
-  color: white;
+  color: #fff;
   border: none;
-  padding: 1rem 2rem;
-  font-size: 1rem;
+  padding: 0.8rem 1.5rem;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: var(--secondary-color);
-  transform: scale(1.05);
+  background-color: #2c3e50;
 }
 
 table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 15px;
+  border-spacing: 0;
   margin-top: 2rem;
 }
 
-thead {
-  background-color: var(--primary-color);
-  color: white;
-}
-
 th, td {
-  padding: 1rem;
   text-align: left;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
 }
 
-tbody tr {
-  background-color: white;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
+th {
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 500;
 }
 
-tbody tr:hover {
-  transform: scale(1.02);
+tr:last-child td {
+  border-bottom: none;
 }
 
-/* Animação para novos itens adicionados */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+tr:hover {
+  background-color: var(--secondary-color);
 }
 
-tbody tr:last-child {
-  animation: fadeIn 0.5s ease-out;
+.actions {
+  display: flex;
+  gap: 0.5rem;
 }
 
-/* Estilo para os botões de ação na tabela */
-td button {
+.actions button {
   padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
   font-size: 0.9rem;
 }
 
-td button:first-child {
-  background-color: var(--success-color);
+.edit-button {
+  background-color: var(--accent-color);
 }
 
-td button:last-child {
-  background-color: var(--error-color);
+.delete-button {
+  background-color: #e74c3c;
 }
 
-/* Estilo para o radio button */
-input[type="radio"] {
-  margin-right: 0.5rem;
-}
-
-/* Responsividade */
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
   }
 
-  form {
-    padding: 1rem;
+  table, tr, td {
+    display: block;
   }
 
-  table {
-    font-size: 0.9rem;
+  tr {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
   }
 
-  th, td {
-    padding: 0.5rem;
+  td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: bold;
   }
 }
