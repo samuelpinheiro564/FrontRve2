@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoginUser } from "../../Data/server";
-import Sidebar from "../Sidebar/page";
-
+import "../Login/styles.css"
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState("");
@@ -49,7 +48,6 @@ const Login = () => {
 
   return (
     <div>
-      <Sidebar />
       <div className="container">
         <header className="header">
           <h1 className="title">Login</h1>
