@@ -1,60 +1,59 @@
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  left: -250px; /* Escondido inicialmente */
+  background-color: #2c3e50; /* Cor de fundo */
+  overflow-x: hidden;
+  transition: 0.3s ease; /* Transição suave */
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Sombra */
+  color: white;
+  z-index: 1000; /* Para garantir que fique acima de outros elementos */
+}
 
-.sidebar {  
-    height: 100%;  
-    width: 250px;  
-    position: fixed;  
-    left: -250px; /* Escondido inicialmente */  
-    background-color: #2c3e50; /* Cor de fundo */  
-    overflow-x: hidden;  
-    transition: 0.3s ease; /* Transição suave */  
-    padding-top: 20px;  
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Sombra */  
-    color: white;  
-    z-index: 1000; /* Para garantir que fique acima de outros elementos */  
-}  
+.open {
+  left: 0; /* Mostra o menu */
+}
 
-.open {  
-    left: 0; /* Mostra o menu */  
-}  
+.sidebar h2 {
+  color: #ecf0f1; /* Cor do título */
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-.sidebar h2 {  
-    color: #ecf0f1; /* Cor do título */  
-    text-align: center;  
-    margin-bottom: 20px;  
-}  
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
 
-.sidebar ul {  
-    list-style-type: none;  
-    padding: 0;  
-}  
+.sidebar ul li {
+  padding: 15px 20px;
+  transition: background 0.3s; /* Transição suave ao passar o mouse */
+}
 
-.sidebar ul li {  
-    padding: 15px 20px;  
-    transition: background 0.3s; /* Transição suave ao passar o mouse */  
-}  
+.sidebar ul li:hover {
+  background-color: #34495e; /* Cor ao passar o mouse */
+}
 
-.sidebar ul li:hover {  
-    background-color: #34495e; /* Cor ao passar o mouse */  
-}  
+.sidebar ul li a {
+  color: #ecf0f1; /* Cor dos links */
+  text-decoration: none;
+  display: block;
+  font-weight: 500; /* Negrito */
+}
 
-.sidebar ul li a {  
-    color: #ecf0f1; /* Cor dos links */  
-    text-decoration: none;  
-    display: block;  
-    font-weight: 500; /* Negrito */  
-}  
+.toggleButton {
+  padding: 10px 15px;
+  cursor: pointer;
+  margin: 20px;
+  background-color: #dc3545; /* Cor do botão */
+  color: white;
+  border: none;
+  border-radius: 5px; /* Bordas arredondadas */
+  transition: background 0.3s; /* Transição suave */
+}
 
-.toggleButton {  
-    padding: 10px 15px;  
-    cursor: pointer;  
-    margin: 20px;  
-    background-color: #2980b9; /* Cor do botão */  
-    color: white;  
-    border: none;  
-    border-radius: 5px; /* Bordas arredondadas */  
-    transition: background 0.3s; /* Transição suave */  
-}  
-
-.toggleButton:hover {  
-    background-color: #3498db; /* Cor ao passar o mouse */  
+.toggleButton:hover {
+  background-color: #3498db; /* Cor ao passar o mouse */
 }
