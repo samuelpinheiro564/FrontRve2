@@ -1,6 +1,7 @@
 import React, { useState } from 'react';  
 import './styles.modules.css';   
 import { CriarAtestado } from '../../Data/server';  
+import Sidebar from '../Sidebar/page';
 
 const Atestado = () => {  
     const [aluno, setAluno] = useState('');  
@@ -49,53 +50,102 @@ const Atestado = () => {
         }  
     };  
 
-    return (  
-        <div className="container">  
-            <h1>Atestado</h1>  
-            {successMessage && <p className="success-message">{successMessage}</p>}  
-            {errorMessage && <p className="error-message">{errorMessage}</p>}  
-            <form onSubmit={handleSubmit}>  
-                <div className="input-group">  
-                    <label>Aluno:</label>  
-                    <input type="text" name="aluno" value={aluno} onChange={(e) => setAluno(e.target.value)} required />  
-                </div>  
-                <div className="input-group">  
-                    <label>Turma:</label>  
-                    <input type="text" name="turma" value={turma} onChange={(e) => setTurma(e.target.value)} />  
-                </div>  
-                <div className="input-group">  
-                    <label>Curso:</label>  
-                    <input type="text" name="curso" value={curso} onChange={(e) => setCurso(e.target.value)} />  
-                </div>  
-                <div className="input-group">  
-                    <label>Ra:</label>  
-                    <input type="text" name="curso" value={ra} onChange={(e) => setRa(e.target.value)} />  
-                </div>  
-                <div className="date-group">  
-                    <div className="input-group">  
-                        <label>Data inicial:</label>  
-                        <input type="date" name="dataInicial" value={dataInicial} onChange={(e) => setDataInicial(e.target.value)} />  
-                    </div>  
-                    <div className="input-group">  
-                        <label>Data final:</label>  
-                        <input type="date" name="dataFinal" value={dataFinal} onChange={(e) => setDataFinal(e.target.value)} />  
-                    </div>  
-                </div>  
-                <div className="input-group">  
-                    <label>Justificativa:</label>  
-                    <textarea name="justificativa" value={justificativa} onChange={(e) => setJustificativa(e.target.value)} />  
-                </div>  
-                <div className="input-group">  
-                    <label>CID:</label>  
-                    <input type="text" name="cid" value={cid} onChange={(e) => setCid(e.target.value)} />  
-                </div>  
-                <div className="upload-group">  
-                    <label>Imagem:</label>  
-                    <input type="file" name="imagem" onChange={(e) => setImagem(e.target.files[0])} />  
-                </div>  
-                <button type="submit">Enviar</button>  
-            </form>  
-        </div>  
+    return (
+      <div>
+        <Sidebar />
+        <div className="container">
+          <h1>Atestado</h1>
+          {successMessage && (
+            <p className="success-message">{successMessage}</p>
+          )}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label>Aluno:</label>
+              <input
+                type="text"
+                name="aluno"
+                value={aluno}
+                onChange={(e) => setAluno(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label>Turma:</label>
+              <input
+                type="text"
+                name="turma"
+                value={turma}
+                onChange={(e) => setTurma(e.target.value)}
+              />
+            </div>
+            <div className="input-group">
+              <label>Curso:</label>
+              <input
+                type="text"
+                name="curso"
+                value={curso}
+                onChange={(e) => setCurso(e.target.value)}
+              />
+            </div>
+            <div className="input-group">
+              <label>Ra:</label>
+              <input
+                type="text"
+                name="curso"
+                value={ra}
+                onChange={(e) => setRa(e.target.value)}
+              />
+            </div>
+            <div className="date-group">
+              <div className="input-group">
+                <label>Data inicial:</label>
+                <input
+                  type="date"
+                  name="dataInicial"
+                  value={dataInicial}
+                  onChange={(e) => setDataInicial(e.target.value)}
+                />
+              </div>
+              <div className="input-group">
+                <label>Data final:</label>
+                <input
+                  type="date"
+                  name="dataFinal"
+                  value={dataFinal}
+                  onChange={(e) => setDataFinal(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="input-group">
+              <label>Justificativa:</label>
+              <textarea
+                name="justificativa"
+                value={justificativa}
+                onChange={(e) => setJustificativa(e.target.value)}
+              />
+            </div>
+            <div className="input-group">
+              <label>CID:</label>
+              <input
+                type="text"
+                name="cid"
+                value={cid}
+                onChange={(e) => setCid(e.target.value)}
+              />
+            </div>
+            <div className="upload-group">
+              <label>Imagem:</label>
+              <input
+                type="file"
+                name="imagem"
+                onChange={(e) => setImagem(e.target.files[0])}
+              />
+            </div>
+            <button type="submit">Enviar</button>
+          </form>
+        </div>
+      </div>
     );  
 };  
 
