@@ -22,12 +22,42 @@ const App = () => {
         fetchSaidaRecords();
     }, []);
 
+    useEffect(() => {
+        if (editId) {
+            fetchSaidaById(editId);
+        }
+    }, [editId]);
+
     const fetchSaidaRecords = async () => {
         try {
+            console.log("Fetching all records...");
             const records = await AllSaida();
+            console.log("Records fetched:", records);
             setHistorico(records);
         } catch (error) {
             console.error("Error fetching records:", error);
+        }
+    };
+
+    const fetchSaidaById = async (id) => {
+        try {
+            console.log(`Fetching record with id: ${id}`);
+            const response = await ObterSaidaPorId(id);
+            console.log("Record fetched for edit:", response);
+            setFormData({
+                nomealuno: response.nomealuno,
+                curso: response.curso,
+                turma: response.turma,
+                alunora: response.alunora,
+                data: response.datasaida,
+                horasaida: response.horasaida,
+                maioridade: response.maioridade ? 'true' : 'false',
+                justificativa: response.justificativa,
+                assinaturaProf: response.assinaturaprof,
+                assinaturaAnaq: response.assinaturaanaq,
+            });
+        } catch (error) {
+            console.error("Error fetching record for edit:", error);
         }
     };
 
@@ -53,9 +83,11 @@ const App = () => {
     
         try {  
             if (editId) {  
+                console.log(`Editing record with id: ${editId}`);
                 await EditarSaida(editId, submissionData);  
                 setEditId(null);  
             } else {  
+                console.log("Creating new record...");
                 await CriarSaida(submissionData);  
             }  
             fetchSaidaRecords();  
@@ -75,31 +107,14 @@ const App = () => {
             console.error("Error submitting form:", error);  
         }  
     };
-    const handleEdit = async (id) => {  
-        console.log("Edit button clicked for ID:", id); // Check if handleEdit is called
-        try {  
-            const response = await ObterSaidaPorId(id);  
-            console.log("Response from ObterSaidaPorId:", response); // Check the response
-            setFormData({  
-                nomealuno: response.nomealuno,  
-                curso: response.curso,  
-                turma: response.turma,  
-                alunora: response.alunora,  
-                data: response.datasaida,  
-                horasaida: response.horasaida,  
-                maioridade: response.maioridade ? 'true' : 'false',  
-                justificativa: response.justificativa,  
-                assinaturaProf: response.assinaturaprof, 
-                assinaturaAnaq: response.assinaturaanaq, 
-            });  
-            console.log("Form data after setFormData:", formData); // Check if form data is updated
-            setEditId(id);  
-        } catch (error) {  
-            console.error("Error fetching record for edit:", error);  
-        }  
+
+    const handleEdit = (id) => {  
+        setEditId(id);  
     };
+
     const handleDelete = async (id) => {
         try {
+            console.log(`Deleting record with id: ${id}`);
             await DeletarSaida(id);
             fetchSaidaRecords();
         } catch (error) {
