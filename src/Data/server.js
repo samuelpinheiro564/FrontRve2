@@ -95,56 +95,6 @@ const DeleteRve = async (id) => {
     }
 };
 
-// Funções para gerenciar atestados
-const CriarAtestado = async (atestadoData) => {
-    try {
-        const response = await axios.post(`${URL}/atestados`, atestadoData);
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao criar atestado:', error);
-        throw error;
-    }
-};
-
-const AllAtestados = async () => {
-    try {
-        const response = await axios.get(`${URL}/atestados`);
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao buscar todos os atestados:', error);
-        throw error;
-    }
-};
-
-const ObterAtestadoPorId = async (id) => {
-    try {
-        const response = await axios.get(`${URL}/atestados/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error(`Erro ao buscar atestado com ID ${id}:`, error);
-        throw error;
-    }
-};
-
-const EditarAtestado = async (id, atestadoData) => {
-    try {
-        const response = await axios.put(`${URL}/atestados/${id}`, atestadoData);
-        return response.data;
-    } catch (error) {
-        console.error(`Erro ao editar atestado com ID ${id}:`, error);
-        throw error;
-    }
-};
-
-const DeleteAtestado = async (id) => {
-    try {
-        const response = await axios.delete(`${URL}/atestados/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error(`Erro ao excluir atestado com ID ${id}:`, error);
-        throw error;
-    }
-};
 
 // Funções para gerenciar campos de texto
 const CriarCampoTexto = async (campoData) => {
@@ -370,11 +320,6 @@ export {
     AllRve,
     EditarRve,
     DeleteRve,
-    CriarAtestado,
-    AllAtestados,
-    ObterAtestadoPorId,
-    EditarAtestado,
-    DeleteAtestado,
     CriarCampoTexto,
     AllCamposTexto,
     ObterCampoTextoPorId,
