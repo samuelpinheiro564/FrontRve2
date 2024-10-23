@@ -1,0 +1,110 @@
+/* Estilos base do menu lateral */
+nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 250px;
+    background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
+    padding: 2rem 0;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  /* Estilização dos links */
+  nav a {
+    display: block;
+    padding: 1rem 2rem;
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Efeito hover nos links */
+  nav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(10px);
+    color: #3498db;
+  }
+  
+  /* Efeito de linha animada */
+  nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background-color: #3498db;
+    transition: width 0.3s ease;
+  }
+  
+  nav a:hover::after {
+    width: 100%;
+  }
+  
+  /* Efeito de ícone indicador */
+  nav a::before {
+    content: '→';
+    position: absolute;
+    left: -20px;
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  
+  nav a:hover::before {
+    left: 10px;
+    opacity: 1;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    nav {
+      width: 60px;
+      overflow: hidden;
+    }
+    
+    nav:hover {
+      width: 250px;
+    }
+  
+    nav a {
+      padding: 1rem;
+      white-space: nowrap;
+    }
+    
+    nav a span {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    nav:hover a span {
+      opacity: 1;
+    }
+  }
+  
+  /* Animação de entrada */
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  nav {
+    animation: slideIn 0.5s ease-out forwards;
+  }
+  
+  /* Estilo ativo para a rota atual */
+  nav a.active {
+    background: rgba(52, 152, 219, 0.2);
+    border-left: 4px solid #3498db;
+  }
