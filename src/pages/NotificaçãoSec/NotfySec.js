@@ -13,7 +13,7 @@ const WhatsAppSender = () => {
         const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase());  
         const url = isMobile   
             ? `whatsapp://send?phone=${encodeURIComponent(phone)}&text=${encodeURIComponent(message)}`  
-            : `https://api.whatsapp.com/send?phone=${encodeURIComponent(phone)}&text=${encodeURIComponent(message)}`;  
+            : `/api/sendText=${encodeURIComponent(phone)}&text=${encodeURIComponent(message)}`;  
 
         window.open(url, '_blank');  
     };  
