@@ -1,13 +1,8 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { LoginUser } from '../../Data/server';
 import userData from '../../Data/dadosUser';
 
-=======
-import React, { useEffect, useState } from "react";
-import { LoginUser } from "../../Data/server";
-import "../Login/styles.css"
->>>>>>> 7b4644591d214a06c0b67d0c3918ad9b8147f597
+
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState("");
@@ -16,7 +11,6 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-<<<<<<< HEAD
     const handleLogin = async () => {
         setIsLoading(true);
         try {
@@ -31,21 +25,7 @@ const Login = () => {
             setIsLoading(false);
         }
     };
-=======
-  const handleLogin = async () => {
-    setIsLoading(true);
-    try {
-      const userData = await LoginUser(Nif);
-      console.log("Dados do usuário:", userData);
-      alert("Logado com sucesso");
-    } catch (error) {
-      setErrorMessage("Erro ao tentar fazer login. Verifique as credenciais.");
-      console.error("Erro na autenticação:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
->>>>>>> 7b4644591d214a06c0b67d0c3918ad9b8147f597
+
 
   useEffect(() => {
     if (userType === "aluno" || userType === "secretaria") {

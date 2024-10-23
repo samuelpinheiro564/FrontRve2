@@ -1,4 +1,4 @@
-import React, { useState } from 'react';  
+import React, { useState, useEffect } from 'react';  
 import { CriarRve } from '../../Data/server';
 import '../Rve/styles.css';  
 import userData from '../../Data/dadosUser';
@@ -20,11 +20,11 @@ const Rve = () => {
   const [presenca, setPresenca] = useState('');
   const [categorias, setCategorias] = useState('');  
   
- const dadosUser = userData.getUsers();
- console.log(dadosUser);
- setAutor(dadosUser.nif);
+  useEffect(() => {
+    const dadosUser = userData.getUsers();
+    setAutor(dadosUser.nif);
+  }, []);
 
-console.log(dadosUser);
   const categories = [  
     'Aprendizagem',  
     'Atitude/postura/comportamento',  
@@ -43,24 +43,23 @@ console.log(dadosUser);
       const rve = { 
         autor,
         estudante,
-         curso, 
-         turma,
-          data, 
-          hora, 
-          motivo, 
-          orientacoesestudante,
-           descricaoocorrido, 
-           docentesenvolvidos:Array(docentesenvolvidos), 
-           assinaturas:Array(assinaturas), 
-           dificuldades, 
-          presenca
+        curso, 
+        turma,
+        data, 
+        hora, 
+        motivo, 
+        orientacoesestudante,
+        descricaoocorrido, 
+        docentesenvolvidos, 
+        assinaturas, 
+        elogios,
+        dificuldades, 
+        presenca,
+        categorias
       };
-      console.log(rve);
       await CriarRve(rve);
-      console.log(id);
       alert('Usuário cadastrado com sucesso');
       // Limpar os campos após o cadastro
-      setAutor('');
       setEstudante('');
       setCurso('');
       setTurma('');
@@ -69,8 +68,8 @@ console.log(dadosUser);
       setMotivo('');
       setOrientacoesEstudante('');
       setDescricaoOcorrido('');
-      setDocentesEnvolvidos('');
-      setAssinaturas('');
+      setDocentesEnvolvidos([]);
+      setAssinaturas([]);
       setElogios('');
       setDificuldades('');
       setPresenca('');
@@ -80,11 +79,6 @@ console.log(dadosUser);
       alert('Erro ao cadastrar usuário');  
     }  
   };  
-  
-  //const formatDate = (dateString) => {  
-   // const options = { day: '2-digit', month: '2-digit', year: 'numeric' };  
-   // return new Date(dateString).toLocaleDateString('pt-BR', options);  
- // };  
 
   return (  
     <div className="container">  
@@ -160,7 +154,7 @@ console.log(dadosUser);
           <textarea  
             name="orientacoesEstudante"  
             placeholder="Orientações ao Estudante"  
-            value={orientacoesEstudante}  
+            value={orientacoesestudante}  
             onChange={(e) => setOrientacoesEstudante(e.target.value)}  
             required  
             className="input"  
@@ -170,7 +164,7 @@ console.log(dadosUser);
           <textarea  
             name="descricaoOcorrido"  
             placeholder="Descrição do Ocorrido"  
-            value={descricaoOcorrido}  
+            value={descricaoocorrido}  
             onChange={(e) => setDescricaoOcorrido(e.target.value)}  
             required  
             className="input"  
@@ -181,7 +175,7 @@ console.log(dadosUser);
             type="text"  
             name="docentesEnvolvidos"  
             placeholder="Docentes Envolvidos"  
-            value={docentesEnvolvidos}  
+            value={docentesenvolvidos}  
             onChange={(e) => setDocentesEnvolvidos(e.target.value)}  
             required  
             className="input"  
