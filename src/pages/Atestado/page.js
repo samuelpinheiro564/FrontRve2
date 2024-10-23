@@ -1,14 +1,15 @@
 import React, { useState } from 'react';  
-import './styles.modules.css';   
+import './styles.modules.css';  
 import { CriarAtestado } from '../../Data/server';  
 
 const Atestado = () => {  
+    // Estado inicial  
     const [aluno, setAluno] = useState('');  
     const [turma, setTurma] = useState('');  
     const [curso, setCurso] = useState('');  
     const [dataInicial, setDataInicial] = useState('');  
     const [dataFinal, setDataFinal] = useState('');  
-    const [ra,setRa]= useState('');
+    const [ra, setRa] = useState('');  
     const [justificativa, setJustificativa] = useState('');  
     const [imagem, setImagem] = useState(null);  
     const [cid, setCid] = useState('');  
@@ -16,37 +17,73 @@ const Atestado = () => {
     const [errorMessage, setErrorMessage] = useState('');  
 
     const handleSubmit = async (e) => {  
-        e.preventDefault(); // Impede o comportamento padrão do formulário  
+        e.preventDefault();  
 
-        // Verificar se o campo "aluno" está vazio  
         if (!aluno) {  
             setErrorMessage('O campo Aluno é obrigatório');  
-            return; // Impede o envio do formulário  
+            return;  
         }  
 
-        try {   
+        if (!dataInicial) {  
+            setErrorMessage('O campo Data Inicial é obrigatório');  
+            return;  
+        }  
 
-            const atest ={aluno,curso,turma,ra,dataInicial,dataFinal,justificativa,imagem,cid}
+        if (!dataFinal) {  
+            setErrorMessage('O campo Data Final é obrigatório');  
+            return;  
+        }  
+
+        try {  
+            // Formatar as datas usando a função formatData  
+            const atest = {  
+                aluno,  
+                curso,  
+                turma,  
+                ra,  
+                dataInicial: formatData(dataInicial),  // Formata a data inicial  
+                dataFinal: formatData(dataFinal),      // Formata a data final  
+                justificativa,  
+                imagem,  
+                cid  
+            };  
+
             await CriarAtestado(atest);  
-            setSuccessMessage('Usuário cadastrado com sucesso');  
-            setErrorMessage('');   
-         
-            // Limpar os campos após o cadastro  
-            setAluno('');  
-            setTurma('');  
-            setCurso('');  
-            setDataInicial('');  
-            setDataFinal('');  
-            setJustificativa('');  
-            setImagem(null);  
-            setCid('');  
+            setSuccessMessage('Atestado criado com sucesso');  
+            setErrorMessage('');  
+
+            // Resetar os campos do formulário  
+            resetForm();  
         } catch (error) {  
             console.error('Erro ao criar atestado:', error);  
-            setErrorMessage(error.response?.data?.error || 'Ocorreu um erro ao criar o atestado');   
+            console.error('error.response:', error.response);  
+            setErrorMessage(error.response?.data?.error || 'Ocorreu um erro ao criar o atestado');  
             setTimeout(() => {  
                 setErrorMessage('');  
             }, 3000);  
         }  
+    };  
+
+    const resetForm = () => {  
+        setAluno('');  
+        setTurma('');  
+        setCurso('');  
+        setDataInicial('');  
+        setDataFinal('');  
+        setJustificativa('');  
+        setImagem(null);  
+        setCid('');  
+    };  
+
+    const formatData = (data) => {  
+        const date = new Date(data);  
+        if (isNaN(date.getTime())) { // Verifica se a data é válida  
+            return null; // Retorna nulo se a data não for válida  
+        }  
+        let day = String(date.getDate()).padStart(2, '0'); // Adiciona zero à esquerda  
+        let month = String(date.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda  
+        let year = date.getFullYear();  
+        return `${day}/${month}/${year}`; // Formato: DD/MM/YYYY  
     };  
 
     return (  
@@ -68,17 +105,17 @@ const Atestado = () => {
                     <input type="text" name="curso" value={curso} onChange={(e) => setCurso(e.target.value)} />  
                 </div>  
                 <div className="input-group">  
-                    <label>Ra:</label>  
-                    <input type="text" name="curso" value={ra} onChange={(e) => setRa(e.target.value)} />  
+                    <label>RA:</label>  
+                    <input type="text" name="ra" value={ra} onChange={(e) => setRa(e.target.value)} />  
                 </div>  
                 <div className="date-group">  
                     <div className="input-group">  
                         <label>Data inicial:</label>  
-                        <input type="date" name="dataInicial" value={dataInicial} onChange={(e) => setDataInicial(e.target.value)} />  
+                        <input type="date" name="dataInicial" value={dataInicial} onChange={(e) => setDataInicial(e.target.value)} required />  
                     </div>  
                     <div className="input-group">  
                         <label>Data final:</label>  
-                        <input type="date" name="dataFinal" value={dataFinal} onChange={(e) => setDataFinal(e.target.value)} />  
+                        <input type="date" name="dataFinal" value={dataFinal} onChange={(e) => setDataFinal(e.target.value)} required />  
                     </div>  
                 </div>  
                 <div className="input-group">  

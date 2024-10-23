@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { LoginUser } from '../../Data/server';
+import userData from '../../Data/dadosUser';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -12,8 +13,9 @@ const Login = () => {
     const handleLogin = async () => {
         setIsLoading(true);
         try {
-            const userData = await LoginUser(Nif);
-            console.log('Dados do usuário:', userData);
+            const data = await LoginUser(Nif);
+            console.log('Dados do usuário:', data);
+            userData.addUser(data)
             alert('Logado com sucesso');
         } catch (error) {
             setErrorMessage('Erro ao tentar fazer login. Verifique as credenciais.');

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';  
 import { CriarRve } from '../../Data/server';
 import '../Rve/styles.css';  
+import userData from '../../Data/dadosUser';
 
 const Rve = () => {  
   const [autor, setAutor] = useState('');
@@ -18,7 +19,12 @@ const Rve = () => {
   const [dificuldades, setDificuldades] = useState('');
   const [presenca, setPresenca] = useState('');
   const [categorias, setCategorias] = useState('');  
+  
+ const dadosUser = userData.getUsers();
+ console.log(dadosUser);
+ setAutor(dadosUser.nif);
 
+console.log(dadosUser);
   const categories = [  
     'Aprendizagem',  
     'Atitude/postura/comportamento',  
@@ -84,18 +90,6 @@ const Rve = () => {
     <div className="container">  
       <h1>Registro de vida escolar</h1> 
       <form onSubmit={handleCriarRVE}>
-        <div>
-          <input  
-            type="text"  
-            name="autor"  
-            placeholder="Autor"  
-            value={autor}  
-            onChange={(e) => setAutor(e.target.value)}  
-            maxLength="15"  
-            required  
-            className="input"  
-          />  
-        </div>
         <div>
           <input  
             type="text"  
