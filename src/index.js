@@ -11,7 +11,7 @@ import CategoriaAdmin from './Routes/CategoriaAdmin/page';
 import AlunoAdm from "../src/Routes/alunosAdm/alunosAdm";
 import CategoriDocente from "../src/Routes/CategoriaDocente/page";
 import ErrorPage from './Routes/ErrorPage';
-
+import './index.css';
 function App() {
   return (
     <div className="App">
@@ -20,7 +20,6 @@ function App() {
     </div>
   );
 }
-
 
 const router = createBrowserRouter([
   {
