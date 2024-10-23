@@ -9,12 +9,12 @@ import SaidaProfessor from "../src/Routes/saidaProfessor/page";
 import CategoriaAdmin from './Routes/CategoriaAdmin/page';
 // import CadastroUsuarios from '../src/Routes/CadastroUsuarios/CadastroUsuarios';
 import AlunoAdm from "../src/Routes/alunosAdm/alunosAdm";
-import CategoriDocente from "../src/Routes/CategoriaDocente/page";
+import CategoriaDocente from "../src/Routes/CategoriaDocente/page";
 import ErrorPage from './Routes/ErrorPage';
-import './index.css';
+import "./index.css"
 function App() {
   return (
-    <div className="App">
+    <div>
       <Navbar />
       <Outlet />
     </div>
@@ -48,8 +48,8 @@ const router = createBrowserRouter([
       //   element: <CadastroUsuarios />,
       // },
       {
-        path: "CategoriDocente",
-        element: <CategoriDocente />,
+        path: "CategoriaDocente",
+        element: <CategoriaDocente />,
       },
       {
         path: "CategoriaAdmin",
