@@ -10,6 +10,7 @@ import CategoriaAdmin from './Routes/CategoriaAdmin/page';
 // import CadastroUsuarios from '../src/Routes/CadastroUsuarios/CadastroUsuarios';
 import AlunoAdm from "../src/Routes/alunosAdm/alunosAdm";
 import CategoriaDocente from "../src/Routes/CategoriaDocente/page";
+import NotificacaoSec from "../src/Routes/NotificacaoSec/page";
 import ErrorPage from './Routes/ErrorPage';
 import './index.css';
 
@@ -25,6 +26,7 @@ function App() {
         <NavLink to="/CategoriaDocente">Categoria Docente</NavLink>
         <NavLink to="/CategoriaAdmin">Categoria Admin</NavLink>
         <NavLink to="/AlunoAdm">Aluno Adm</NavLink>
+        <NavLink to="/NotificacaoSec">Notificação Sec</NavLink>
       </nav>
       <Outlet />
     </div>
@@ -68,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "AlunoAdm",
         element: <AlunoAdm />,
+      },
+      {
+        path: "NotificacaoSec",
+        element: <NotificacaoSec />,
       },
     ],
   },
