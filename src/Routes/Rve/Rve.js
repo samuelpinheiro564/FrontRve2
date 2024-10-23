@@ -13,12 +13,14 @@ const Rve = () => {
   const [motivo, setMotivo] = useState('');
   const [orientacoesestudante, setOrientacoesEstudante] = useState('');
   const [descricaoocorrido, setDescricaoOcorrido] = useState('');
-  const [docentesenvolvidos, setDocentesEnvolvidos] = useState([]);
+  const [docentesenvolvidos, setDocentesEnvolvidos] = useState('');
   const [assinaturas, setAssinaturas] = useState([]);
   const [elogios, setElogios] = useState('');
   const [dificuldades, setDificuldades] = useState('');
   const [presenca, setPresenca] = useState('');
   const [categorias, setCategorias] = useState('');  
+  const [arrayDocente] = useState([]);
+
   
   useEffect(() => {
     const dadosUser = userData.getUsers();
@@ -36,6 +38,13 @@ const Rve = () => {
     'Saúde mental',  
     'Outras',  
   ];
+  const AddDocente = () => {
+ arrayDocente.push(docentesenvolvidos);
+
+  };
+  const deleteDocente = (index) => {
+    arrayDocente.splice(index, 1);
+  };
   
   const handleCriarRVE = async (e) => {  
     e.preventDefault();  
@@ -74,6 +83,7 @@ const Rve = () => {
       setDificuldades('');
       setPresenca('');
       setCategorias('');
+      
     } catch (error) {  
       console.error('Erro ao criar RVE:', error);  
       alert('Erro ao cadastrar usuário');  
@@ -180,7 +190,21 @@ const Rve = () => {
             required  
             className="input"  
           />  
+          <button type='button' onClick={AddDocente}>Adicionar Docente</button>
         </div>
+        {arrayDocente.length > 0 && (
+          <div>
+            <h3>Docentes Envolvidos:</h3>
+            <ul>
+              {arrayDocente.map((docente, index) => (
+                <div>
+                <li key={index}>{docente}</li>
+                <button type='button' onClick={deleteDocente(index)}>x</button>
+                </div>
+              ))}
+            </ul>
+          </div>
+        )}
         <div>
           <input  
             type="text"  
