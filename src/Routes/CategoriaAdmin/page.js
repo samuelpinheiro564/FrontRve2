@@ -1,11 +1,9 @@
 import React from "react";
 import "./styles.modules.css"; 
-import Sidebar from "../../pages/Sidebar/page";
 
 const CategoriaAdmin = () => {
   return (
     <div>
-      <Sidebar />
       <div className="container">
         <div className="banner">
           <h1>SENAI</h1>

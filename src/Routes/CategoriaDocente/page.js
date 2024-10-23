@@ -1,12 +1,10 @@
 import React from 'react';  
 import { FaFileAlt, FaDoorOpen, FaUserGraduate } from 'react-icons/fa';  
 import './styles.modules.css';  
-import Sidebar from '../../pages/Sidebar/page';
 
 function App() {  
   return (
     <div>
-      <Sidebar />
       <div className="app">
         <header className="header">
           <h1>SENAI</h1>
