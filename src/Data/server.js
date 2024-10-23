@@ -64,6 +64,15 @@ const CriarRve = async (rveData) => {
         throw error;
     }
 };
+const RveById =  async (nif) => {
+    try {
+        const response = await axios.post(`${URL}/rve/${nif}`);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao criar registro RVE:', error);
+        throw error;
+    }
+};
 
 const AllRve = async () => {
     try {
@@ -368,6 +377,7 @@ export {
     AllUsers,
     CriarRve,
     AllRve,
+    RveById,
     EditarRve,
     DeleteRve,
     CriarAtestado,

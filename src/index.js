@@ -1,13 +1,11 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Rve from '../src/pages/Rve/Rve'
-
+import SuasRve from '../src/pages/SuasRve/suasRve';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-<Rve/>
-
+<SuasRve/>
   </React.StrictMode>
 );
