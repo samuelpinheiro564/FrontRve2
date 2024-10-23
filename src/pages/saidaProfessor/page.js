@@ -4,13 +4,12 @@ import { CriarSaida, AllSaida, ObterSaidaPorId, EditarSaida, DeletarSaida } from
 
 const App = () => {
     const [formData, setFormData] = useState({
-        nomealuno: '',
+      nomeprofessor: '',
         curso: '',
         turma: '',
-        alunora: '',
+        professorra: '',
         data: '',
         horasaida: '',
-        maioridade: '',
         justificativa: '',
         assinaturaProf: '',
         assinaturaAnaq: '',
@@ -41,13 +40,12 @@ const App = () => {
         try {
             const response = await ObterSaidaPorId(id);
             setFormData({
-                nomealuno: response.nomealuno,
+              nomeprofessor: response.nomeprofessor,
                 curso: response.curso,
                 turma: response.turma,
-                alunora:Number(response.alunora),
+                professorra:Number(response.professorra),
                 data: response.datasaida,
                 horasaida: response.horasaida,
-                maioridade: response.maioridade ? 'true' : 'false',
                 justificativa: response.justificativa,
                 assinaturaProf: response.assinaturaprof,
                 assinaturaAnaq: response.assinaturaanaq,
@@ -86,13 +84,12 @@ const App = () => {
             }  
             fetchSaidaRecords();  
             setFormData({  
-                nomealuno: '',  
+              nomeprofessor: '',  
                 curso: '',  
                 turma: '',  
-                alunora: '',  
+                professorra: '',  
                 data: '',  
                 horasaida: '',  
-                maioridade: '',  
                 justificativa: '',  
                 assinaturaProf: '',  
                 assinaturaAnaq: '',  
@@ -122,22 +119,14 @@ const App = () => {
 
     return (  
         <div className="container">  
-            <h1>JUSTIFICATIVA SAÍDA</h1>  
+            <h1>JUSTIFICATIVA SAÍDA PROFESSOR</h1>  
             <form onSubmit={handleSubmit}>  
-                <input type="text" name="nomealuno" placeholder="Aluno" value={formData.nomealuno} onChange={handleChange} required />  
+                <input type="text" name="nomeprofessor" placeholder="Professor" value={formData.nomeprofessor} onChange={handleChange} required />  
                 <input type="text" name="curso" placeholder="Curso" value={formData.curso} onChange={handleChange} required />  
                 <input type="text" name="turma" placeholder="Turma" value={formData.turma} onChange={handleChange} required />  
-                <input className="RA" type="number" name="alunora" placeholder="RA" value={formData.alunora} onChange={handleChange} required />  
+                <input className="RA" type="number" name="professorra" placeholder="RA" value={formData.professorra} onChange={handleChange} required />  
 
-                <div>  
-                    <label>Maior de Idade:</label>  
-                    <label>  
-                        <input type="radio" name="maioridade" value="true" onChange={handleChange} checked={formData.maioridade === 'true'} required /> Sim  
-                    </label>  
-                    <label>  
-                        <input type="radio" name="maioridade" value="false" onChange={handleChange} checked={formData.maioridade === 'false'} required /> Não  
-                    </label>  
-                </div>  
+               
 
                 <input type="date" name="data" value={formData.data} onChange={handleChange} required />  
                 <input type="time" name="horasaida" value={formData.horasaida} onChange={handleChange} required />  
@@ -153,11 +142,10 @@ const App = () => {
             <table>  
                 <thead>  
                     <tr>  
-                        <th>Nome do Aluno</th>
+                        <th>Nome do Professor</th>
                         <th>Curso</th>
                         <th>Turma</th>
                         <th>RA</th>
-                        <th>Maioridade</th>
                         <th>Data/Hora da Saída</th>  
                         <th>Justificativa</th>
                         <th>Assinatura do Professor</th>  
@@ -168,11 +156,10 @@ const App = () => {
                 <tbody>  
                     {historico.map((item) => (  
                         <tr key={item.id}>  
-                            <td>{item.nomealuno}</td>
+                            <td>{item.nomeprofessor}</td>
                             <td>{item.curso}</td>
                             <td>{item.turma}</td>
-                            <td>{item.alunora}</td>
-                            <td>{item.maioridade ? 'Sim' : 'Não'}</td>
+                            <td>{item.professorra}</td>
                             <td>{`${formatarData(item.datasaida)} ${item.horasaida}`}</td>  
                             <td>{item.justificativa}</td>
                             <td>{item.assinaturaprof}</td>  

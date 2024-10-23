@@ -3,7 +3,7 @@ import { CriarRve } from '../../Data/server';
 import '../Rve/styles.css';  
 import userData from '../../Data/dadosUser';
 
-const Rve = () => {  
+const Rve = () => {
   const [autor, setAutor] = useState('');
   const [estudante, setEstudante] = useState('');
   const [curso, setCurso] = useState('');
@@ -11,10 +11,10 @@ const Rve = () => {
   const [data, setData] = useState('');
   const [hora, setHora] = useState('');
   const [motivo, setMotivo] = useState('');
-  const [orientacoesEstudante, setOrientacoesEstudante] = useState('');
-  const [descricaoOcorrido, setDescricaoOcorrido] = useState('');
-  const [docentesEnvolvidos, setDocentesEnvolvidos] = useState('');
-  const [assinaturas, setAssinaturas] = useState('');
+  const [orientacoesestudante, setOrientacoesEstudante] = useState('');
+  const [descricaoocorrido, setDescricaoOcorrido] = useState('');
+  const [docentesenvolvidos, setDocentesEnvolvidos] = useState([]);
+  const [assinaturas, setAssinaturas] = useState([]);
   const [elogios, setElogios] = useState('');
   const [dificuldades, setDificuldades] = useState('');
   const [presenca, setPresenca] = useState('');
@@ -43,23 +43,23 @@ console.log(dadosUser);
       const rve = { 
         autor,
         estudante,
-        curso,
-        turma,
-        data,
-        hora,
-        motivo,
-        orientacoesEstudante,
-        descricaoOcorrido,
-        docentesEnvolvidos,
-        assinaturas,
-        elogios,
-        dificuldades,
-        presenca,
-        categorias
-      };  
-      await CriarRve(rve);  
-      alert('Usuário cadastrado com sucesso');  
-      // Limpar os campos após o cadastro  
+         curso, 
+         turma,
+          data, 
+          hora, 
+          motivo, 
+          orientacoesestudante,
+           descricaoocorrido, 
+           docentesenvolvidos:Array(docentesenvolvidos), 
+           assinaturas:Array(assinaturas), 
+           dificuldades, 
+          presenca
+      };
+      console.log(rve);
+      await CriarRve(rve);
+      console.log(id);
+      alert('Usuário cadastrado com sucesso');
+      // Limpar os campos após o cadastro
       setAutor('');
       setEstudante('');
       setCurso('');

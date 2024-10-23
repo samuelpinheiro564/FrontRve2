@@ -1,120 +1,159 @@
-import React, { useState } from "react";  
-import "../CadastroUsuarios/styles.modules.css";  
-import { CriarUser } from "../../Data/server";  
+import React, { useState, useEffect } from "react";
+import { CriarAtestado, AllAtestados } from "../../Data/server";
+import Sidebar from "../Sidebar/page";
 
-const CadastroUsuarios = () => {  
-    const [nif, setNif] = useState('');  
-    const [nome, setNome] = useState('');  
-    const [email, setEmail] = useState('');  
-  //  const [curso, setCurso] = useState('');  
-    const [senha, setSenha] = useState('');  
-    const [telefone, setTelefone] = useState('');
-    const [userType, setUserType] = useState('');  
+const Atestado = () => {
+  const [atestado, setAtestado] = useState([]);
+  const [nome_aluno, setNome_aluno] = useState("");
+  const [turma, setTurma] = useState("");
+  const [curso, setCurso] = useState("");
+  const [ra, setRa] = useState("");
+  const [data_inicial, setData_inicial] = useState("");
+  const [data_final, setData_final] = useState("");
+  const [imagem, setImagem] = useState(null);
+  const [cid, setCid] = useState("");
 
-    const handleCriarUser = async (e) => {  
-        e.preventDefault();  
-        try {  
-            const user = {  
-                nif: Number(nif), // Converter para número aqui  
-                nome,  
-                email,  
-               // curso,  
-                senha,  
-                telefone,
-                userType  
-            };  
-            await CriarUser(user);  
-            alert('Usuário cadastrado com sucesso');  
-            // Limpar os campos após o cadastro  
-            fecharCard();  
-        } catch (error) {  
-            console.error('Erro ao criar usuário:', error);  
-            alert('Erro ao cadastrar usuário');  
-        }  
-    };  
+  useEffect(() => {
+    fetchAtestados();
+  }, []);
 
-    const fecharCard = () => {  
-        setNif('');  
-        setNome('');  
-        setEmail('');  
-    //    setCurso('');  
-        setSenha('');  
-        setTelefone('');  
-    };  
+  const fetchAtestados = async () => {
+    const allAtestados = await AllAtestados();
+    setAtestado(allAtestados);
+  };
 
-    return (  
-        <div className="container">  
-            <h1 className="title">Cadastro de Usuário</h1>  
-            <form className="form" onSubmit={handleCriarUser}>  
-                <input  
-                    type="number"  
-                    name="nif"  
-                    placeholder="NIF"  
-                    value={nif}  
-                    onChange={(e) => setNif(e.target.value)}  
-                    maxLength="12"  
-                    required  
-                    className="input"  
-                />  
-                <input  
-                    type="text"  
-                    name="nome"  
-                    placeholder="Nome"  
-                    value={nome}  
-                    onChange={(e) => setNome(e.target.value)}  
-                    maxLength="100"  
-                    required  
-                    className="input"  
-                />  
-                <input  
-                    type="email"  
-                    name="email"  
-                    placeholder="Email"  
-                    value={email}  
-                    onChange={(e) => setEmail(e.target.value)}  
-                    maxLength="100"  
-                    required  
-                    className="input"  
-                />  
-              
-                <input  
-                    type="password"  
-                    name="senha"  
-                    placeholder="Senha"  
-                    value={senha}  
-                    onChange={(e) => setSenha(e.target.value)}  
-                    maxLength="150"  
-                    required  
-                    className="input"  
-                /> 
-       
-                <input  
-                    type="text"  
-                    name="telefone"  
-                    placeholder="Telefone"  
-                    value={telefone}  
-                    onChange={(e) => setTelefone(e.target.value)}  
-                    maxLength="15"  
-                    required  
-                    className="input"  
-                />  
-                         <select
-                            value={userType}
-                            onChange={(e) => setUserType(e.target.value)}
-                            required
-                            className='input'
-                        >
-                            <option value="" disabled>Tipo de Usuario</option>
-                            <option value="aluno">Aluno</option>
-                            <option value="secretaria">Secretaria</option>
-                            <option value="docente">Docente</option>
-                            <option value="admin">Administrador</option>
-                        </select> 
-                <button type="submit" className="button">Cadastrar</button>  
-                <button type="button" className="button" onClick={fecharCard}>Cancelar</button>  
-            </form>  
-        </div>  
-    );  
-};  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-export default CadastroUsuarios;
+    const atest = {
+      nome_aluno,
+      turma,
+      curso,
+      ra,
+      data_inicial,
+      data_final,
+      imagem, // A imagem deve ser uma string Base64
+      cid,
+    };
+
+    await CriarAtestado(atest);
+    resetForm();
+    fetchAtestados();
+  };
+
+  const resetForm = () => {
+    setNome_aluno("");
+    setTurma("");
+    setCurso("");
+    setRa("");
+    setData_inicial("");
+    setData_final("");
+    setImagem(null);
+    setCid("");
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagem(reader.result); // Converte a imagem para Base64
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  return (
+    <div>
+      <Sidebar />
+
+      <div>
+        <h1>Atestados</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="nome_aluno"
+            value={nome_aluno}
+            onChange={(e) => setNome_aluno(e.target.value)}
+            placeholder="Nome do Aluno"
+            required
+          />
+          <input
+            type="text"
+            name="turma"
+            value={turma}
+            onChange={(e) => setTurma(e.target.value)}
+            placeholder="Turma"
+            required
+          />
+          <input
+            type="text"
+            name="curso"
+            value={curso}
+            onChange={(e) => setCurso(e.target.value)}
+            placeholder="Curso"
+            required
+          />
+          <input
+            type="text"
+            name="ra"
+            value={ra}
+            onChange={(e) => setRa(e.target.value)}
+            placeholder="RA"
+            required
+          />
+          <input
+            type="date"
+            name="data_inicial"
+            value={data_inicial}
+            onChange={(e) => setData_inicial(e.target.value)}
+            required
+          />
+          <input
+            type="date"
+            name="data_final"
+            value={data_final}
+            onChange={(e) => setData_final(e.target.value)}
+            required
+          />
+          <input
+            type="file"
+            name="imagem"
+            accept="image/*"
+            onChange={handleImageChange}
+            required
+          />
+          <input
+            type="text"
+            name="cid"
+            value={cid}
+            onChange={(e) => setCid(e.target.value)}
+            placeholder="CID"
+            required
+          />
+          <button type="submit">Adicionar</button>
+        </form>
+
+        <h2>Lista de Atestados</h2>
+        <ul>
+          {atestado.map((atest, index) => (
+            <li key={index}>
+              <strong>Nome:</strong> {atest.nome_aluno} <br />
+              <strong>Curso:</strong> {atest.curso} <br />
+              <strong>Data Inicial:</strong> {atest.data_inicial} <br />
+              <strong>Data Final:</strong> {atest.data_final} <br />
+              <strong>CID:</strong> {atest.cid} <br />
+              <img
+                src={atest.imagem}
+                alt="Atestado"
+                style={{ maxWidth: "100px", maxHeight: "100px" }}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default Atestado;
