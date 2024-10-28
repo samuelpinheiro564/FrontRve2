@@ -19,14 +19,6 @@ const CategoriaAdmin = () => {
               <i className="icon">📤</i>
               <p>Saída</p>
             </div>
-            <div className="card">
-              <i className="icon">📄</i>
-              <p>Atestados</p>
-            </div>
-            <div className="card">
-              <i className="icon">🎓</i>
-              <p>Alunos</p>
-            </div>
             <div className="card1">
               <i className="icon">👥</i>
               <p>Usuários</p>
