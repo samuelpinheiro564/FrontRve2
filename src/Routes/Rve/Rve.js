@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';  
 import { CriarRve } from '../../Data/server';
-import './styles.css';  
 import userData from '../../Data/dadosUser';
+import styles from '../Rve/rve.module.css';
 
 const Rve = () => {
   const [autor, setAutor] = useState('');
@@ -21,7 +21,6 @@ const Rve = () => {
   const [categorias, setCategorias] = useState('');  
   const [arrayDocente] = useState([]);
 
-  
   useEffect(() => {
     const dadosUser = userData.getUsers();
     setAutor(dadosUser.nif);
@@ -38,14 +37,15 @@ const Rve = () => {
     'Saúde mental',  
     'Outras',  
   ];
-  const AddDocente = () => {
- arrayDocente.push(docentesenvolvidos);
 
+  const AddDocente = () => {
+    arrayDocente.push(docentesenvolvidos);
   };
+
   const deleteDocente = (index) => {
     arrayDocente.splice(index, 1);
   };
-  
+
   const handleCriarRVE = async (e) => {  
     e.preventDefault();  
     try {  
@@ -91,10 +91,10 @@ const Rve = () => {
   };  
 
   return (  
-    <div className="container">  
-      <h1>Registro de vida escolar</h1> 
-      <form onSubmit={handleCriarRVE}>
-        <div>
+    <div className={styles.container}>  
+      <h1 className={styles.title}>Registro de vida escolar</h1> 
+      <form onSubmit={handleCriarRVE} className={styles.form}>
+        <div className={styles.formGroup}>
           <input  
             type="text"  
             name="estudante"  
@@ -102,10 +102,10 @@ const Rve = () => {
             value={estudante}  
             onChange={(e) => setEstudante(e.target.value)}  
             required  
-            className="input"  
+            className={styles.input}  
           />  
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <input  
             type="text"  
             name="curso"  
@@ -113,10 +113,10 @@ const Rve = () => {
             value={curso}  
             onChange={(e) => setCurso(e.target.value)}  
             required  
-            className="input"  
+            className={styles.input}  
           />  
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <input  
             type="text"  
             name="turma"  
@@ -124,10 +124,10 @@ const Rve = () => {
             value={turma}  
             onChange={(e) => setTurma(e.target.value)}  
             required  
-            className="input"  
+            className={styles.input}  
           />  
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <input  
             type="date"  
             name="data"  
@@ -135,10 +135,10 @@ const Rve = () => {
             value={data}  
             onChange={(e) => setData(e.target.value)}  
             required  
-            className="input"  
+            className={styles.input}  
           />  
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <input  
             type="time"  
             name="hora"  
@@ -146,10 +146,10 @@ const Rve = () => {
             value={hora}  
             onChange={(e) => setHora(e.target.value)}  
             required  
-            className="input"  
+            className={styles.input}  
           />  
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <input  
             type="text"  
             name="motivo"  
@@ -157,30 +157,30 @@ const Rve = () => {
             value={motivo}  
             onChange={(e) => setMotivo(e.target.value)}  
             required  
-            className="input"  
+            className={styles.input}  
           />  
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <textarea  
             name="orientacoesEstudante"  
             placeholder="Orientações ao Estudante"  
             value={orientacoesestudante}  
             onChange={(e) => setOrientacoesEstudante(e.target.value)}  
             required  
-            className="input"  
+            className={styles.input}  
           />  
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <textarea  
             name="descricaoOcorrido"  
             placeholder="Descrição do Ocorrido"  
             value={descricaoocorrido}  
             onChange={(e) => setDescricaoOcorrido(e.target.value)}  
             required  
-            className="input"  
+            className={styles.input}  
           />  
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <input  
             type="text"  
             name="docentesEnvolvidos"  
@@ -188,24 +188,24 @@ const Rve = () => {
             value={docentesenvolvidos}  
             onChange={(e) => setDocentesEnvolvidos(e.target.value)}  
             required  
-            className="input"  
+            className={styles.input}  
           />  
-          <button type='button' onClick={AddDocente}>Adicionar Docente</button>
+          <button type='button' onClick={AddDocente} className={styles.button}>Adicionar Docente</button>
         </div>
         {arrayDocente.length > 0 && (
-          <div>
+          <div className={styles.docenteList}>
             <h3>Docentes Envolvidos:</h3>
             <ul>
               {arrayDocente.map((docente, index) => (
-                <div>
-                <li key={index}>{docente}</li>
-                <button type='button' onClick={deleteDocente(index)}>x</button>
+                <div key={index} className={styles.docenteItem}>
+                  <li>{docente}</li>
+                  <button type='button' onClick={() => deleteDocente(index)} className={styles.deleteButton}>x</button>
                 </div>
               ))}
             </ul>
           </div>
         )}
-        <div>
+        <div className={styles.formGroup}>
           <input  
             type="text"  
             name="assinaturas"  
@@ -213,46 +213,46 @@ const Rve = () => {
             value={assinaturas}  
             onChange={(e) => setAssinaturas(e.target.value)}  
             required  
-            className="input"  
+            className={styles.input}  
           />  
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <input  
             type="text"  
             name="elogios"  
             placeholder="Elogios"  
             value={elogios}  
             onChange={(e) => setElogios(e.target.value)}  
-            className="input"  
+            className={styles.input}  
           />  
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <input  
             type="text"  
             name="dificuldades"  
             placeholder="Dificuldades"  
             value={dificuldades}  
             onChange={(e) => setDificuldades(e.target.value)}  
-            className="input"  
+            className={styles.input}  
           />  
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <input  
             type="text"  
             name="presenca"  
             placeholder="Presença"  
             value={presenca}  
             onChange={(e) => setPresenca(e.target.value)}  
-            className="input"  
+            className={styles.input}  
           />  
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <select  
             name="categorias"  
             value={categorias}  
             onChange={(e) => setCategorias(e.target.value)}  
             required  
-            className="input"  
+            className={styles.input}  
           >  
             <option value="">Selecione uma categoria</option>  
             {categories.map((category, index) => (  
@@ -262,6 +262,7 @@ const Rve = () => {
         </div>
         <button 
           type="submit"
+          className={styles.submitButton}
         >Criar RVE</button>
       </form>
     </div>  

@@ -1,0 +1,177 @@
+/* rve.module.css */
+
+.container {
+  background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+  min-height: 100vh;
+  padding: 3rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 60%);
+  animation: rotate 20s linear infinite;
+}
+
+.title {
+  color: #fff;
+  font-size: 3.5rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  text-shadow: 2px 2px 15px rgba(0,0,0,0.2);
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.form {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30px;
+  padding: 3rem;
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.1),
+    inset 0 -10px 30px rgba(78,205,196,0.2),
+    inset 0 10px 30px rgba(255,107,107,0.2);
+  backdrop-filter: blur(10px);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.formGroup {
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.9);
+  font-size: 1.1rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 5px 15px rgba(0,0,0,0.05),
+    inset 0 -2px 5px rgba(0,0,0,0.03);
+}
+
+.input:focus {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 15px 30px rgba(0,0,0,0.1),
+    inset 0 -2px 5px rgba(0,0,0,0.03);
+  outline: none;
+}
+
+textarea.input {
+  min-height: 150px;
+  line-height: 1.6;
+}
+
+.button {
+  background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(255,107,107,0.3);
+}
+
+.button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(255,107,107,0.4);
+}
+
+.docenteList {
+  background: rgba(255,255,255,0.8);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.docenteItem {
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin: 0.8rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.docenteItem:hover {
+  transform: translateX(5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.submitButton {
+  background: linear-gradient(45deg, #4ECDC4, #2ECC71);
+  width: 100%;
+  padding: 1.2rem;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  margin-top: 2rem;
+  box-shadow: 0 10px 20px rgba(46,204,113,0.3);
+}
+
+.submitButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(46,204,113,0.4);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animações de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.formGroup {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+  animation-delay: calc(var(--index) * 0.1s);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .form {
+    padding: 2rem;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+  }
+}
