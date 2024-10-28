@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { CriarUser, AllUsers } from '../../Data/server';
 import styles from '../CadastroUsuarios/user.module.css';
 
