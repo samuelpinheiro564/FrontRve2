@@ -5,10 +5,9 @@ import Navbar from "./components/Navbar";
 import Saida from "../src/Routes/Saida/page";
 import Rve from "../src/Routes/Rve/Rve";
 import Login from '../src/Routes/Login/Login';
-import SaidaProfessor from "../src/Routes/saidaProfessor/page";
+
 import CategoriaAdmin from './Routes/CategoriaAdmin/page';
 // import CadastroUsuarios from '../src/Routes/CadastroUsuarios/CadastroUsuarios';
-import AlunoAdm from "../src/Routes/alunosAdm/alunosAdm";
 import CategoriaDocente from "../src/Routes/CategoriaDocente/page";
 import NotificacaoSec from "../src/Routes/NotificacaoSec/page";
 import ErrorPage from './Routes/ErrorPage';
@@ -22,10 +21,8 @@ function App() {
         <NavLink to="/">Login</NavLink>
         <NavLink to="/Saida">Saida</NavLink>
         <NavLink to="/Rve">Rve</NavLink>
-        <NavLink to="/SaidaProfessor">Saida Professor</NavLink>
         <NavLink to="/CategoriaDocente">Categoria Docente</NavLink>
         <NavLink to="/CategoriaAdmin">Categoria Admin</NavLink>
-        <NavLink to="/AlunoAdm">Aluno Adm</NavLink>
         <NavLink to="/NotificacaoSec">Notificação Sec</NavLink>
       </nav>
       <Outlet />
@@ -51,10 +48,6 @@ const router = createBrowserRouter([
         path: "Rve",
         element: <Rve />,
       },
-      {
-        path: "SaidaProfessor",
-        element: <SaidaProfessor />,
-      },
       // {
       //   path: "CadastroUsuarios",
       //   element: <CadastroUsuarios />,
@@ -67,10 +60,7 @@ const router = createBrowserRouter([
         path: "CategoriaAdmin",
         element: <CategoriaAdmin />,
       },
-      {
-        path: "AlunoAdm",
-        element: <AlunoAdm />,
-      },
+ 
       {
         path: "NotificacaoSec",
         element: <NotificacaoSec />,

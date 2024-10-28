@@ -15,9 +15,6 @@ const Navbar = () => {
             <Link to="/Rve" className={`${styles.navLink} ${location.pathname === "/Rve" ? styles.active : ""}`}>
                 <span>RVE</span>
             </Link>
-            <Link to="/SaidaProfessor" className={`${styles.navLink} ${location.pathname === "/SaidaProfessor" ? styles.active : ""}`}>
-                <span>Saída Professor</span>
-            </Link>
             <Link to="/CadastroUsuarios" className={`${styles.navLink} ${location.pathname === "/CadastroUsuarios" ? styles.active : ""}`}>
                 <span>Cadastro Usuários</span>
             </Link>
@@ -26,9 +23,6 @@ const Navbar = () => {
             </Link>
             <Link to="/CategoriaAdmin" className={`${styles.navLink} ${location.pathname === "/CategoriaAdmin" ? styles.active : ""}`}>
                 <span>Categoria Admin</span>
-            </Link>
-            <Link to="/AlunoAdm" className={`${styles.navLink} ${location.pathname === "/AlunoAdm" ? styles.active : ""}`}>
-                <span>Aluno Adm</span>
             </Link>
         </nav>
     );
