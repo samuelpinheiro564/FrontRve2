@@ -25,7 +25,7 @@ const Page = () => {
     };
 
     const handleSubmit = async () => {
-        const url = 'http://localhost:3000/api/sendText';
+        const url = 'http://10.88.200.130:3000/api/sendText';
         const data = {
             chatId: `${phone}@c.us`,
             text: message,
