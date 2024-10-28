@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';  
 import Saida from "../src/Routes/Saida/page";  
 import Rve from "../src/Routes/Rve/Rve";  
+import SuasRve from "../src/Routes/SuasRve/suasRve";  
 import Login from '../src/Routes/Login/Login';  
 import CadastroUsuarios from '../src/Routes/CadastroUsuarios/CadastroUsuarios';
 import CategoriaAdmin from './Routes/CategoriaAdmin/page';  
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
         path: "Rve",  
         element: <Rve />,  
       },  
+      {  
+        path: "SuasRve",  
+        element: <SuasRve />,  
+      }, 
       {  
         path: "CategoriaDocente",  
         element: <CategoriaDocente />,  
