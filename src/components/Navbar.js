@@ -9,34 +9,38 @@ const NavBar = () => {
     setMenuVisible(!menuVisible);
   };
 
+  const handleLinkClick = () => {
+    setMenuVisible(false);
+  };
+
   return (  
     <div>
       <button onClick={toggleMenu} className="menu-icon">
-        &#9776; {/* Ícone de menu (hambúrguer) */}
+        &#9776; 
       </button>
       {menuVisible && (
         <nav>  
           <ul>  
             <li>  
-              <NavLink to="/SuasRve" activeClassName="active">Suas RVE</NavLink>  
+              <NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Suas RVE</NavLink>  
             </li>  
             <li>  
-              <NavLink to="/Saida" activeClassName="active">Saída</NavLink>  
+              <NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Saída</NavLink>  
             </li>  
             <li>  
-              <NavLink to="/Rve" activeClassName="active">RVE</NavLink>  
+              <NavLink to="/Rve" activeClassName="active" onClick={handleLinkClick}>RVE</NavLink>  
             </li>  
             <li>  
-              <NavLink to="/CategoriaDocente" activeClassName="active">Categoria Docente</NavLink>  
+              <NavLink to="/CategoriaDocente" activeClassName="active" onClick={handleLinkClick}>Categoria Docente</NavLink>  
             </li>  
             <li>  
-              <NavLink to="/CategoriaAdmin" activeClassName="active">Categoria Admin</NavLink>  
+              <NavLink to="/CategoriaAdmin" activeClassName="active" onClick={handleLinkClick}>Categoria Admin</NavLink>  
             </li> 
             <li>  
-              <NavLink to="/CadastroUsuarios" activeClassName="active">Cadastro USer</NavLink>  
+              <NavLink to="/CadastroUsuarios" activeClassName="active" onClick={handleLinkClick}>Cadastro USer</NavLink>  
             </li>   
             <li>  
-              <NavLink to="/NotificacaoSec" activeClassName="active">Notificação Sec</NavLink>  
+              <NavLink to="/NotificacaoSec" activeClassName="active" onClick={handleLinkClick}>Notificação Sec</NavLink>  
             </li>  
           </ul>  
         </nav>
