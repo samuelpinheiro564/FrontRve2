@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet, NavLink } from 'react-rout
 import Navbar from "./components/Navbar";
 import Saida from "../src/Routes/Saida/page";
 import Rve from "../src/Routes/Rve/Rve";
-import Login from '../src/Routes/Login/Login';
+import Login from '../src/Routes/Login/Login'
 
 import CategoriaAdmin from './Routes/CategoriaAdmin/page';
 // import CadastroUsuarios from '../src/Routes/CadastroUsuarios/CadastroUsuarios';
