@@ -71,7 +71,7 @@ const Page = () => {
                     onChange={(e) => setMessage(e.target.value)}
                 />
             </div>
-            <button onClick={handleSubmit}>Enviar</button>
+            <button onClick={handleSubmit} className={styles.button}>Enviar</button>
             {success && <p className={styles.success}>{success}</p>}
             {error && <p className={styles.error}>{error}</p>}
         </div>
