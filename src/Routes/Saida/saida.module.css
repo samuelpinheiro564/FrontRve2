@@ -1,11 +1,12 @@
 /* saida.module.css */
 
 .container {
-  max-width: 1200px;
+  max-width: 1450px;
   margin: 0 auto;
   padding: 2rem;
   background-color: #f8f9fa;
   min-height: 100vh;
+  margin-left: 20%;
 }
 
 .title {
