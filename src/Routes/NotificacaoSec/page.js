@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import styles from '../NotificacaoSec/notic.module.css';
 
 const Page = () => {
     const [phone, setPhone] = useState('');
@@ -51,9 +52,9 @@ const Page = () => {
     };
 
     return (
-        <div style={styles.container}>
-            <h2 style={styles.header}>Enviar Mensagem para WhatsApp</h2>
-            <div style={styles.formGroup}>
+        <div className={styles.container}>
+            <h2 className={styles.header}>Enviar Mensagem para WhatsApp</h2>
+            <div className={styles.formGroup}>
                 <label htmlFor="phone">Número (formato internacional):</label>
                 <input
                     type="text"
@@ -62,7 +63,7 @@ const Page = () => {
                     onChange={(e) => setPhone(e.target.value)}
                 />
             </div>
-            <div style={styles.formGroup}>
+            <div className={styles.formGroup}>
                 <label htmlFor="message">Mensagem:</label>
                 <textarea
                     id="message"
@@ -71,29 +72,10 @@ const Page = () => {
                 />
             </div>
             <button onClick={handleSubmit}>Enviar</button>
-            {success && <p style={styles.success}>{success}</p>}
-            {error && <p style={styles.error}>{error}</p>}
+            {success && <p className={styles.success}>{success}</p>}
+            {error && <p className={styles.error}>{error}</p>}
         </div>
     );
-};
-
-const styles = {
-    container: {
-        padding: '20px',
-    },
-    header: {
-        fontSize: '24px',
-        marginBottom: '20px',
-    },
-    formGroup: {
-        marginBottom: '15px',
-    },
-    success: {
-        color: 'green',
-    },
-    error: {
-        color: 'red',
-    },
 };
 
 export default Page;
