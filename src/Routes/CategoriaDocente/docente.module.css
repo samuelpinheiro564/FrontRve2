@@ -1,0 +1,110 @@
+/* docente.module.css */
+
+.app {
+  min-height: 100vh;
+  background: linear-gradient(45deg, #1a1a1a, #4a4a4a);
+  padding: 20px;
+}
+
+/* Header com efeito de brilho */
+.header {
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.header h1 {
+  color: transparent;
+  background: linear-gradient(45deg, #ff3366, #ff6b6b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 4rem;
+  letter-spacing: 8px;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Container com layout grid responsivo */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Cards com efeito neumórfico e hover surreal */
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.5s ease;
+  box-shadow: 
+    20px 20px 60px rgba(0, 0, 0, 0.5),
+    -20px -20px 60px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-10px) rotate(2deg);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 0 30px rgba(255, 99, 71, 0.6),
+    inset 0 0 20px rgba(255, 99, 71, 0.4);
+}
+
+/* Ícones com animação */
+.icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #ff6b6b;
+  transition: all 0.3s ease;
+}
+
+.card:hover .icon {
+  transform: scale(1.2) rotate(360deg);
+  color: #fff;
+}
+
+/* Texto dos cards */
+.card h2 {
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+/* Animação de brilho para o título */
+@keyframes glow {
+  from {
+    text-shadow: 
+      0 0 10px rgba(255, 99, 71, 0.5),
+      0 0 20px rgba(255, 99, 71, 0.3),
+      0 0 30px rgba(255, 99, 71, 0.2);
+  }
+  to {
+    text-shadow: 
+      0 0 20px rgba(255, 99, 71, 0.8),
+      0 0 30px rgba(255, 99, 71, 0.5),
+      0 0 40px rgba(255, 99, 71, 0.3);
+  }
+}
+
+/* Media query para responsividade */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 3rem;
+  }
+  
+  .container {
+    gap: 20px;
+    padding: 10px;
+  }
+  
+  .card {
+    padding: 20px;
+  }
+}
