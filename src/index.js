@@ -1,69 +1,75 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import React from 'react';  
+import ReactDOM from 'react-dom/client';  
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';  
+import Saida from "../src/Routes/Saida/page";  
+import Rve from "../src/Routes/Rve/Rve";  
+import Login from '../src/Routes/Login/Login';  
+import CadastroUsuarios from '../src/Routes/CadastroUsuarios/CadastroUsuarios';
+import CategoriaAdmin from './Routes/CategoriaAdmin/page';  
+import CategoriaDocente from "../src/Routes/CategoriaDocente/page";  
+import NotificacaoSec from "../src/Routes/NotificacaoSec/page";  
+import ErrorPage from './Routes/ErrorPage';  
+import { useLocation } from 'react-router-dom';  
+import NavBar from '../src/components/Navbar'; // Importe o NavBar  
 
-import Navbar from "./components/Navbar";
-import Saida from "./Routes/Saida/page";
-import Rve from "./Routes/Rve/Rve";
-import Login from './Routes/Login/Login';
-import SaidaProfessor from "./Routes/saidaProfessor/page";
-import CategoriaAdmin from './Routes/CategoriaAdmin/page';
-import AlunosAdm from "./Routes/AlunosAdm/AlunosAdm";
-import CategoriaDocente from "./Routes/CategoriaDocente/page";
-import ErrorPage from './Routes/ErrorPage';
-import './index.css';
+function App() {  
+  const location = useLocation(); // Obtém a localização atual  
 
-function App() {
-  return (
-    <div className="App">
-      <Navbar />
-      <Outlet />
-    </div>
-  );
-}
+  return (  
+    <div>  
+      {location.pathname !== '/Login' && <NavBar />} {/* Renderiza o NavBar apenas se não estiver na rota "/Login" */}  
+      <Outlet />  
+    </div>  
+  );  
+}  
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/",
-        element: <Login />,
-      },
-      {
-        path: "Saida",
-        element: <Saida />,
-      },
-      {
-        path: "Rve",
-        element: <Rve />,
-      },
-      {
-        path: "SaidaProfessor",
-        element: <SaidaProfessor />,
-      },
-      {
-        path: "CategoriaDocente",
-        element: <CategoriaDocente />,
-      },
-      {
-        path: "CategoriaAdmin",
-        element: <CategoriaAdmin />,
-      },
-      {
-        path: "AlunosAdm",
-        element: <AlunosAdm />,
-      },
-    ],
-  },
-]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
+const router = createBrowserRouter([  
+  {  
+    path: "/",  
+    element: <App />,  
+    errorElement: <ErrorPage />,  
+    children: [  
+      {  
+        path: "/",  
+        element: <Navigate to="/Login" replace />, // Redireciona para "/Login" ao acessar "/"  
+      },  
+      {  
+        path: "Login",  
+        element: <Login />,  
+      },  
+      {  
+        path: "Saida",  
+        element: <Saida />,  
+      },  
+      {  
+        path: "Rve",  
+        element: <Rve />,  
+      },  
+      {  
+        path: "CategoriaDocente",  
+        element: <CategoriaDocente />,  
+      },  
+      {  
+        path: "CategoriaAdmin",  
+        element: <CategoriaAdmin />,  
+      },  
+      {  
+        path: "CadastroUsuarios",  
+        element: <CadastroUsuarios/>,  
+      },  
+      {  
+        path: "NotificacaoSec",  
+        element: <NotificacaoSec />,  
+      },  
+    ],  
+  },  
+]);  
+
+ReactDOM.createRoot(document.getElementById('root')).render(  
+  <React.StrictMode>  
+    <RouterProvider router={router} />  
+  </React.StrictMode>  
+);  
 
 export default App;
