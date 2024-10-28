@@ -1,7 +1,7 @@
 /* rve.module.css */
 
 .container {
-  background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+  background: linear-gradient(135deg, #d71b1b, #ff2f2f);
   min-height: 100vh;
   padding: 3rem 2rem;
   position: relative;
@@ -36,7 +36,7 @@
   box-shadow: 
     0 10px 30px rgba(0,0,0,0.1),
     inset 0 -10px 30px rgba(78,205,196,0.2),
-    inset 0 10px 30px rgba(255,107,107,0.2);
+    inset 0 10px 30px rgba(230, 13, 13, 0.2);
   backdrop-filter: blur(10px);
   max-width: 900px;
   margin: 0 auto;
@@ -74,7 +74,8 @@ textarea.input {
 }
 
 .button {
-  background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+  background: linear-gradient(45deg, #c72f2f, #FF8E53);
+
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -115,7 +116,8 @@ textarea.input {
 }
 
 .submitButton {
-  background: linear-gradient(45deg, #4ECDC4, #2ECC71);
+  background: linear-gradient(45deg, #c72f2f, #FF8E53);
+
   width: 100%;
   padding: 1.2rem;
   border: none;
