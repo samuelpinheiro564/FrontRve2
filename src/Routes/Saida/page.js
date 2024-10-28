@@ -168,16 +168,16 @@ const Saida = () => {
                 <tbody>
                     {historico.map((item) => (
                         <tr key={item.id}>
-                            <td>{item.nomealuno}</td>
-                            <td>{item.curso}</td>
-                            <td>{item.turma}</td>
-                            <td>{item.alunora}</td>
-                            <td>{item.maioridade ? 'Sim' : 'Não'}</td>
-                            <td>{`${formatarData(item.datasaida)} ${item.horasaida}`}</td>
-                            <td>{item.justificativa}</td>
-                            <td>{item.assinaturaprof}</td>
-                            <td>{item.assinaturaanaq}</td>
-                            <td>
+                            <td className='td'>{item.nomealuno}</td>
+                            <td className='td'>{item.curso}</td>
+                            <td className='td'>{item.turma}</td>
+                            <td className='td'>{item.alunora}</td>
+                            <td className='td'>{item.maioridade ? 'Sim' : 'Não'}</td>
+                            <td className='td'>{`${formatarData(item.datasaida)} ${item.horasaida}`}</td>
+                            <td className='td'>{item.justificativa}</td>
+                            <td className='td'>{item.assinaturaprof}</td>
+                            <td className='td'>{item.assinaturaanaq}</td>
+                            <td className='td'>
                                 <button onClick={() => handleEdit(item.id)} className={styles.button}>Editar</button>
                                 <button onClick={() => handleDelete(item.id)} className={styles.button}>Deletar</button>
                             </td>
