@@ -9,7 +9,7 @@ import CategoriaAdmin from './Routes/CategoriaAdmin/page';
 import CategoriaDocente from "../src/Routes/CategoriaDocente/page";  
 import NotificacaoSec from "../src/Routes/NotificacaoSec/page";  
 import ErrorPage from './Routes/ErrorPage';  
-import './index.css';  
+
 import { useLocation } from 'react-router-dom';  
 import NavBar from '../src/components/Navbar'; // Importe o NavBar  
 
