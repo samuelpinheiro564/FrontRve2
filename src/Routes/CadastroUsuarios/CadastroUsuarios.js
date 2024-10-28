@@ -11,6 +11,7 @@ const CadastroUsuarios = () => {
         telefone: '',  
         tipo: ''  
     });  
+    const [error, setError] = useState('');  // Estado para armazenar a mensagem de erro
 
     const handleInputChange = (e) => {  
         const { name, value } = e.target;  
@@ -22,13 +23,14 @@ const CadastroUsuarios = () => {
         const users = await AllUsers();  // Certifique-se de que esta função está fazendo uma requisição à API  
         const res = users.find(user => user.nif === form.nif);  
         if (res) {  
-            console.error('O campo NIF já existe');  
+            setError('O campo NIF já existe');  // Define a mensagem de erro
             return;  
         }  
         try {  
             await CriarUser(form);  // Certifique-se de que esta função está fazendo uma requisição à API  
             alert('Usuário cadastrado com sucesso');  
             limparCampos();  
+            setError('');  // Limpa a mensagem de erro após o cadastro bem-sucedido
         } catch (error) {  
             console.error('Erro ao criar usuário:', error);  
         }  
@@ -51,7 +53,7 @@ const CadastroUsuarios = () => {
             <form className={styles.form} onSubmit={handleCadastro}>  
                 <div className={styles.formGroup}>  
                     <label htmlFor="nif" className={styles.label}>NIF:</label>  
-                    <input type="text" id="nif" name="nif" value={form.nif} onChange={handleInputChange} className={styles.input} />  
+                    <input type="number" id="nif" name="nif" value={form.nif} onChange={handleInputChange} className={styles.input} />  
                 </div>  
                 <div className={styles.formGroup}>  
                     <label htmlFor="nome" className={styles.label}>Nome:</label>  
@@ -67,12 +69,13 @@ const CadastroUsuarios = () => {
                 </div>  
                 <div className={styles.formGroup}>  
                     <label htmlFor="telefone" className={styles.label}>Telefone:</label>  
-                    <input type="text" id="telefone" name="telefone" value={form.telefone} onChange={handleInputChange} className={styles.input} />  
+                    <input type="number" id="telefone" name="telefone" value={form.telefone} onChange={handleInputChange} className={styles.input} />  
                 </div>  
                 <div className={styles.formGroup}>  
                     <label htmlFor="tipo" className={styles.label}>Tipo:</label>  
                     <input type="text" id="tipo" name="tipo" value={form.tipo} onChange={handleInputChange} className={styles.input} />  
                 </div>  
+                {error && <p className={styles.error}>{error}</p>}  {/* Exibe a mensagem de erro, se houver */}
                 <button type="submit" className={styles.button}>Cadastrar</button>  
             </form>  
         </div>  
