@@ -1,17 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+
 import Navbar from "./components/Navbar";
-import Saida from "../src/Routes/Saida/page";
-import Rve from "../src/Routes/Rve/Rve";
-import Login from '../src/Routes/Login/Login';
-import SaidaProfessor from "../src/Routes/saidaProfessor/page";
+import Saida from "./Routes/Saida/page";
+import Rve from "./Routes/Rve/Rve";
+import Login from './Routes/Login/Login';
+import SaidaProfessor from "./Routes/saidaProfessor/page";
 import CategoriaAdmin from './Routes/CategoriaAdmin/page';
-// import CadastroUsuarios from '../src/Routes/CadastroUsuarios/CadastroUsuarios';
-import AlunoAdm from "../src/Routes/alunosAdm/alunosAdm";
-import CategoriDocente from "../src/Routes/CategoriaDocente/page";
+import AlunosAdm from "./Routes/AlunosAdm/AlunosAdm";
+import CategoriaDocente from "./Routes/CategoriaDocente/page";
 import ErrorPage from './Routes/ErrorPage';
 import './index.css';
+
 function App() {
   return (
     <div className="App">
@@ -43,21 +44,17 @@ const router = createBrowserRouter([
         path: "SaidaProfessor",
         element: <SaidaProfessor />,
       },
-      // {
-      //   path: "CadastroUsuarios",
-      //   element: <CadastroUsuarios />,
-      // },
       {
-        path: "CategoriDocente",
-        element: <CategoriDocente />,
+        path: "CategoriaDocente",
+        element: <CategoriaDocente />,
       },
       {
         path: "CategoriaAdmin",
         element: <CategoriaAdmin />,
       },
       {
-        path: "AlunoAdm",
-        element: <AlunoAdm />,
+        path: "AlunosAdm",
+        element: <AlunosAdm />,
       },
     ],
   },

@@ -7,25 +7,38 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState("");
   const [Nif, setNif] = useState("");
+  const [password, setPassword] = useState("");
   const [userNotPassword, setUserNotPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const handleLogin = async () => {  
+    setIsLoading(true);  
+    try {  
+        const data = await LoginUser(Nif);  
+        console.log('Dados do usuário:', data);  
+        userData.addUser(data);  
 
-    const handleLogin = async () => {
-        setIsLoading(true);
-        try {
-            const data = await LoginUser(Nif);
-            console.log('Dados do usuário:', data);
-            userData.addUser(data)
-            alert('Logado com sucesso');
-        } catch (error) {
-            setErrorMessage('Erro ao tentar fazer login. Verifique as credenciais.');
-            console.error('Erro na autenticação:', error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
+        if (data.length === 0) {  
+            setMessage('Nif ou senha usuario Nâo foi encontrados');  
+            setTimeout(() => {  
+                setMessage('');  
+            }, 3000);  
+        } 
+        setNif('');  
+        setPassword('')// Corrigido  
+        setPassword(''); // Corrigido  
+    } catch (error) {    
+        setMessage('Usuário não encontrado'); // Mensagem de erro genérica  
+        setTimeout(() => {  
+            setMessage('');  
+        }, 3000);  
+        setNif('');
+        setPassword('');
+        setUserType('');
+    } finally {  
+        setIsLoading(false);  
+    }  
+};  
 
   useEffect(() => {
     if (userType === "aluno" || userType === "secretaria") {
@@ -79,13 +92,6 @@ const Login = () => {
             </>
           ) : (
             <>
-              <input
-                type="text"
-                placeholder="Nome"
-                required
-                className="input"
-                maxLength={50}
-              />
               <select
                 value={userType}
                 onChange={(e) => setUserType(e.target.value)}
@@ -100,13 +106,7 @@ const Login = () => {
                 <option value="docente">Docente</option>
                 <option value="secretaria">Secretaria</option>
               </select>
-              <input
-                type="email"
-                placeholder="Email"
-                required
-                className="input"
-                maxLength={100}
-              />
+            
               <input
                 type="number"
                 placeholder="Nif"
@@ -118,6 +118,8 @@ const Login = () => {
               />
               <div style={{ position: "relative" }}>
                 <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                   type={showPassword ? "text" : "password"}
                   placeholder="Senha"
                   required
@@ -140,13 +142,12 @@ const Login = () => {
               <button type="submit" className="button" disabled={isLoading}>
                 {isLoading ? "Entrando..." : "Entrar"}
               </button>
-              {errorMessage && <p className="error">{errorMessage}</p>}
+              { <p className="error">{message}</p> }
             </>
           )}
         </form>
       </div>
     </div>
   );
-};
-
+}
 export default Login;

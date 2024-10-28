@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const URL = 'http://localhost:4040';
-
 const LoginUser = async (nif) => {
     try {
         const requestURL = `${URL}/usuarios/${nif}`;
@@ -10,8 +9,9 @@ const LoginUser = async (nif) => {
         console.log('Resposta:', response.data);
         return response.data;
     } catch (error) {
-        console.error('Erro na requisição:', error);
-        throw error;
+            console.error('Erro interno do servidor:', error);
+            throw error;
+        
     }
 };
 
@@ -69,9 +69,10 @@ const RveById =  async (nif) => {
         const response = await axios.post(`${URL}/rve/${nif}`);
         return response.data;
     } catch (error) {
-        console.error('Erro ao criar registro RVE:', error);
+if(error.response.status === 400) {
+        console.error('Erro ao buscar registro RVE:', error);
         throw error;
-    }
+    }}
 };
 
 const AllRve = async () => {
