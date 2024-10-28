@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-rou
 import Saida from "../src/Routes/Saida/page";  
 import Rve from "../src/Routes/Rve/Rve";  
 import Login from '../src/Routes/Login/Login';  
-import SuasRve from '../src/Routes/SuasRve/suasRve';  
+
 import CategoriaAdmin from './Routes/CategoriaAdmin/page';  
 import CategoriaDocente from "../src/Routes/CategoriaDocente/page";  
 import NotificacaoSec from "../src/Routes/NotificacaoSec/page";  
@@ -38,10 +38,6 @@ const router = createBrowserRouter([
       {  
         path: "Login",  
         element: <Login />,  
-      },  
-      {  
-        path: "SuasRve",  
-        element: <SuasRve />,  
       },  
       {  
         path: "Saida",  
