@@ -1,5 +1,5 @@
 import React, { useState } from 'react';  
-import { CriarUser, AllUsers } from '../../Data/server';  // Certifique-se de que aqui você está chamando a API corretamente  
+import { CriarUser, AllUsers } from '../../Data/server';  
 import styles from '../CadastroUsuarios/user.module.css';  
 
 const CadastroUsuarios = () => {  
@@ -11,7 +11,9 @@ const CadastroUsuarios = () => {
         telefone: '',  
         tipo: ''  
     });  
-    const [error, setError] = useState('');  // Estado para armazenar a mensagem de erro
+    const [error, setError] = useState('');  
+    const [successMessage, setSuccessMessage] = useState('');  
+    const [showPassword, setShowPassword] = useState(false);  
 
     const handleInputChange = (e) => {  
         const { name, value } = e.target;  
@@ -20,19 +22,23 @@ const CadastroUsuarios = () => {
 
     const handleCadastro = async (e) => {  
         e.preventDefault();  
-        const users = await AllUsers();  // Certifique-se de que esta função está fazendo uma requisição à API  
+        const users = await AllUsers();  
         const res = users.find(user => user.nif === form.nif);  
         if (res) {  
-            setError('O campo NIF já existe');  // Define a mensagem de erro
+            setError('O campo NIF já existe');  
+            setTimeout(() => setError(''), 3000); // Mensagem de erro desaparece após 3 segundos
             return;  
         }  
         try {  
-            await CriarUser(form);  // Certifique-se de que esta função está fazendo uma requisição à API  
-            alert('Usuário cadastrado com sucesso');  
+            await CriarUser(form);  
+            setSuccessMessage('Usuário cadastrado com sucesso');  
             limparCampos();  
-            setError('');  // Limpa a mensagem de erro após o cadastro bem-sucedido
+            setError('');  
+            setTimeout(() => setSuccessMessage(''), 3000); // Mensagem de sucesso desaparece após 3 segundos
         } catch (error) {  
             console.error('Erro ao criar usuário:', error);  
+            setError('Erro ao cadastrar usuário.');  // Mensagem de erro genérica para falha na API  
+            setTimeout(() => setError(''), 3000); // Mensagem de erro desaparece após 3 segundos
         }  
     };  
 
@@ -45,6 +51,10 @@ const CadastroUsuarios = () => {
             telefone: '',  
             tipo: ''  
         });  
+    };  
+
+    const toggleShowPassword = () => {  
+        setShowPassword(prevShowPassword => !prevShowPassword);  
     };  
 
     return (  
@@ -65,7 +75,8 @@ const CadastroUsuarios = () => {
                 </div>  
                 <div className={styles.formGroup}>  
                     <label htmlFor="senha" className={styles.label}>Senha:</label>  
-                    <input type="password" id="senha" name="senha" value={form.senha} onChange={handleInputChange} className={styles.input} />  
+                    <input type={showPassword ? "text" : "password"} id="senha" name="senha" value={form.senha} onChange={handleInputChange} className={styles.input} />  
+                    <span onClick={toggleShowPassword} className={styles.togglePassword}>{showPassword ? '🙈' : '👁️'}</span>  
                 </div>  
                 <div className={styles.formGroup}>  
                     <label htmlFor="telefone" className={styles.label}>Telefone:</label>  
@@ -75,7 +86,8 @@ const CadastroUsuarios = () => {
                     <label htmlFor="tipo" className={styles.label}>Tipo:</label>  
                     <input type="text" id="tipo" name="tipo" value={form.tipo} onChange={handleInputChange} className={styles.input} />  
                 </div>  
-                {error && <p className={styles.error}>{error}</p>}  {/* Exibe a mensagem de erro, se houver */}
+                {error && <p className={styles.error}>{error}</p>}  
+                {successMessage && <p className={styles.success}>{successMessage}</p>}  
                 <button type="submit" className={styles.button}>Cadastrar</button>  
             </form>  
         </div>  
