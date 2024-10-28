@@ -1,26 +1,39 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const WhatsAppSender = () => {
+const Page = () => {
     const [phone, setPhone] = useState('');
     const [message, setMessage] = useState('');
-    const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const [error, setError] = useState(null);
 
-    const handleSend = async () => {
-        if (!phone || !message) {
-            alert('Por favor, preencha todos os campos.');
-            return;
+    const postData = async (url, data) => {
+        try {
+            console.log('Sending to URL:', url);
+            console.log('Data:', data);
+            const response = await axios.post(url, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log('Response:', response);
+            return response;
+        } catch (error) {
+            console.error('Error response:', error.response);
+            throw new Error(error.response?.data?.message || error.message);
         }
+    };
+
+    const handleSubmit = async () => {
+        const url = 'http://localhost:3000/api/sendText';
+        const data = {
+            chatId: `${phone}@c.us`,
+            text: message,
+            session: 'default' // Usando a sessão padrão
+        };
 
         try {
-            // Envia a mensagem
-            const response = await postData('http://localhost:3001/api/sendText', {
-                phone,
-                message,
-            });
-
-            // Verifica se a resposta é bem-sucedida
+            const response = await postData(url, data);
             if (response.status === 200) {
                 setSuccess('Mensagem enviada com sucesso!');
                 setError(null);
@@ -28,21 +41,12 @@ const WhatsAppSender = () => {
                 setPhone('');
                 setMessage('');
             } else {
-                setError('Erro ao enviar a mensagem.');
+                setError('Mensagem enviada.');
             }
         } catch (err) {
             setError('Erro ao enviar a mensagem: ' + (err.response?.data?.message || err.message));
             setSuccess(null);
             console.error('Erro:', err);
-        }
-    };
-
-    const postData = async (url, data) => {
-        try {
-            const response = await axios.post(url, data);
-            return response;
-        } catch (error) {
-            throw new Error(error.response?.data?.message || error.message);
         }
     };
 
@@ -54,63 +58,42 @@ const WhatsAppSender = () => {
                 <input
                     type="text"
                     id="phone"
-                    placeholder="e.g. 5511999999999"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    style={styles.input}
                 />
             </div>
             <div style={styles.formGroup}>
                 <label htmlFor="message">Mensagem:</label>
                 <textarea
                     id="message"
-                    rows="3"
-                    placeholder="Digite sua mensagem aqui"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    style={styles.textArea}
                 />
             </div>
-            <button onClick={handleSend} style={styles.button}>Enviar</button>
-            {success && <p style={{ color: 'green' }}>{success}</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <button onClick={handleSubmit}>Enviar</button>
+            {success && <p style={styles.success}>{success}</p>}
+            {error && <p style={styles.error}>{error}</p>}
         </div>
     );
 };
 
 const styles = {
     container: {
-        maxWidth: '500px',
-        margin: 'auto',
         padding: '20px',
-        border: '1px solid #ccc',
-        borderRadius: '5px',
     },
     header: {
-        textAlign: 'center',
+        fontSize: '24px',
+        marginBottom: '20px',
     },
     formGroup: {
         marginBottom: '15px',
     },
-    input: {
-        width: '100%',
-        padding: '8px',
-        boxSizing: 'border-box',
+    success: {
+        color: 'green',
     },
-    textArea: {
-        width: '100%',
-        padding: '8px',
-        boxSizing: 'border-box',
-    },
-    button: {
-        backgroundColor: '#28a745',
-        color: 'white',
-        padding: '10px',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        width: '100%',
+    error: {
+        color: 'red',
     },
 };
 
-export default WhatsAppSender;
+export default Page;
