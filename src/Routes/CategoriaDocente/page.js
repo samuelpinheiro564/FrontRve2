@@ -12,15 +12,15 @@ function App() {
       <div className={styles.cardsBackground}>  
         <div className={styles.grid}>  
           <div className={`${styles.card} ${styles.active}`}>  
-            <FaFileAlt className={styles.icon} />  
+          <i className={styles.icon}>📝</i>  
             <p>RVE</p>  
           </div>  
           <div className={styles.card}>  
-            <FaDoorOpen className={styles.icon} />  
+          <i className={styles.icon}>📤</i> 
             <p>Saída</p>  
           </div>  
           <div className={styles.card1}>  
-            <FaUserGraduate className={styles.icon} />  
+          <i className={styles.icon}>👥</i>
             <p>Usuários</p>  
           </div>  
         </div>  
