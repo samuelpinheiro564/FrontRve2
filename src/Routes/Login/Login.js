@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';  
 import { LoginUser } from '../../Data/server';  
 import userData from '../../Data/dadosUser';  
-import { useNavigate } from 'react-router-dom'; // Import useNavigate  
+import { useNavigate } from 'react-router-dom'; 
+import styles from '../Login/login.module.css';
 
 const Login = () => {  
   const navigate = useNavigate();  // Inicializa o hook useNavigate  
@@ -72,85 +73,77 @@ const Login = () => {
   };  
 
   return (  
-    <div>  
-      <div className="container">  
-        <header className="header">  
-          <h1 className="title">Login</h1>  
-        </header>  
-        <form className="form" onSubmit={handleEnviar}>  
-          {userNotPassword ? (  
-            <>  
-              <select  
-                value={userType}  
-                onChange={(e) => setUserType(e.target.value)}  
-                required  
-                className="input"  
-              >  
-                <option value="" disabled>  
-                  Tipo de Usuario  
-                </option>  
-                <option value="secretaria">Secretaria</option>  
-                <option value="docente">Docente</option>  
-                <option value="admin">Administrador</option>  
-              </select>  
-              <button type="submit" className="button">  
-                Entrar  
-              </button>  
-            </>  
-          ) : (  
-            <>  
-              <select  
-                value={userType}  
-                onChange={(e) => setUserType(e.target.value)}  
-                required  
-                className="input"  
-              >  
-                <option value="" disabled>  
-                  Tipo de Usuario Administrador  
-                </option>  
-                <option value="admin">Administrador</option>  
-                <option value="aluno">Aluno</option>  
-                <option value="docente">Docente</option>  
-                <option value="secretaria">Secretaria</option>  
-              </select>  
+    <div className={styles.container}>  
+      <header className={styles.header}>  
+        <h1 className={styles.title}>Login</h1>  
+      </header>  
+      <form className={styles.form} onSubmit={handleEnviar}>  
+        {userNotPassword ? (  
+          <>  
+            <select  
+              value={userType}  
+              onChange={(e) => setUserType(e.target.value)}  
+              required  
+              className={styles.input}  
+            >  
+              <option value="" disabled>  
+                Tipo de Usuario  
+              </option>  
+              <option value="secretaria">Secretaria</option>  
+              <option value="docente">Docente</option>  
+              <option value="admin">Administrador</option>  
+            </select>  
+            <button type="submit" className={styles.button}>  
+              Entrar  
+            </button>  
+          </>  
+        ) : (  
+          <>  
+            <select  
+              value={userType}  
+              onChange={(e) => setUserType(e.target.value)}  
+              required  
+              className={styles.input}  
+            >  
+              <option value="" disabled>  
+                Tipo de Usuario Administrador  
+              </option>  
+              <option value="admin">Administrador</option>  
+              <option value="aluno">Aluno</option>  
+              <option value="docente">Docente</option>  
+              <option value="secretaria">Secretaria</option>  
+            </select>  
+            <input  
+              type="number"  
+              placeholder="Nif"  
+              required  
+              className={styles.input}  
+              maxLength={9}  
+              value={Nif}  
+              onChange={(e) => setNif(e.target.value)}  
+            />  
+            <div className={styles.passwordContainer}>  
               <input  
-                type="number"  
-                placeholder="Nif"  
+                type={showPassword ? "text" : "password"}  
+                placeholder="Senha"  
                 required  
-                className="input"  
-                maxLength={9}  
-                value={Nif}  
-                onChange={(e) => setNif(e.target.value)}  
+                className={styles.input}  
+                maxLength={50}  
               />  
-              <div style={{ position: "relative" }}>  
-                <input  
-                  type={showPassword ? "text" : "password"}  
-                  placeholder="Senha"  
-                  required  
-                  className="input"  
-                  maxLength={50}  
-                />  
-                <span  
-                  onClick={toggleShowPassword}  
-                  style={{  
-                    position: "absolute",  
-                    right: 10,  
-                    top: "50%",  
-                    transform: "translateY(-50%)",  
-                    cursor: "pointer",  
-                  }}  
-                >  
-                  {showPassword ? "🙈" : "👁️"}  
-                </span>  
-              </div>  
-              <button type="submit" className="button" disabled={isLoading}>  
-                {isLoading ? "Entrando..." : "Entrar"}  
-              </button>  
-              {errorMessage && <p className="error">{errorMessage}</p>}  
-            </>  
-          )}  
-        </form>  
-      </div>  
+              <span  
+                onClick={toggleShowPassword}  
+                className={styles.togglePassword}  
+              >  
+                {showPassword ? "🙈" : "👁️"}  
+              </span>  
+            </div>  
+            <button type="submit" className={styles.button} disabled={isLoading}>  
+              {isLoading ? "Entrando..." : "Entrar"}  
+            </button>  
+            {errorMessage && <p className={styles.error}>{errorMessage}</p>}  
+          </>  
+        )}  
+      </form>  
     </div>  
   );  
 };  
