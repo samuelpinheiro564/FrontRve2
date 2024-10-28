@@ -1,5 +1,5 @@
 import React from 'react';  
-import { FaFileAlt, FaDoorOpen } from 'react-icons/fa';  
+import { FaFileAlt, FaDoorOpen, FaUserGraduate } from 'react-icons/fa';  
 import './styles.modules.css';  
 
 function App() {  
@@ -17,6 +17,10 @@ function App() {
           <div className="card">
             <FaDoorOpen className="icon" />
             <h2>Saída</h2>
+          </div>
+          <div className="card">
+            <FaUserGraduate className="icon" />
+            <h2>Alunos</h2>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useState,useEffect } from 'react';
 import {CriarUser,AllUsers} from '../../Data/server';
@@ -63,3 +64,4 @@ const CadastroUsuarios = () => {
 };
 
 export default CadastroUsuarios;
+
