@@ -37,10 +37,10 @@ const NavBar = () => {
               <NavLink to="/CategoriaAdmin" activeClassName="active" onClick={handleLinkClick}>Categoria Admin</NavLink>  
             </li> 
             <li>  
-              <NavLink to="/CadastroUsuarios" activeClassName="active" onClick={handleLinkClick}>Cadastro USer</NavLink>  
+              <NavLink to="/CadastroUsuarios" activeClassName="active" onClick={handleLinkClick}>Cadastro Usuarios</NavLink>  
             </li>   
             <li>  
-              <NavLink to="/NotificacaoSec" activeClassName="active" onClick={handleLinkClick}>Notificação Sec</NavLink>  
+              <NavLink to="/NotificacaoSec" activeClassName="active" onClick={handleLinkClick}>Notificação Secretaria</NavLink>  
             </li>  
           </ul>  
         </nav>
