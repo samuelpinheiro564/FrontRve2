@@ -1,66 +1,99 @@
-import React, { useState } from 'react';
-import {CriarCampoTexto,} from '../../Data/server';
+// Forum.js  
+import React, { useState, useEffect } from 'react';  
+import { CriarCampoTexto, getCampostextoRve,AllForum } from '../../Data/server'; // Lembre-se de criar esse serviço  
+import './styles.css'; // Para estilizações, se você quiser
+import rveData from '../../Data/DadosRve';  
 
-const ConversationPage = () => {
-// const [forum, setForum] = useState('');
-// const [autor, setAutor] = useState('');
-// const [mensagem, setMensagem] = useState('');
-const [id, setId] = useState(null);
-const [nifusuario, setNifUsuario] = useState('');
-const [campotexto, setCampoTexto] = useState('');
+const Forum = () => {  
+    const [messages, setMessages] = useState([]); // Estado para armazenar mensagens  
+    const [texto, setTexto] = useState(''); // Estado para nova mensagem 
+    const [id, setId] = useState(0); // Estado para armazenar ID de cada mensagem 
+    const [nif ] = useState(0); // Estado para armazenar NIF do usuário
+    const [forum,setForum] = useState([]); // Estado para armazenar o forum
+    const dadosRve = rveData.getRves();
+    console.log(dadosRve);
 
+    // Fetch messages when the component mounts  
+    useEffect(() => {  
+      const dadosRve = rveData.getRves();
+      console.log(dadosRve);
+      const allForum = async () => {
+        try{
+          const fetchedAllForum = await AllForum();
+          setForum(fetchedAllForum);
+          console.log('Forum:', forum);
+        } catch (error) {
+          console.error('Erro ao buscar RVE:', error);
+        }
+      }
+        const loadMessages = async () => {  
+            try {  
+              const rve = rveData.getRves();
+              console.log('RVE:', rve);
+                const fetchedMessages = await getCampostextoRve(); // Chamando a função para buscar mensagens  
+                setMessages(fetchedMessages);  
+            } catch (error) {  
+                console.error('Erro ao buscar mensagens:', error);  
+            }  
+        };  
+        const gerarIdNumber = () => {  
+          const randomId = Math.floor(Math.random() * 1000000);   
+          setId(randomId);   
+        };  
+        gerarIdNumber();  
+        loadMessages();  
+        allForum();
+    });  
 
-
-const GerarId = () => {
-    setId(Math.floor(Math.random() * 10000));
-    };
-
-const handleCriarForum = async (e) => {
-    GerarId();
-e.preventDefault();
-try {
-    
-const CampoTexto1 = {
-id:Number(id),
-nifusuario:Number(nifusuario),
-campotexto
-};
-console.log(CampoTexto1);
- CriarCampoTexto(CampoTexto1);
-alert('Campo de texto cadastrado com sucesso');
-setCampoTexto('');
-}
-catch (error) {
-console.error('Erro ao criar campo de texto:', error);
-}
-}
-
-  return (
-    <div>
-<h1>Forum</h1>
-<form onSubmit={handleCriarForum}>
-<input  
-    type="Number"  
-            name="NifUsuario"  
-            placeholder="NifUsuario"  
-            value={nifusuario}  
-            onChange={(e) => setNifUsuario(e.target.value)}  
-            className="input"  
-          />  
-              <input  
-            type="text"  
-            name="presenca"  
-            placeholder="Presença"  
-            value={campotexto}  
-            onChange={(e) => setCampoTexto(e.target.value)}  
-            className="input"  
-          />  
-<button type="submit" onClick={handleCriarForum}>Criar Campo de Texto</button>
-</form>
-
-    </div>
+   
+    // Função para enviar uma nova mensagem  
+    const handleSendMessage = async (e) => {  
+      e.preventDefault(); // Previne o comportamento padrão do form  
   
-  );
-};
+      // Verificando se o texto está vazio  
+      if (texto === '') return; // Não envia mensagens vazias  
+  
+      try {   
+          // Verifica se o ID da RVE está no array do forum  
+          const isIdValid = forum.some(rve => rve.id === id); // Verifica se existe um RVE no forum com o mesmo ID  
+          
+          if (!isIdValid) {  
+              console.error('ID da RVE não encontrado no forum.');  
+              alert('Não é possível enviar a mensagem. O ID da RVE não está associado a nenhum tópico do forum.'); // Mensagem de erro simples  
+              return; // Saia da função se o ID não for válido  
+          }  
+  
+          const newMessage = { id, texto, nif };  
+          await CriarCampoTexto(newMessage); // Chamando a função para enviar a mensagem  
+          setMessages([...messages, newMessage]); // Adiciona nova mensagem à lista  
+          setTexto(''); // Limpa o campo de nova mensagem  
+          setId(''); // Limpa o ID   
+      } catch (error) {  
+          console.error('Erro ao enviar mensagem:', error);  
+      }  
+  };
 
-export default ConversationPage;
+    return (  
+        <div>  
+            <h1>Fórum</h1>  
+            <div className="messages-container">  
+                <ul>  
+                    {messages.map((msg, index) => (  
+                        <li key={index}>{msg}</li> // Mostrando cada mensagem  
+                    ))}  
+                </ul>  
+            </div>  
+            <form onSubmit={handleSendMessage}>  
+                <textarea  
+                    value={texto}  
+                    onChange={(e) => setTexto(e.target.value)}  
+                    placeholder="Digite sua mensagem aqui"  
+                    required  
+                />  
+                <button type="submit">Enviar</button>  
+            </form>  
+        </div>  
+    );  
+};  
+
+export default Forum;

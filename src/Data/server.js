@@ -166,6 +166,9 @@ const getCampostextoRve = async (id) => {
         throw error;
     }
 };
+// messageService.js  
+;  
+
 
 // Funções para gerenciar fóruns
 const CriarForum = async (forumData) => {
@@ -188,12 +191,12 @@ const AllForum = async () => {
     }
 };
 
-const ObterForumPorId = async (id) => {
+const ObterForumPorIdRVE = async (IdRve) => {
     try {
-        const response = await axios.get(`${URL}/forum/${id}`);
+        const response = await axios.get(`${URL}/forum/${IdRve}`);
         return response.data;
     } catch (error) {
-        console.error(`Erro ao buscar fórum com ID ${id}:`, error);
+        console.error(`Erro ao buscar fórum com ID ${IdRve}:`, error);
         throw error;
     }
 };
@@ -338,7 +341,7 @@ export {
     DeleteCampoTexto,
     CriarForum,
     AllForum,
-    ObterForumPorId,
+    ObterForumPorIdRVE,
     EditarForum,
     DeleteForum,
     CriarSaida,

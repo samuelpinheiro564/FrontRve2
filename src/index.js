@@ -12,13 +12,15 @@ import NotificacaoSec from "../src/Routes/NotificacaoSec/page";
 import ErrorPage from './Routes/ErrorPage';  
 import { useLocation } from 'react-router-dom';  
 import NavBar from '../src/components/Navbar'; // Importe o NavBar  
+import DocentList from '../src/Routes/DocentList/DocentList';
+import Forum from '../src/Routes/Forum/Forum';
 
 function App() {  
   const location = useLocation(); // Obtém a localização atual  
 
   return (  
     <div>  
-      {location.pathname !== '/Login' && <NavBar />} {/* Renderiza o NavBar apenas se não estiver na rota "/Login" */}  
+      {location.pathname !== '/DocentList' && <NavBar />} {/* Renderiza o NavBar apenas se não estiver na rota "/Login" */}  
       <Outlet />  
     </div>  
   );  
@@ -48,6 +50,10 @@ const router = createBrowserRouter([
         element: <Rve />,  
       },  
       {  
+        path: "DocentList",  
+        element: <DocentList />,  
+      },  
+      {  
         path: "SuasRve",  
         element: <SuasRve />,  
       }, 
@@ -67,6 +73,10 @@ const router = createBrowserRouter([
         path: "NotificacaoSec",  
         element: <NotificacaoSec />,  
       },  
+      {  
+        path: "Forum",  
+        element: <Forum />,  
+      },
     ],  
   },  
 ]);  

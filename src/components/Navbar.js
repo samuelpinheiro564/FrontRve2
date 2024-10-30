@@ -23,7 +23,10 @@ const NavBar = () => {
           <ul>  
             <li>  
               <NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Suas RVE</NavLink>  
-            </li>  
+            </li>   
+            <li>  
+              <NavLink to="/DocentList" activeClassName="active" onClick={handleLinkClick}>DocentList</NavLink>  
+            </li> 
             <li>  
               <NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Saída</NavLink>  
             </li>  
