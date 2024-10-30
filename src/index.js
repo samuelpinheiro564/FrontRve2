@@ -12,7 +12,6 @@ import NotificacaoSec from "../src/Routes/NotificacaoSec/page";
 import ErrorPage from './Routes/ErrorPage';  
 import { useLocation } from 'react-router-dom';  
 import NavBar from '../src/components/Navbar'; // Importe o NavBar  
-import DocentList from '../src/Routes/DocentList/DocentList';
 import Forum from '../src/Routes/Forum/Forum';
 
 function App() {  
@@ -49,10 +48,7 @@ const router = createBrowserRouter([
         path: "Rve",  
         element: <Rve />,  
       },  
-      {  
-        path: "DocentList",  
-        element: <DocentList />,  
-      },  
+     
       {  
         path: "SuasRve",  
         element: <SuasRve />,  
