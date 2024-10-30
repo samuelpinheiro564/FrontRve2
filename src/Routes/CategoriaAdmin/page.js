@@ -28,6 +28,12 @@ const CategoriaAdmin = () => {
             <p>Usuários</p>  
           </div>  
           </NavLink>
+          <NavLink to="/NotificacaoSec" activeClassName={styles.active}>
+          <div className={styles.card1}>  
+          <i className={styles.icon}>📨</i>
+            <p>Notificação Secretaria</p>  
+          </div>  
+          </NavLink>
         </div>  
       </div>  
     </div>
