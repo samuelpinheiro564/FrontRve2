@@ -20,7 +20,7 @@ function App() {
 
   return (  
     <div>  
-      {location.pathname !== '/DocentList' && <NavBar />} {/* Renderiza o NavBar apenas se não estiver na rota "/Login" */}  
+      {location.pathname !== '/Login' && <NavBar />} {/* Renderiza o NavBar apenas se não estiver na rota "/Login" */}  
       <Outlet />  
     </div>  
   );  

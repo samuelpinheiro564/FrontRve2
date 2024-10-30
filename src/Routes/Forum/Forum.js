@@ -26,6 +26,7 @@ const Forum = () => {
           console.error('Erro ao buscar RVE:', error);
         }
       }
+      //chama todos os foruns e armazena no estado forum
         const loadMessages = async () => {  
             try {  
               const rve = rveData.getRves();
@@ -36,6 +37,7 @@ const Forum = () => {
                 console.error('Erro ao buscar mensagens:', error);  
             }  
         };  
+        // Função para gerar um ID aleatório
         const gerarIdNumber = () => {  
           const randomId = Math.floor(Math.random() * 1000000);   
           setId(randomId);   
