@@ -1,5 +1,4 @@
 import React from 'react';  
-import { FaFileAlt, FaDoorOpen, FaUserGraduate } from 'react-icons/fa';  
 import styles from "../CategoriaDocente/docente.module.css";  
 
 function App() {  
