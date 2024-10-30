@@ -1,14 +1,14 @@
 // Forum.js  
 import React, { useState, useEffect } from 'react';  
-import { CriarCampoTexto, getCampostextoRve,AllForum } from '../../Data/server'; // Lembre-se de criar esse serviço  
+import {  getCampostextoRve,AllForum } from '../../Data/server'; // Lembre-se de criar esse serviço  
 import './styles.css'; // Para estilizações, se você quiser
 import rveData from '../../Data/DadosRve';  
 
 const Forum = () => {  
     const [messages, setMessages] = useState([]); // Estado para armazenar mensagens  
     const [texto, setTexto] = useState(''); // Estado para nova mensagem 
-    const [id, setId] = useState(0); // Estado para armazenar ID de cada mensagem 
-    const [nif ] = useState(0); // Estado para armazenar NIF do usuário
+    const [ setId] = useState(0); // Estado para armazenar ID de cada mensagem 
+   // const [nif ] = useState(0); // Estado para armazenar NIF do usuário
     const [forum,setForum] = useState([]); // Estado para armazenar o forum
     const dadosRve = rveData.getRves();
     console.log(dadosRve);
@@ -33,10 +33,12 @@ const Forum = () => {
               console.log('RVE:', rve);
                 const fetchedMessages = await getCampostextoRve(); // Chamando a função para buscar mensagens  
                 setMessages(fetchedMessages);  
+                console.log('Mensagens:', messages);
             } catch (error) {  
                 console.error('Erro ao buscar mensagens:', error);  
             }  
-        };  
+        }; 
+        //armazena todas as mensagens no estado messages 
         // Função para gerar um ID aleatório
         const gerarIdNumber = () => {  
           const randomId = Math.floor(Math.random() * 1000000);   
@@ -46,7 +48,11 @@ const Forum = () => {
         loadMessages();  
         allForum();
     });  
-
+console.log('Forum:', forum);
+console.log('Mensagens:', messages);
+console.log('Texto:', texto);
+console.log('ID:', dadosRve.IdRVE);
+  
    
     // Função para enviar uma nova mensagem  
     const handleSendMessage = async (e) => {  
@@ -57,7 +63,7 @@ const Forum = () => {
   
       try {   
           // Verifica se o ID da RVE está no array do forum  
-          const isIdValid = forum.some(rve => rve.id === id); // Verifica se existe um RVE no forum com o mesmo ID  
+          const isIdValid = forum.some(IdRVE => IdRVE.id === IdRVE); // Verifica se existe um RVE no forum com o mesmo ID  
           
           if (!isIdValid) {  
               console.error('ID da RVE não encontrado no forum.');  
@@ -65,9 +71,8 @@ const Forum = () => {
               return; // Saia da função se o ID não for válido  
           }  
   
-          const newMessage = { id, texto, nif };  
-          await CriarCampoTexto(newMessage); // Chamando a função para enviar a mensagem  
-          setMessages([...messages, newMessage]); // Adiciona nova mensagem à lista  
+       
+          setMessages([...messages]); // Adiciona nova mensagem à lista  
           setTexto(''); // Limpa o campo de nova mensagem  
           setId(''); // Limpa o ID   
       } catch (error) {  
