@@ -2,27 +2,26 @@
 
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
+  background: linear-gradient(135deg, #9b1212 0%, #e04c4c 100%);
   overflow: hidden;
 }
 
 /* Banner com efeito de onda */
 .banner {
-  background: linear-gradient(45deg, #1e3c72 0%, #2a5298 100%);
+  background: linear-gradient(45deg, #ff7070 0%, #ff0000 100%);
   padding: 2rem;
   position: relative;
   overflow: hidden;
 }
 
 .banner::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 40px;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M321.39 56.44c58-10.79 114.16-30.13 172-41.86 82.39-16.72 168.19-17.73 250.45-.39C823.78 31 906.67 72 985.66 92.83c70.05 18.48 146.53 26.09 214.34 3V0H0v27.35a600.21 600.21 0 00321.39 29.09z'/%3E%3C/svg%3E");
-  background-size: cover;
+
   animation: wave 10s linear infinite;
 }
 
@@ -30,14 +29,14 @@
   color: #fff;
   font-size: 3.5rem;
   text-align: center;
-  text-shadow: 0 2px 15px rgba(0,0,0,0.2);
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
   margin: 0;
   letter-spacing: 4px;
 }
 
 /* Título das categorias */
 h2 {
-  color: #64ffda;
+  color: #dadada;
   text-align: center;
   font-size: 2rem;
   margin: 2rem 0;
@@ -59,8 +58,9 @@ h2 {
 }
 
 /* Estilo dos cards */
-.card, .card1 {
-  background: rgba(255, 255, 255, 0.05);
+.card,
+.card1 {
+  background: rgba(255, 255, 255, 0);
   border-radius: 15px;
   padding: 2rem;
   text-align: center;
@@ -69,10 +69,11 @@ h2 {
   backdrop-filter: blur(10px);
 }
 
-.card:hover, .card1:hover {
+.card:hover,
+.card1:hover {
   transform: translateY(-10px) rotateX(10deg);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  border-color: #64ffda;
+  border-color: #fff;
 }
 
 /* Ícones */
@@ -83,12 +84,14 @@ h2 {
   transition: transform 0.3s ease;
 }
 
-.card:hover .icon, .card1:hover .icon {
+.card:hover .icon,
+.card1:hover .icon {
   transform: scale(1.2) rotate(10deg);
 }
 
 /* Texto dos cards */
-.card p, .card1 p {
+.card p,
+.card1 p {
   color: #fff;
   font-size: 1.2rem;
   margin: 0.5rem 0 0;
@@ -97,8 +100,12 @@ h2 {
 
 /* Card ativo */
 .active {
-  background: linear-gradient(135deg, rgba(100, 255, 218, 0.1), rgba(100, 255, 218, 0.05));
-  border-color: #64ffda;
+  background: linear-gradient(
+    135deg,
+    rgba(100, 255, 218, 0.1),
+    rgba(100, 255, 218, 0.05)
+  );
+  border-color: white;
   box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
 }
 
@@ -120,32 +127,39 @@ h2 {
   .banner h1 {
     font-size: 2.5rem;
   }
-  
+
   .grid {
     gap: 1rem;
     padding: 1rem;
   }
-  
-  .card, .card1 {
+
+  .card,
+  .card1 {
     padding: 1.5rem;
   }
 }
 
 /* Efeito de brilho ao hover */
-.card::after, .card1::after {
-  content: '';
+.card::after,
+.card1::after {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(225deg, transparent 0%, rgba(100, 255, 218, 0.1) 100%);
+  background: linear-gradient(
+    225deg,
+    transparent 0%,
+    rgba(100, 255, 218, 0.1) 100%
+  );
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
   border-radius: 15px;
 }
 
-.card:hover::after, .card1:hover::after {
+.card:hover::after,
+.card1:hover::after {
   opacity: 1;
 }

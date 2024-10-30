@@ -49,7 +49,7 @@ const Login = () => {
   };  
 
   useEffect(() => {  
-    if (userType === "aluno" || userType === "secretaria") {  
+    if (userType === "secretaria") {  
       console.log("Não precisa de senha");  
       setUserNotPassword(true);  
     } else if (userType === "docente" || userType === "admin") {  
@@ -90,7 +90,6 @@ const Login = () => {
               <option value="" disabled>
                 Tipo de Usuario
               </option>
-              <option value="aluno">Aluno</option>
               <option value="secretaria">Secretaria</option>
               <option value="docente">Docente</option>
               <option value="admin">Administrador</option>
@@ -111,7 +110,6 @@ const Login = () => {
                 Tipo de Usuario Administrador
               </option>
               <option value="admin">Administrador</option>
-              <option value="aluno">Aluno</option>
               <option value="docente">Docente</option>
               <option value="secretaria">Secretaria</option>
             </select>

@@ -5,7 +5,7 @@ nav {
     top: 0;
     height: 100vh;
     width: 250px;
-    background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
+    background: linear-gradient(180deg, #848e99 0%, #fff 100%);
     padding: 2rem 0;
     box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
@@ -15,7 +15,7 @@ nav {
   nav a {
     display: block;
     padding: 1rem 2rem;
-    color: #ecf0f1;
+    color: #000;
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
@@ -24,18 +24,24 @@ nav {
     overflow: hidden;
   }
   
-  .menu-icon{
+  .menu-icon {
     cursor: pointer;
     font-size: 1.5rem;
-    color: #fff;
+    position: absolute;
     top: 1rem;
-    margin-right: 40%;
+    left: 1rem;
+    color: red;
+    transition: color 0.3s ease;
+  }
+
+  .menu-icon:hover {
+    color: darkred;
   }
   /* Efeito hover nos links */
   nav a:hover {
     background: rgba(255, 255, 255, 0.1);
     transform: translateX(10px);
-    color: #3498db;
+    color: red;
   }
   
   /* Efeito de linha animada */
@@ -46,7 +52,7 @@ nav {
     bottom: 0;
     height: 2px;
     width: 0;
-    background-color: #3498db;
+    background-color: red;
     transition: width 0.3s ease;
   }
   
@@ -112,6 +118,6 @@ nav {
   
   /* Estilo ativo para a rota atual */
   nav a.active {
-    background: rgba(52, 152, 219, 0.2);
-    border-left: 4px solid #3498db;
+    background: rgba(172, 180, 185, 0.2);
+    border-left: 4px solid red;
   }
