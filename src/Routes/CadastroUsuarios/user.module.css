@@ -1,168 +1,180 @@
-/* user.module.css */
-
-.container {
-    min-height: 100vh;
-    padding: 2rem;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .error {  
-    color: red;  
-    margin-top: 10px;  
-}  
-
-.success {  
-    color: green;  
-    margin-top: 10px;  
+/* Variáveis globais */
+:root {
+  --primary-color: #df0a0a;
+  --primary-hover: #a31010;
+  --text-color: #000000;
+  --white: #ffffff;
+  --form-width: 600px;
+  --animation-timing: 0.3s;
 }
-  .title {
-    font-size: 2.5rem;
-    color: #2d3436;
-    margin-bottom: 2rem;
-    font-weight: 700;
-    text-align: center;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+/* Container principal com gradiente animado */
+.container {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(-45deg, #ff0000, #ff4444, #c91a1a, #ff8585);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+/* Título com efeito de destaque */
+.title {
+  font-size: 3.5rem;
+  color: var(--white);
+  margin-bottom: 3rem;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 
+    2px 2px 0px var(--primary-color),
+    4px 4px 0px rgba(0,0,0,0.2);
+  animation: titleFloat 3s ease-in-out infinite;
+}
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Formulário com efeito de vidro */
+.form {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3.5rem;
+  border-radius: 30px;
+  width: 90%;
+  max-width: var(--form-width);
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 20px 40px rgba(0,0,0,0.1),
+    0 0 0 1px rgba(255,255,255,0.1);
+  transform-style: preserve-3d;
+  transition: all var(--animation-timing) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form:hover {
+  box-shadow: 
+    0 30px 60px rgba(0,0,0,0.15),
+    0 0 0 2px rgba(255,255,255,0.2);
+}
+
+/* Grupos de formulário melhorados */
+.formGroup {
+  margin-bottom: 2.5rem;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1.1rem;
+  transform: translateZ(20px);
+}
+
+/* Input com efeitos de foco aprimorados */
+.input {
+  width: 100%;
+  padding: 1.2rem;
+  border: 2px solid rgba(0,0,0,0.1);
+  border-radius: 15px;
+  font-size: 1.1rem;
+  transition: all var(--animation-timing) ease;
+  background: rgba(255,255,255,0.9);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 
+    0 0 0 4px rgba(223,10,10,0.1),
+    0 10px 20px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+/* Botão com efeitos modernos */
+.button {
+  width: 100%;
+  padding: 1.3rem;
+  background: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--animation-timing) ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.2),
+    transparent
+  );
+  transition: var(--animation-timing);
+}
+
+.button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-3px);
+  box-shadow: 
+    0 10px 20px rgba(223,10,10,0.3),
+    0 6px 6px rgba(223,10,10,0.2);
+}
+
+.button:hover::before {
+  left: 100%;
+}
+
+/* Mensagens de feedback aprimoradas */
+.error, .success {
+  padding: 1rem;
+  border-radius: 10px;
+  margin-top: 1rem;
+  font-weight: 500;
+  animation: slideIn 0.3s ease;
+}
+
+.error {
+  background: rgba(255,0,0,0.1);
+  color: #ff0000;
+  border-left: 4px solid #ff0000;
+}
+
+.success {
+  background: rgba(0,255,0,0.1);
+  color: #008000;
+  border-left: 4px solid #008000;
+}
+
+/* Responsividade melhorada */
+@media (max-width: 768px) {
+  .container { padding: 2rem 1rem; }
+  .form { 
+    padding: 2rem;
+    max-width: 100%;
   }
-  
-  .form {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 2.5rem;
-    border-radius: 20px;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 
-      0 10px 20px rgba(0,0,0,0.08),
-      0 6px 6px rgba(0,0,0,0.12);
-    transition: transform 0.3s ease;
-  }
-  
-  .form:hover {
-    transform: translateY(-5px);
-  }
-  
-  .formGroup {
-    margin-bottom: 1.5rem;
-    position: relative;
-  }
-  
-  .label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #2d3436;
-    font-weight: 500;
-    font-size: 0.95rem;
-  }
-  
-  .input {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    border: 2px solid #e1e1e1;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: white;
-  }
-  
-  .input:focus {
-    outline: none;
-    border-color: #6c5ce7;
-    box-shadow: 0 0 0 3px rgba(108,92,231,0.1);
-  }
-  
-  .button {
-    width: 100%;
-    padding: 1rem;
-    background: #6c5ce7;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
-  }
-  
-  .button:hover {
-    background: #5b4bc4;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(108,92,231,0.4);
-  }
-  
-  .button:active {
-    transform: translateY(0);
-  }
-  
-  /* Animação de entrada dos elementos do formulário */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .formGroup {
-    animation: fadeInUp 0.5s ease forwards;
-    opacity: 0;
-    animation-delay: calc(var(--index, 0) * 0.1s);
-  }
-  
-  /* Responsividade */
-  @media (max-width: 768px) {
-    .container {
-      padding: 1rem;
-    }
-    
-    .form {
-      padding: 1.5rem;
-    }
-    
-    .title {
-      font-size: 2rem;
-    }
-  }
-  
-  /* Feedback visual para estados de erro */
-  .input.error {
-    border-color: #ff7675;
-  }
-  
-  .errorMessage {
-    color: #ff7675;
-    font-size: 0.85rem;
-    margin-top: 0.5rem;
-  }
-  
-  /* Efeito de loading no botão */
-  .button.loading {
-    position: relative;
-    background: #8f87e9;
-    pointer-events: none;
-  }
-  
-  .button.loading::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    top: 50%;
-    left: 50%;
-    margin: -10px 0 0 -10px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
+  .title { font-size: 2.5rem; }
+  .input, .button { padding: 1rem; }
+}
