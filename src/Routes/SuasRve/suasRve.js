@@ -1,28 +1,20 @@
 import React, { useState, useEffect } from 'react';  
 import userData from '../../Data/dadosUser';  
-import { RveById } from '../../Data/server';  
+import { getAllUsersrve_usuarios } from '../../Data/server';  
 
 const SuasRve = () => {  
     const [rve, setRve] = useState([]);  
 
     useEffect(() => {  
-        const dadosUser = userData.getUsers();  
-        console.log(dadosUser);  
-        
-        // Check if there is a user and get their NIF  
-        if (dadosUser.length > 0 && dadosUser[0].length > 0) {  
-            const nif = dadosUser[0][0].nif; // Adjust this if the structure is different  
-            console.log(nif);  
-
-            // Set Rve state with the result of RveById  
-            const fetchedRves = RveById(nif);  
-            if (Array.isArray(fetchedRves)) { // Ensure that fetchedRves is an array  
-                setRve(fetchedRves);  
-            } else {  
-                console.warn("RveById did not return an array:", fetchedRves);  
-                setRve([]); // Fallback if not an array  
-            }  
-        }  
+        const handleRves = async () => {
+        const userNif = userData.getUsers();  
+        console.log(userNif);  
+        console.log(userNif[0].nif);
+        const rves = await getAllUsersrve_usuarios(userNif[0].nif);
+        console.log(rves);
+        setRve(rves); 
+        }
+        handleRves();
     }, []); // Empty array means this effect runs once on mount  
 
     return (  

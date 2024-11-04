@@ -15,6 +15,46 @@ const LoginUser = async (nif) => {
     }
 };
 
+const createrve_usuarios  = async (datarve_usuario) => {
+    try {
+        const response = await axios.post(`${URL}/rve_usuario`, datarve_usuario);
+        console.log('Resposta:', response.data);
+        return response.data;
+    } catch (error) {
+            console.error('Erro interno do servidor:', error);
+            throw error;
+        
+    }
+};
+
+const getAllUsersrve_usuarios  = async (usuario_nif) => {
+    try {
+        const requestURL = `${URL}/rve_usuario/${usuario_nif}`;
+        console.log(`Fazendo requisição para: ${requestURL}`);
+        const response = await axios.get(requestURL);
+        console.log('Resposta:', response.data);
+        return response.data;
+    } catch (error) {
+            console.error('Erro interno do servidor:', error);
+            throw error;
+        
+    }
+}
+
+const getAllRVErve_usuarios  = async (rve_id) => {
+    try {
+        const requestURL = `${URL}/rve_usuario/${rve_id}`;
+        console.log(`Fazendo requisição para: ${requestURL}`);
+        const response = await axios.get(requestURL);
+        console.log('Resposta:', response.data);
+        return response.data;
+    } catch (error) {
+            console.error('Erro interno do servidor:', error);
+            throw error;
+        
+    }
+}
+
 const CriarUser = async (userData) => {
     try {
         const response = await axios.post(`${URL}/usuarios`, userData);
@@ -117,9 +157,9 @@ const CriarCampoTexto = async (campoData) => {
     }
 };
 
-const AllCamposTexto = async () => {
+const AllCamposTextoRve = async (idrve) => {
     try {
-        const response = await axios.get(`${URL}/camposTexto`);
+        const response = await axios.get(`${URL}/camposTexto${idrve}`);
         return response.data;
     } catch (error) {
         console.error('Erro ao buscar todos os campos de texto:', error);
@@ -127,15 +167,6 @@ const AllCamposTexto = async () => {
     }
 };
 
-const ObterCampoTextoPorId = async (id) => {
-    try {
-        const response = await axios.get(`${URL}/camposTexto/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error(`Erro ao buscar campo de texto com ID ${id}:`, error);
-        throw error;
-    }
-};
 
 const EditarCampoTexto = async (id, campoData) => {
     try {
@@ -335,8 +366,7 @@ export {
     EditarRve,
     DeleteRve,
     CriarCampoTexto,
-    AllCamposTexto,
-    ObterCampoTextoPorId,
+    AllCamposTextoRve,
     EditarCampoTexto,
     DeleteCampoTexto,
     CriarForum,
@@ -354,6 +384,9 @@ export {
     AllSaidaProfessor,
     ObterSaidaProfessorPorId,
     EditarSaidaProfessor,
-    DeletarSaidaProfessor
+    DeletarSaidaProfessor,
+    createrve_usuarios,
+    getAllUsersrve_usuarios,
+    getAllRVErve_usuarios
 
 };
