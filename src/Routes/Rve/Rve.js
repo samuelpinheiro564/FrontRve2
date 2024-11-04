@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';  
-import { AllUsers,CriarRve,createrve_usuarios } from '../../Data/server';  
+import { AllUsers, CriarRve, createrve_usuarios } from '../../Data/server';  
 import userData from '../../Data/dadosUser';   
 import rveData from '../../Data/DadosRve';  
 import { useNavigate } from 'react-router-dom';
+import styles from "../Rve/rve.module.css";
 
 const Rve = () => {  
   const [autor, setAutor] = useState('');  
@@ -23,25 +24,21 @@ const Rve = () => {
   const [categorias, setCategorias] = useState('');  
   const [id, setId] = useState('');  
   const [listaDocentes, setListaDocentes] = useState([]);
-  // const [chatRve, setChatRve] = useState(false);
-  // const [campotexto, setCampotexto] = useState('');
-  // const [assinatura, setAssinatura] = useState(false);
   const navigate = useNavigate(); 
 
-  // Fetch user data and generate random ID  
   useEffect(() => {  
     const dadosUser = userData.getUsers();   
     if (dadosUser.length > 0) {  
       setAutor(dadosUser[0][0].nif);  
     }  
 
-    // Generate a random ID  
     const gerarIdNumber = () => {  
       const randomId = Math.floor(Math.random() * 1000000);   
       setId(randomId);   
     };  
     gerarIdNumber();  
   }, []);   
+
   useEffect(() => {  
     const fetchDocentes = async () => {  
         try {  
@@ -57,24 +54,7 @@ const Rve = () => {
         }   
     };  
     fetchDocentes();  
-}, []); 
-
-
-  // Fetch teachers  
-  useEffect(() => {  
-    const fetchDocentes = async () => {  
-      try {  
-        const docentes = await AllUsers();   
-        setListaDocentes(docentes);  
-        console.log('Docentes:', docentes); 
-      } catch (error) {  
-        console.error('Erro ao buscar docentes:', error);  
-      }  
-    };  
-    fetchDocentes();   
-  }, []);  
-
-
+  }, []); 
 
   const categories = [  
     'Aprendizagem',  
@@ -90,17 +70,14 @@ const Rve = () => {
 
   const addDocente = () => {  
     if (docenteAtual) {  
-      // Verifica se o docente já está na lista  
       if (docentesEnvolvidos.includes(docenteAtual)) {  
         alert('Este docente já está na lista de envolvidos.');  
-        return; // Não adiciona o docente se já estiver presente  
+        return; 
       }  
       
-      // Adiciona o docente à lista  
       setDocentesEnvolvidos([...docentesEnvolvidos, docenteAtual]);  
       setDocenteAtual('');   
   
-      // Log do array de docentes selecionados  
       console.log('Docentes Selecionados:', [...docentesEnvolvidos, docenteAtual]);  
     } else {  
       alert('Selecione um docente antes de adicionar.');  
@@ -117,55 +94,10 @@ const Rve = () => {
     e.preventDefault();
     console.log(docentesEnvolvidos);
     for (let i = 0; i < docentesEnvolvidos.length; i++) {
-      const userRve = await userData.createrve_usuarios(id,docentesEnvolvidos[i].nif);
+      const userRve = await createrve_usuarios(id, docentesEnvolvidos[i].nif);
       console.log(userRve);
+    }
   };
-};
-
-//useEffect(() => {
- // const getAllmsgs = async () => {
- // cons rveid = rveData.getRves();
- // console.log(rveid);
- // console.log(rveid[0].id);
-  //  const rves = await AllCamposTextoRve(rveid[0].id);
-  //  console.log(rves);
-  //  setRve(rves);
-  //};
-  //getAllmsgs();
-
-//},[chatRve]);
-
-// const handleChatRve = async (e) => {
-//  e.preventDefault();
-// if (chatRve) {
-// const users = userData.getUsers();
-//const now = new Date();
-// const rves = rveData.getRves();
-// Formatar a data
-//const data = now.toLocaleDateString('pt-BR'); // '04/11/2024'
-// Formatar a hora
-//const hora = now.toLocaleTimeString('pt-BR');
-// if(assinatura === false){
-//   const chat = {id,users[0].nif,campotexto,hora,data,rves[0].id}
-//  const res = await CriarCampoTexto(chat);
-// } 
-//};
-
-// const handleAssinatura = async (e) => {
-// e.preventDefault();
-// if (chatRve) {
-// const users = userData.getUsers();
-//const now = new Date();
-// const rves = rveData.getRves();
-// Formatar a data
-//const data = now.toLocaleDateString('pt-BR'); // '04/11/2024'
-// Formatar a hora
-//const hora = now.toLocaleTimeString('pt-BR');
-// if(assinatura === false){
-//   const chat = {id,users[0].nif,campotexto,hora,data,rves[0].id,assinatura}
-//  const res = await CriarCampoTexto(chat);
-// }
-
 
   const handleCriarRVE = async (e) => {  
     e.preventDefault();  
@@ -182,24 +114,22 @@ const Rve = () => {
         orientacoesEstudante,  
         descricaoOcorrido,  
         docentesEnvolvidos,
-        assinaturas:Array(assinaturas),  
+        assinaturas: Array(assinaturas),  
         elogios,  
         dificuldades,  
         presenca,  
         categorias,  
       };  
-      const rve_usuarios = await createrve_usuarios(id,autor,docentesEnvolvidos)
       handleUSerRve();
- const res=  rveData.addRve(rve);
-console.log(res);
-console.log(rve_usuarios);
-     await CriarRve(rve);
-      // Aqui você poderia fazer a chamada para salvar o RVE, por exemplo:  
-      // Supondo que você tenha uma função saveRve  
-console.log(rveData.getRves());
-navigate('/SuasRves');
-          //setChatRve(true);
-      // Limpar os estados após a criação do RVE  
+      const res = rveData.addRve(rve);
+      console.log(res);
+
+      await CriarRve(rve);
+      console.log(rveData.getRves());
+      
+      alert('RVE criado com sucesso!');  
+      navigate('/SuasRve');
+
       setEstudante('');  
       setCurso('');  
       setTurma('');  
@@ -213,9 +143,6 @@ navigate('/SuasRves');
       setDificuldades('');  
       setPresenca('');  
       setCategorias('');  
-    
-      // Notificar ou redirecionar o usuário após o sucesso  
-      alert('RVE criado com sucesso!');  
     } catch (error) {  
       console.error('Erro ao criar RVE:', error);  
       alert('Ocorreu um erro ao criar o RVE.');  
@@ -223,10 +150,10 @@ navigate('/SuasRves');
   };  
 
   return (  
-    <div>  
-      {/* {chatRve ?     <h1>Criar RVE</h1>  
-      <form onSubmit={handleCriarRVE}>  
-        <div>  
+    <div className={styles.container}>  
+      <h1 className={styles.title}>Criar RVE</h1>  
+      <form onSubmit={handleCriarRVE} className={styles.form}>  
+        <div className={styles.formGroup}>  
           <input  
             type="text"  
             name="estudante"  
@@ -234,9 +161,10 @@ navigate('/SuasRves');
             value={estudante}  
             onChange={(e) => setEstudante(e.target.value)}  
             required  
+            className={styles.input}
           />  
         </div>  
-        <div>  
+        <div className={styles.formGroup}>  
           <input  
             type="text"  
             name="curso"  
@@ -244,18 +172,20 @@ navigate('/SuasRves');
             value={curso}  
             onChange={(e) => setCurso(e.target.value)}  
             required  
+            className={styles.input}
           />  
         </div>  
-        <div>  
+        <div className={styles.formGroup}>  
           <textarea  
             name="turma"  
             placeholder="Turma do Estudante"  
             value={turma}  
             onChange={(e) => setTurma(e.target.value)}  
             required  
+            className={styles.textarea}
           />  
         </div>  
-        <div>  
+        <div className={styles.formGroup}>  
           <input  
             type="date"  
             name="data"  
@@ -263,9 +193,10 @@ navigate('/SuasRves');
             value={data}  
             onChange={(e) => setData(e.target.value)}  
             required  
+            className={styles.input}
           />  
         </div>  
-        <div>  
+        <div className={styles.formGroup}>  
           <input  
             type="time"  
             name="hora"  
@@ -273,58 +204,63 @@ navigate('/SuasRves');
             value={hora}  
             onChange={(e) => setHora(e.target.value)}  
             required  
+            className={styles.input}
           />  
         </div>  
-        <div>  
+        <div className={styles.formGroup}>  
           <textarea  
             name="motivo"  
             placeholder="Motivo"  
             value={motivo}  
             onChange={(e) => setMotivo(e.target.value)}  
             required  
+            className={styles.textarea}
           />  
         </div>  
-        <div>  
+        <div className={styles.formGroup}>  
           <textarea  
             name="orientacoesEstudante"  
             placeholder="Orientações ao Estudante"  
             value={orientacoesEstudante}  
             onChange={(e) => setOrientacoesEstudante(e.target.value)}  
             required  
+            className={styles.textarea}
           />  
         </div>  
-        <div>  
+        <div className={styles.formGroup}>  
           <textarea  
             name="descricaoOcorrido"  
             placeholder="Descrição do Ocorrido"  
             value={descricaoOcorrido}  
             onChange={(e) => setDescricaoOcorrido(e.target.value)}  
             required  
+            className={styles.textarea}
           />  
         </div>  
-        <div>  
+        <div className={styles.formGroup}>  
           <select  
             name="docenteAtual"  
             value={docenteAtual}  
             onChange={(e) => setDocenteAtual(e.target.value)}  
+            className={styles.select}
           >  
             <option value="">Selecione um Docente</option>  
              {listaDocentes.map((docente) => (  
               <option key={docente.nif} value={`${docente.nome}`}>{docente.nome}</option>  
             ))}   
           </select>  
-          <button type='button' onClick={addDocente}>  
+          <button type='button' onClick={addDocente} className={styles.button}>  
             Adicionar Docente  
           </button>  
         </div>  
         {docentesEnvolvidos.length > 0 && (  
-          <div>  
+          <div className={styles.formGroup}>  
             <h3>Docentes Envolvidos:</h3>  
-            <ul>  
+            <ul className={styles.list}>  
               {docentesEnvolvidos.map((docente, index) => (  
-                <li key={docente.nif}>  
+                <li key={docente.nif} className={styles.listItem}>  
                   {docente}  
-                  <button type="button" onClick={() => deleteDocente(index)}>  
+                  <button type="button" onClick={() => deleteDocente(index)} className={styles.button}>  
                     Remover  
                   </button>  
                 </li>  
@@ -332,39 +268,43 @@ navigate('/SuasRves');
             </ul>  
           </div>  
         )}  
-        <div>  
+        <div className={styles.formGroup}>  
           <input  
             type="text"  
             name="elogios"  
             placeholder="Elogios"  
             value={elogios}  
             onChange={(e) => setElogios(e.target.value)}  
+            className={styles.input}
           />  
         </div>  
-        <div>  
+        <div className={styles.formGroup}>  
           <input  
             type="text"  
             name="dificuldades"  
             placeholder="Dificuldades"  
             value={dificuldades}  
             onChange={(e) => setDificuldades(e.target.value)}  
+            className={styles.input}
           />  
         </div>  
-        <div>  
+        <div className={styles.formGroup}>  
           <input  
             type="text"  
             name="presenca"  
             placeholder="Presença"  
             value={presenca}  
             onChange={(e) => setPresenca(e.target.value)}  
+            className={styles.input}
           />  
         </div>  
-        <div>  
+        <div className={styles.formGroup}>  
           <select  
             name="categorias"  
             value={categorias}  
             onChange={(e) => setCategorias(e.target.value)}  
             required  
+            className={styles.select}
           >  
             <option value="">Selecione uma categoria</option>  
             {categories.map((category, index) => (  
@@ -373,174 +313,7 @@ navigate('/SuasRves');
           </select>  
         </div>  
       
-        <button type="submit" onClick={handleCriarRVE}>Criar RVE</button>  
-  
-      </form>  :
-      <div>
-      // colocar map  que pega os valores salvos em rveData e mostra aqui 
-      <div>
-      <div></div> => aqui fica a linha
-      <h2>Chat</h2>
-       // map que lista os comentarios de chatRve
-      <div>
-      <input type="text" value={campotexto} onChange={(e) => setCampotexto(e.target.value)} />
-            </div>
-        <button type="submit" onClick={handleChatRve}>Enviar</button>
-        <button type="submit" onClick={handleAssinatura}>Assinar</button>
-</div>
-      </div>
-      */}
-      <h1>Criar RVE</h1>  
-      <form onSubmit={handleCriarRVE}>  
-        <div>  
-          <input  
-            type="text"  
-            name="estudante"  
-            placeholder="Nome do Estudante"  
-            value={estudante}  
-            onChange={(e) => setEstudante(e.target.value)}  
-            required  
-          />  
-        </div>  
-        <div>  
-          <input  
-            type="text"  
-            name="curso"  
-            placeholder="Curso do Estudante"  
-            value={curso}  
-            onChange={(e) => setCurso(e.target.value)}  
-            required  
-          />  
-        </div>  
-        <div>  
-          <textarea  
-            name="turma"  
-            placeholder="Turma do Estudante"  
-            value={turma}  
-            onChange={(e) => setTurma(e.target.value)}  
-            required  
-          />  
-        </div>  
-        <div>  
-          <input  
-            type="date"  
-            name="data"  
-            placeholder="Data"  
-            value={data}  
-            onChange={(e) => setData(e.target.value)}  
-            required  
-          />  
-        </div>  
-        <div>  
-          <input  
-            type="time"  
-            name="hora"  
-            placeholder="Hora"  
-            value={hora}  
-            onChange={(e) => setHora(e.target.value)}  
-            required  
-          />  
-        </div>  
-        <div>  
-          <textarea  
-            name="motivo"  
-            placeholder="Motivo"  
-            value={motivo}  
-            onChange={(e) => setMotivo(e.target.value)}  
-            required  
-          />  
-        </div>  
-        <div>  
-          <textarea  
-            name="orientacoesEstudante"  
-            placeholder="Orientações ao Estudante"  
-            value={orientacoesEstudante}  
-            onChange={(e) => setOrientacoesEstudante(e.target.value)}  
-            required  
-          />  
-        </div>  
-        <div>  
-          <textarea  
-            name="descricaoOcorrido"  
-            placeholder="Descrição do Ocorrido"  
-            value={descricaoOcorrido}  
-            onChange={(e) => setDescricaoOcorrido(e.target.value)}  
-            required  
-          />  
-        </div>  
-        <div>  
-          <select  
-            name="docenteAtual"  
-            value={docenteAtual}  
-            onChange={(e) => setDocenteAtual(e.target.value)}  
-          >  
-            <option value="">Selecione um Docente</option>  
-             {listaDocentes.map((docente) => (  
-              <option key={docente.nif} value={`${docente.nome}`}>{docente.nome}</option>  
-            ))}   
-          </select>  
-          <button type='button' onClick={addDocente}>  
-            Adicionar Docente  
-          </button>  
-        </div>  
-        {docentesEnvolvidos.length > 0 && (  
-          <div>  
-            <h3>Docentes Envolvidos:</h3>  
-            <ul>  
-              {docentesEnvolvidos.map((docente, index) => (  
-                <li key={docente.nif}>  
-                  {docente}  
-                  <button type="button" onClick={() => deleteDocente(index)}>  
-                    Remover  
-                  </button>  
-                </li>  
-              ))}  
-            </ul>  
-          </div>  
-        )}  
-        <div>  
-          <input  
-            type="text"  
-            name="elogios"  
-            placeholder="Elogios"  
-            value={elogios}  
-            onChange={(e) => setElogios(e.target.value)}  
-          />  
-        </div>  
-        <div>  
-          <input  
-            type="text"  
-            name="dificuldades"  
-            placeholder="Dificuldades"  
-            value={dificuldades}  
-            onChange={(e) => setDificuldades(e.target.value)}  
-          />  
-        </div>  
-        <div>  
-          <input  
-            type="text"  
-            name="presenca"  
-            placeholder="Presença"  
-            value={presenca}  
-            onChange={(e) => setPresenca(e.target.value)}  
-          />  
-        </div>  
-        <div>  
-          <select  
-            name="categorias"  
-            value={categorias}  
-            onChange={(e) => setCategorias(e.target.value)}  
-            required  
-          >  
-            <option value="">Selecione uma categoria</option>  
-            {categories.map((category, index) => (  
-              <option key={index} value={category}>{category}</option>  
-            ))}  
-          </select>  
-        </div>  
-      
-        <button type="submit" onClick={handleCriarRVE}>Criar RVE</button>  
-  
+        <button type="submit" onClick={handleCriarRVE} className={styles.button}>Criar RVE</button>  
       </form>  
     </div>  
   );  
