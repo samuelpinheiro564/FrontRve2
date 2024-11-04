@@ -58,6 +58,20 @@ h2 {
   margin: 0 auto;
 }
 
+.card2{
+  background: rgba(255, 255, 255, 0);
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  height: 60%;
+  width: 80%;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  margin-left: 110%;
+}
+
 .card,
 .card1 {
   background: rgba(255, 255, 255, 0);
@@ -67,10 +81,15 @@ h2 {
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  
 }
 
 .card:hover,
-.card1:hover {
+.card1:hover,.card2:hover {
   transform: translateY(-10px) rotateX(10deg);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   border-color: #fff;
@@ -84,12 +103,12 @@ h2 {
 }
 
 .card:hover .icon,
-.card1:hover .icon {
+.card1:hover .icon,.card2:hover .icon {
   transform: scale(1.2) rotate(10deg);
 }
 
 .card p,
-.card1 p {
+.card1 p,.card2 p {
   color: #fff;
   font-size: 1.2rem;
   margin: 0.5rem 0 0;
@@ -129,13 +148,13 @@ h2 {
   }
 
   .card,
-  .card1 {
+  .card1, .card2 {
     padding: 1.5rem;
   }
 }
 
 .card::after,
-.card1::after {
+.card1::after, .card2::after {
   content: "";
   position: absolute;
   top: 0;
@@ -154,6 +173,6 @@ h2 {
 }
 
 .card:hover::after,
-.card1:hover::after {
+.card1:hover::after, .card2:hover::after {
   opacity: 1;
 }
