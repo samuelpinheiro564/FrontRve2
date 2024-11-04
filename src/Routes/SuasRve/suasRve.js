@@ -9,8 +9,8 @@ const SuasRve = () => {
         const handleRves = async () => {
         const userNif = userData.getUsers();  
         console.log(userNif);  
-        console.log(userNif[0].nif);
-        const rves = await getAllUsersrve_usuarios(userNif[0].nif);
+        console.log(userNif[0][0].nif);
+        const rves = await getAllUsersrve_usuarios(userNif[0][0].nif);
         console.log(rves);
         setRve(rves); 
         }
@@ -21,7 +21,7 @@ const SuasRve = () => {
         <div>  
             {rve.length > 0 ? (  
                 rve.map((item) => (  
-                    <div key={item.nif}>  
+                    <div key={item}>  
                         <p>{item.estudante}</p>  
                         <p>{item.data}</p>  
                         <p>{item.motivo}</p>  

@@ -14,6 +14,20 @@ const LoginUser = async (nif) => {
         
     }
 };
+const UserName = async (nome) => {
+    try {
+        const requestURL = `${URL}/usuarios/nome/${nome}`;
+        console.log(`Fazendo requisição para: ${requestURL}`);
+        const response = await axios.get(requestURL);
+        console.log('Resposta:', response.data);
+        return response.data;
+    } catch (error) {
+            console.error('Erro interno do servidor:', error);
+            throw error;
+        
+    }
+};
+
 
 const createrve_usuarios  = async (datarve_usuario) => {
     try {
@@ -387,6 +401,7 @@ export {
     DeletarSaidaProfessor,
     createrve_usuarios,
     getAllUsersrve_usuarios,
-    getAllRVErve_usuarios
+    getAllRVErve_usuarios,
+    UserName
 
 };
