@@ -1,8 +1,7 @@
 /* Estilos gerais */
 body {
+
   background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
-  font-family: 'Arial', sans-serif;
-  color: #fff;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -11,10 +10,10 @@ body {
   padding: 0;
 }
 
-.container {
-  background:"white";
-  backdrop-filter: blur(10px);
+.container {  
   border-radius: 20px;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
   padding: 40px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), 
               0 0 60px rgba(0, 0, 0, 0.1),
