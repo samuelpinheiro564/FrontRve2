@@ -31,7 +31,7 @@ function App() {
           </div>  
           </NavLink>
           <NavLink to="/NotificacaoSec" activeClassName={styles.active}>
-          <div className={styles.card1}>  
+          <div className={styles.card2}>  
           <i className={styles.icon}>📨</i>
             <p>Notificação Secretaria</p>  
           </div>  
