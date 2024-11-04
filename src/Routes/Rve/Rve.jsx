@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';  
-import { AllUsers, CriarRve, createrve_usuarios } from '../../Data/server';  
+import { AllUsers, CriarRve, createrve_usuarios, UserName } from '../../Data/server';  
 import userData from '../../Data/dadosUser';   
 import rveData from '../../Data/DadosRve';  
-import { useNavigate } from 'react-router-dom';
 import styles from "../Rve/rve.module.css";
+import { useNavigate } from 'react-router-dom';
 
 const Rve = () => {  
   const [autor, setAutor] = useState('');  
@@ -22,9 +22,9 @@ const Rve = () => {
   const [dificuldades, setDificuldades] = useState('');  
   const [presenca, setPresenca] = useState('');  
   const [categorias, setCategorias] = useState('');  
-  const [id, setId] = useState('');  
+  const [id, setId] = useState(0);  
   const [listaDocentes, setListaDocentes] = useState([]);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {  
     const dadosUser = userData.getUsers();   
@@ -74,7 +74,6 @@ const Rve = () => {
         alert('Este docente já está na lista de envolvidos.');  
         return; 
       }  
-      
       setDocentesEnvolvidos([...docentesEnvolvidos, docenteAtual]);  
       setDocenteAtual('');   
   
@@ -89,15 +88,8 @@ const Rve = () => {
     const updatedDocentes = docentesEnvolvidos.filter((_, i) => i !== index);  
     setDocentesEnvolvidos(updatedDocentes);  
   };   
+  console.log('Docentes Envolvidos2:', docentesEnvolvidos);
 
-  const handleUSerRve = async (e) => {
-    e.preventDefault();
-    console.log(docentesEnvolvidos);
-    for (let i = 0; i < docentesEnvolvidos.length; i++) {
-      const userRve = await createrve_usuarios(id, docentesEnvolvidos[i].nif);
-      console.log(userRve);
-    }
-  };
 
   const handleCriarRVE = async (e) => {  
     e.preventDefault();  
@@ -120,33 +112,33 @@ const Rve = () => {
         presenca,  
         categorias,  
       };  
-      handleUSerRve();
-      const res = rveData.addRve(rve);
-      console.log(res);
-
+      rveData.addRve(rve);
+      const dataUser = userData.getUsers(); 
+      console.log("dataUser:",dataUser[0][0].nome)
+      docentesEnvolvidos.push(dataUser[0][0].nome)
+      console.log("rve", rve);
       await CriarRve(rve);
-      console.log(rveData.getRves());
-      
-      alert('RVE criado com sucesso!');  
-      navigate('/SuasRve');
-
-      setEstudante('');  
-      setCurso('');  
-      setTurma('');  
-      setData('');  
-      setHora('');  
-      setMotivo('');  
-      setOrientacoesEstudante('');  
-      setDescricaoOcorrido('');  
-      setDocentesEnvolvidos([]);  
-      setElogios('');  
-      setDificuldades('');  
-      setPresenca('');  
-      setCategorias('');  
+      console.log(id);
+      for (let i = 0; i < docentesEnvolvidos.length; i++) {
+        const dadosUser = await UserName(docentesEnvolvidos[i]);
+        console.log(dadosUser);
+        const rve4 = rveData.getRves();
+        console.log(rve4[0].id);
+        const id_rve = rve4[0].id;
+        const usuario_nif = dadosUser[0].nif;
+        const datarve_usuario = { id_rve, usuario_nif };
+        console.log(datarve_usuario);
+        const userRve = await createrve_usuarios(datarve_usuario);
+        console.log('User rves', userRve);
+       
+      }  
+      navigate('/SuasRve');  
     } catch (error) {  
       console.error('Erro ao criar RVE:', error);  
       alert('Ocorreu um erro ao criar o RVE.');  
     }  
+  
+
   };  
 
   return (  
@@ -258,7 +250,7 @@ const Rve = () => {
             <h3>Docentes Envolvidos:</h3>  
             <ul className={styles.list}>  
               {docentesEnvolvidos.map((docente, index) => (  
-                <li key={docente.nif} className={styles.listItem}>  
+                <li key={index} className={styles.listItem}>  
                   {docente}  
                   <button type="button" onClick={() => deleteDocente(index)} className={styles.button}>  
                     Remover  
@@ -313,7 +305,7 @@ const Rve = () => {
           </select>  
         </div>  
       
-        <button type="submit" onClick={handleCriarRVE} className={styles.button}>Criar RVE</button>  
+        <button type="submit" className={styles.button}>Criar RVE</button>  
       </form>  
     </div>  
   );  
