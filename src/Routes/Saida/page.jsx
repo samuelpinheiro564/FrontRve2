@@ -178,8 +178,8 @@ const Saida = () => {
                             <td className='td'>{item.assinaturaprof}</td>
                             <td className='td'>{item.assinaturaanaq}</td>
                             <td className='td'>
-                                <button onClick={() => handleEdit(item.id)} className={styles.button}>Editar</button>
-                                <button onClick={() => handleDelete(item.id)} className={styles.button}>Deletar</button>
+                                <button onClick={() => handleEdit(item.id)} className={styles.buttonEditar}>Editar</button>
+                                <button onClick={() => handleDelete(item.id)} className={styles.buttonDeletar}>Deletar</button>
                             </td>
                         </tr>
                     ))}
