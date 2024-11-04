@@ -1,9 +1,15 @@
 /* admin.module.css */
 
 .container {
-  min-height: 100vh;
+  margin: 2rem auto;
+  min-width: 120vh;
   background: linear-gradient(135deg, #9b1212 0%, #e04c4c 100%);
   overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  position: relative;
+  display:grid;
+  z-index: 1;
 }
 
 /* Banner com efeito de onda */
@@ -21,7 +27,6 @@
   left: 0;
   width: 100%;
   height: 40px;
-
   animation: wave 10s linear infinite;
 }
 
@@ -53,7 +58,7 @@ h2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
