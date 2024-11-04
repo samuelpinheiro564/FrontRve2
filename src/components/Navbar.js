@@ -1,9 +1,10 @@
-import React, { useState } from 'react';  
+import React, { useState, useEffect, useRef } from 'react';  
 import { NavLink } from 'react-router-dom';  
-import './Navbar.css'; // opcional para estilos  
+import './Navbar.css';  
 
 const NavBar = () => {  
   const [menuVisible, setMenuVisible] = useState(false);
+  const menuRef = useRef(null);
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
@@ -13,8 +14,26 @@ const NavBar = () => {
     setMenuVisible(false);
   };
 
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setMenuVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    if (menuVisible) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuVisible]);
+
   return (  
-    <div>
+    <div ref={menuRef}>
       <button onClick={toggleMenu} className="menu-icon">
         &#9776; 
       </button>
