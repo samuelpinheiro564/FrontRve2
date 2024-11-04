@@ -2,25 +2,25 @@
 
 .container {
   background: linear-gradient(135deg, #d71b1b, #ff2f2f);
-  min-height: 100vh;
   padding: 3rem 2rem;
   position: relative;
   overflow: hidden;
+  width: 200%;
+  right: 50%;
 }
 
 .container::before {
   content: '';
   position: absolute;
   top: -50%;
-  left: -50%;
-  width: 200%;
+  left: -20%;
   height: 200%;
   background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 60%);
   animation: rotate 20s linear infinite;
 }
 
 .title {
-  color: #fff;
+  color: #000;
   font-size: 3.5rem;
   text-align: center;
   margin-bottom: 3rem;
@@ -45,7 +45,9 @@
 .formGroup {
   margin-bottom: 2rem;
   position: relative;
+  color: #000;
 }
+
 
 .input {
   width: 100%;
