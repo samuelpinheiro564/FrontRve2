@@ -118,9 +118,9 @@ const CriarRve = async (rveData) => {
         throw error;
     }
 };
-const RveById =  async (nif) => {
+const RveById =  async (id) => {
     try {
-        const response = await axios.post(`${URL}/rve/${nif}`);
+        const response = await axios.post(`${URL}/rve/${id}`);
         return response.data;
     } catch (error) {
 if(error.response.status === 400) {

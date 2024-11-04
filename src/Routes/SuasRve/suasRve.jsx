@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';  
 import userData from '../../Data/dadosUser';  
-import { getAllUsersrve_usuarios } from '../../Data/server';  
+import { getAllUsersrve_usuarios,RveById } from '../../Data/server';  
 
 const SuasRve = () => {  
     const [rve, setRve] = useState([]);  
@@ -13,6 +13,10 @@ const SuasRve = () => {
         const rves = await getAllUsersrve_usuarios(userNif[0][0].nif);
         console.log(rves);
         setRve(rves); 
+        for(let i = 0; i < rves.length; i++){
+            const rves2 = await RveById(rves[i].id_rve)
+            console.log(rves2)
+        }
         }
         handleRves();
     }, []); // Empty array means this effect runs once on mount  
@@ -21,7 +25,7 @@ const SuasRve = () => {
         <div>  
             {rve.length > 0 ? (  
                 rve.map((item) => (  
-                    <div key={item}>  
+                    <div key={`${item.usuario_nif}_${item.id_rve}`}>  
                         <p>{item.estudante}</p>  
                         <p>{item.data}</p>  
                         <p>{item.motivo}</p>  
