@@ -79,12 +79,12 @@ const CriarUser = async (userData) => {
     }
 };
 
-const EditarUser = async (nif, userData) => {
+const AtualizaUser = async (userData) => {
     try {
-        const response = await axios.put(`${URL}/usuarios/${nif}`, userData);
+        const response = await axios.put(`${URL}/usuarios/${userData.nif}`, userData);
         return response.data;
     } catch (error) {
-        console.error('Erro na edição do usuário:', error);
+        console.error('Erro na atualização do usuário:', error);
         throw error;
     }
 };
@@ -371,7 +371,7 @@ const DeletarSaidaProfessor = async (id) => {
 export {
     LoginUser,
     CriarUser,
-    EditarUser,
+    AtualizaUser,
     DeleteUser,
     AllUsers,
     CriarRve,
