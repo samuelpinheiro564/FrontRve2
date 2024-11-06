@@ -10,7 +10,9 @@
 }
 .subtitle{
 color: #b91709;
-}
+font-size: 2rem;
+text-align: center;
+font-family: Verdana, Geneva, Tahoma, sans-serif;}
 .title {
   font-size: 2.5rem;
   color: #2c3e50;
@@ -62,6 +64,12 @@ color: #b91709;
   resize: vertical;
 }
 
+
+.label,.radioGroup{
+  font-size: 1rem;
+  color: black;
+}
+
 .button {
   background: linear-gradient(45deg, #b91717, #cc3e2e);
   color: white;
@@ -70,17 +78,38 @@ color: #b91709;
   border-radius: 0.5rem;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
-.label,.radioGroup{
-  font-size: 1rem;
-  color: black;
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 300%;
+  height: 300%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.75s ease;
+  transform: translate(-50%, -50%) rotate(45deg);
+  opacity: 0;
+}
+
+.button:hover::before {
+  width: 400%;
+  height: 400%;
+  opacity: 1;
 }
 
 .button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
+  background: linear-gradient(45deg, #cc3e2e, #b91717);
 }
+
+
 
 .table {
   width: 100%;
