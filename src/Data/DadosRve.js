@@ -6,6 +6,7 @@ class dadosRve {
   
     // Define um rve e salva no sessionStorage  
     setRve(rve) {  
+        this.clearRve(); // Limpa a rve existente
         this.rve = rve;  
         this.saveRveToStorage();  
     }  
