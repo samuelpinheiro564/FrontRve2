@@ -6,17 +6,17 @@ import styles from "../Rve/rve.module.css";
 import { useNavigate } from 'react-router-dom';
 
 const Rve = () => {  
-  const [autor, setAutor] = useState('');  
+  const [nifautor, setNifAutor] = useState('');  
   const [estudante, setEstudante] = useState('');  
   const [curso, setCurso] = useState('');  
   const [turma, setTurma] = useState('');  
   const [data, setData] = useState('');  
   const [hora, setHora] = useState('');  
   const [motivo, setMotivo] = useState('');  
-  const [orientacoesEstudante, setOrientacoesEstudante] = useState('');  
-  const [descricaoOcorrido, setDescricaoOcorrido] = useState('');  
+  const [orientacoesestudante, setOrientacoesEstudante] = useState('');  
+  const [descricaoocorrido, setDescricaoOcorrido] = useState('');  
   const [docenteAtual, setDocenteAtual] = useState('');  
-  const [docentesEnvolvidos, setDocentesEnvolvidos] = useState([]);  
+  const [nifdocentes, setNifDocentes] = useState([]);  
   const [assinaturas] = useState(null);  
   const [elogios, setElogios] = useState('');  
   const [dificuldades, setDificuldades] = useState('');  
@@ -29,7 +29,7 @@ const Rve = () => {
   useEffect(() => {  
     const dadosUser = userData.getUsers();   
     if (dadosUser.length > 0) {  
-      setAutor(dadosUser[0][0].nif);  
+      setNifAutor(dadosUser[0][0].nif);  
     }  
 
     const gerarIdNumber = () => {  
@@ -70,57 +70,53 @@ const Rve = () => {
 
   const addDocente = () => {  
     if (docenteAtual) {  
-      if (docentesEnvolvidos.includes(docenteAtual)) {  
+      if (nifdocentes.includes(docenteAtual)) {  
         alert('Este docente já está na lista de envolvidos.');  
         return; 
       }  
-      setDocentesEnvolvidos([...docentesEnvolvidos, docenteAtual]);  
+      setNifDocentes([...nifdocentes, docenteAtual]);  
       setDocenteAtual('');   
   
-      console.log('Docentes Selecionados:', [...docentesEnvolvidos, docenteAtual]);  
+      console.log('Docentes Selecionados:', [...nifdocentes, docenteAtual]);  
     } else {  
       alert('Selecione um docente antes de adicionar.');  
     }  
   };    
-  console.log('Docentes Envolvidos:', docentesEnvolvidos);
+  console.log('Docentes Envolvidos:', nifdocentes);
 
   const deleteDocente = (index) => {  
-    const updatedDocentes = docentesEnvolvidos.filter((_, i) => i !== index);  
+    const updatedDocentes = nifdocentes.filter((_, i) => i !== index);  
     setDocentesEnvolvidos(updatedDocentes);  
   };   
-  console.log('Docentes Envolvidos2:', docentesEnvolvidos);
-
+  console.log('Docentes Envolvidos2:', nifdocentes);
 
   const handleCriarRVE = async (e) => {  
     e.preventDefault();  
     try {  
       const rve = {  
         id,  
-        autor,  
+        nifautor,  
         estudante,  
         curso,  
         turma,  
         data,  
         hora,  
         motivo,  
-        orientacoesEstudante,  
-        descricaoOcorrido,  
-        docentesEnvolvidos,
-        assinaturas: Array(assinaturas),  
+        orientacoesestudante,  
+        descricaoocorrido,  
+        nifdocentes,
+        assinaturas,  
         elogios,  
         dificuldades,  
         presenca,  
         categorias,  
       };  
       rveData.addRve(rve);
-      const dataUser = userData.getUsers(); 
-      console.log("dataUser:",dataUser[0][0].nome)
-      docentesEnvolvidos.push(dataUser[0][0].nome)
       console.log("rve", rve);
       await CriarRve(rve);
       console.log(id);
-      for (let i = 0; i < docentesEnvolvidos.length; i++) {
-        const dadosUser = await UserName(docentesEnvolvidos[i]);
+      for (let i = 0; i < docentesenvolvidos.length; i++) {
+        const dadosUser = await UserName(docentesenvolvidos[i]);
         console.log(dadosUser);
         const rve4 = rveData.getRves();
         console.log(rve4[0].id);
@@ -130,15 +126,12 @@ const Rve = () => {
         console.log(datarve_usuario);
         const userRve = await createrve_usuarios(datarve_usuario);
         console.log('User rves', userRve);
-       
       }  
       navigate('/SuasRve');  
     } catch (error) {  
       console.error('Erro ao criar RVE:', error);  
       alert('Ocorreu um erro ao criar o RVE.');  
     }  
-  
-
   };  
 
   return (  
@@ -213,7 +206,7 @@ const Rve = () => {
           <textarea  
             name="orientacoesEstudante"  
             placeholder="Orientações ao Estudante"  
-            value={orientacoesEstudante}  
+            value={orientacoesestudante}  
             onChange={(e) => setOrientacoesEstudante(e.target.value)}  
             required  
             className={styles.textarea}
@@ -223,7 +216,7 @@ const Rve = () => {
           <textarea  
             name="descricaoOcorrido"  
             placeholder="Descrição do Ocorrido"  
-            value={descricaoOcorrido}  
+            value={descricaoocorrido}  
             onChange={(e) => setDescricaoOcorrido(e.target.value)}  
             required  
             className={styles.textarea}
@@ -245,11 +238,11 @@ const Rve = () => {
             Adicionar Docente  
           </button>  
         </div>  
-        {docentesEnvolvidos.length > 0 && (  
+        {nifdocentes.length > 0 && (  
           <div className={styles.formGroup}>  
             <h3>Docentes Envolvidos:</h3>  
             <ul className={styles.list}>  
-              {docentesEnvolvidos.map((docente, index) => (  
+              {nifdocentes.map((docente, index) => (  
                 <li key={index} className={styles.listItem}>  
                   {docente}  
                   <button type="button" onClick={() => deleteDocente(index)} className={styles.button}>  
@@ -260,6 +253,7 @@ const Rve = () => {
             </ul>  
           </div>  
         )}  
+
         <div className={styles.formGroup}>  
           <input  
             type="text"  
