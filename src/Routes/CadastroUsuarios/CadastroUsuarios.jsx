@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CriarUser, AllUsers, EditarUser, DeleteUser } from '../../Data/server';
+import { CriarUser, AllUsers, AtualizaUser, DeleteUser } from '../../Data/server';
 import styles from '../CadastroUsuarios/user.module.css';
 
 const CadastroUsuarios = () => {
@@ -46,7 +46,7 @@ const CadastroUsuarios = () => {
         }
         try {
             if (editingUser) {
-                await EditarUser({ ...form, nif: editingUser.nif });
+                await AtualizaUser({ ...form, nif: editingUser.nif });
                 setSuccessMessage('Usuário editado com sucesso');
             } else {
                 await CriarUser(form);
