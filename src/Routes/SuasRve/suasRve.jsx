@@ -3,7 +3,8 @@ import userData from '../../Data/dadosUser';
 import { getAllUsersrve_usuarios,RveById } from '../../Data/server';  
 
 const SuasRve = () => {  
-    const [rve, setRve] = useState([]);  
+    const [rve, setRve] = useState([]); 
+     
 
     useEffect(() => {  
         const handleRves = async () => {
@@ -25,7 +26,7 @@ const SuasRve = () => {
         <div>  
             {rve.length > 0 ? (  
                 rve.map((item) => (  
-                    <div key={`${item.usuario_nif}_${item.id_rve}`}>  
+                    <div key={item.id_rve}>  
                         <p>{item.estudante}</p>  
                         <p>{item.data}</p>  
                         <p>{item.motivo}</p>  
