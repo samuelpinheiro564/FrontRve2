@@ -134,7 +134,7 @@ const Rve = () => {
         console.log('User rves', userRve);
        
       }  
-      navigate('/SuasRve');  
+      
     } catch (error) {  
       console.error('Erro ao criar RVE:', error);  
       alert('Ocorreu um erro ao criar o RVE.');  
