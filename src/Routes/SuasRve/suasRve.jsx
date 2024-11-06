@@ -13,21 +13,19 @@ const SuasRve = () => {
             if (userNif && Array.isArray(userNif) && userNif.length > 0 && Array.isArray(userNif[0])) {  
                 const nif = userNif[0][0]?.nif; // Use optional chaining to prevent errors  
                 const rves = await getAllUsersrve_usuarios(nif);  
-                setRve(rves);   
-    for (let i = 0; i < rves.length; i++) {  
-        const rves2 = await RveById(rves[i].id_rve);  
-        setListRve(prevList => {
-            const isDuplicate = prevList.some(item => item[0].id === rves2[0].id);
-            if (!isDuplicate) {
-                return [...prevList, rves2];
-            }
-            return prevList;
-        }); // Use setListRve to update state immutably and avoid duplicates
-    }  
+                for (let i = 0; i < rves.length; i++) {  
+                    const rves2 = await RveById(rves[i].id_rve);  
+                    setListRve(prevList => {
+                        const isDuplicate = prevList.some(item => item[0].id === rves2[0].id);
+                        if (!isDuplicate) {
+                            return [...prevList, rves2];
+                        }
+                        return prevList;
+                    }); // Use setListRve to update state immutably and avoid duplicates
+                }  
+            }  
         };  
         handleRves();  
-    };  
-    handleRves();  
     }, []);
 
     const handleNext = () => {

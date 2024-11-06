@@ -56,6 +56,11 @@ const Rve = () => {
     fetchDocentes();  
   }, []); 
 
+  useEffect(() => {
+    const allRves = rveData.getRves();
+    console.log('Todas as RVEs:', allRves);
+  }, []);
+
   const categories = [  
     'Aprendizagem',  
     'Atitude/postura/comportamento',  
