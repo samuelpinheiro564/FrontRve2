@@ -86,7 +86,7 @@ const Rve = () => {
 
   const deleteDocente = (index) => {  
     const updatedDocentes = nifdocentes.filter((_, i) => i !== index);  
-    setDocentesEnvolvidos(updatedDocentes);  
+    setNifDocentes(updatedDocentes);  
   };   
   console.log('Docentes Envolvidos2:', nifdocentes);
 
@@ -115,8 +115,8 @@ const Rve = () => {
       console.log("rve", rve);
       await CriarRve(rve);
       console.log(id);
-      for (let i = 0; i < docentesenvolvidos.length; i++) {
-        const dadosUser = await UserName(docentesenvolvidos[i]);
+      for (let i = 0; i < nifdocentes.length; i++) {
+        const dadosUser = await UserName(nifdocentes[i]);
         console.log(dadosUser);
         const rve4 = rveData.getRves();
         console.log(rve4[0].id);
