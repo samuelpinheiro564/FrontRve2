@@ -142,7 +142,7 @@ const Rve = () => {
 
   return (  
     <div className={styles.container}>  
-    {chatAtivo?}
+    {chatAtivo?
       <h1 className={styles.title}>Criar RVE</h1>  
       <form onSubmit={handleCriarRVE} className={styles.form}>  
         <div className={styles.formGroup}>  
@@ -306,7 +306,7 @@ const Rve = () => {
         </div>  
       
         <button type="submit" className={styles.button}>Criar RVE</button>  
-      </form>  
+      </form> :  }
     </div>  
   );  
 };  
