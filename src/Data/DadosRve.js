@@ -1,40 +1,35 @@
 class dadosRve {  
     constructor() {  
-        // Inicializa a lista de rves a partir do sessionStorage, se disponível  
-        this.rves = this.getRvesFromStorage();  
+        // Inicializa o rve a partir do sessionStorage, se disponível  
+        this.rve = this.getRveFromStorage();  
     }  
   
-    // Adiciona um rve ao array e ao sessionStorage  
-    addRve(rve) {  
-        this.rves.push(rve);  
-        this.saveRvesToStorage();  
+    // Define um rve e salva no sessionStorage  
+    setRve(rve) {  
+        this.rve = rve;  
+        this.saveRveToStorage();  
     }  
   
-    // Obtém todos os rves  
-    getRves() {  
-        return this.rves;  
+    // Obtém o rve  
+    getRve() {  
+        return this.rve;  
     }  
   
-    // Encontra um rve pelo nome de usuário  
-    findRve(username) {  
-        return this.rves.find((rve) => rve.username === username);  
+    // Limpa o rve  
+    clearRve() {  
+        this.rve = null;  
+        sessionStorage.removeItem('rve'); // Limpa os dados do sessionStorage  
     }  
   
-    // Limpa todos os dados dos rves  
-    clearRves() {  
-        this.rves = [];  
-        sessionStorage.removeItem('rves'); // Limpa os dados do sessionStorage  
+    // Salva o rve no sessionStorage  
+    saveRveToStorage() {  
+        sessionStorage.setItem('rve', JSON.stringify(this.rve));  
     }  
   
-    // Salva os rves no sessionStorage  
-    saveRvesToStorage() {  
-        sessionStorage.setItem('rves', JSON.stringify(this.rves));  
-    }  
-  
-    // Obtém os rves do sessionStorage  
-    getRvesFromStorage() {  
-        const storedRves = sessionStorage.getItem('rves');  
-        return storedRves ? JSON.parse(storedRves) : [];  
+    // Obtém o rve do sessionStorage  
+    getRveFromStorage() {  
+        const storedRve = sessionStorage.getItem('rve');  
+        return storedRve ? JSON.parse(storedRve) : null;  
     }  
 }  
   
