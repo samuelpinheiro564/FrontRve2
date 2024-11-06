@@ -136,8 +136,12 @@ const CadastroUsuarios = () => {
                     <h2>Lista de Usuários</h2>
                     <ul>
                         {users.map(user => (
-                            <li key={user.nif}>
-                                <span>{user.nome} ({user.nif})</span>
+                            <li key={user.nif} className={styles.userItem}>
+                                <p><strong>NIF:</strong> {user.nif}</p>
+                                <p><strong>Nome:</strong> {user.nome}</p>
+                                <p><strong>Email:</strong> {user.email}</p>
+                                <p><strong>Telefone:</strong> {user.telefone}</p>
+                                <p><strong>Tipo:</strong> {user.tipo}</p>
                                 <button onClick={() => handleEditUser(user)} className={styles.editButton}>Editar</button>
                                 <button onClick={() => handleDeleteUser(user.nif)} className={styles.deleteButton}>Deletar</button>
                             </li>
