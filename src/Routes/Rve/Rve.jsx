@@ -132,14 +132,12 @@ const Rve = () => {
         console.log(datarve_usuario);
         const userRve = await createrve_usuarios(datarve_usuario);
         console.log('User rves', userRve);
-       
       }  
       chatAtivo(true);
     } catch (error) {  
       console.error('Erro ao criar RVE:', error);  
       alert('Ocorreu um erro ao criar o RVE.');  
     }  
-  
 
   };  
 
