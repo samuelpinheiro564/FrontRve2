@@ -123,6 +123,7 @@ const Rve = () => {
         const dadosUser = await UserName(docentesEnvolvidos[i]);
         console.log(dadosUser);
         const rve4 = rveData.getRves();
+        console.log(rve4);
         console.log(rve4[0].id);
         const id_rve = rve4[0].id;
         const usuario_nif = dadosUser[0].nif;
