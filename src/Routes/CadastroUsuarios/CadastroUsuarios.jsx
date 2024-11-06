@@ -102,7 +102,7 @@ const CadastroUsuarios = () => {
             <h1 className={styles.title}>Cadastro de Usuários</h1>
             <form className={styles.form} onSubmit={handleCadastro}>
                 <div className={styles.formGroup}>
-                    <label htmlFor="nif" className={styles.label}>NIF:</label>
+                    <label htmlFor="number" className={styles.label}>NIF:</label>
                     <input type="number" id="nif" name="nif" value={form.nif} onChange={handleInputChange} className={styles.input} />
                 </div>
                 <div className={styles.formGroup}>
