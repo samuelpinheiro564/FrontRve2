@@ -138,7 +138,6 @@ const Rve = () => {
       console.error('Erro ao criar RVE:', error);  
       alert('Ocorreu um erro ao criar o RVE.');  
     }  
-
   };  
 
   return (  
