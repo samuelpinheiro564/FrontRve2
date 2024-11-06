@@ -25,6 +25,7 @@ const Rve = () => {
   const [id, setId] = useState(0);  
   const [listaDocentes, setListaDocentes] = useState([]);
   const navigate = useNavigate();
+  const [chatAtivo, setChatAtivo] = useState(false);  
 
   useEffect(() => {  
     const dadosUser = userData.getUsers();   
