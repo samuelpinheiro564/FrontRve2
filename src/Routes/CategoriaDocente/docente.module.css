@@ -176,3 +176,7 @@ h2 {
 .card1:hover::after, .card2:hover::after {
   opacity: 1;
 }
+
+a {
+  text-decoration: none;
+}
