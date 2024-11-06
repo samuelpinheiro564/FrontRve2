@@ -43,7 +43,6 @@ const Rve = () => {
     const fetchDocentes = async () => {  
         try {  
             const docents = await AllUsers();  
-            console.log('Docentes:', docents);  
             if (Array.isArray(docents)) {  
                 setListaDocentes(docents);  
             } else {  
@@ -81,20 +80,15 @@ const Rve = () => {
       }  
       setDocentesEnvolvidos([...docentesEnvolvidos, docenteAtual]);  
       setDocenteAtual('');   
-  
-      console.log('Docentes Selecionados:', [...docentesEnvolvidos, docenteAtual]);  
     } else {  
       alert('Selecione um docente antes de adicionar.');  
     }  
   };    
-  console.log('Docentes Envolvidos:', docentesEnvolvidos);
 
   const deleteDocente = (index) => {  
     const updatedDocentes = docentesEnvolvidos.filter((_, i) => i !== index);  
     setDocentesEnvolvidos(updatedDocentes);  
   };   
-  console.log('Docentes Envolvidos2:', docentesEnvolvidos);
-
 
   const handleCriarRVE = async (e) => {  
     e.preventDefault();  
@@ -119,32 +113,21 @@ const Rve = () => {
       };  
       rveData.addRve(rve);
       const dataUser = userData.getUsers(); 
-      console.log("dataUser:",dataUser[0][0].nome)
-      docentesEnvolvidos.push(dataUser[0][0].nome)
-      console.log("rve", rve);
+      docentesEnvolvidos.push(dataUser[0][0].nome);
       await CriarRve(rve);
-      console.log(id);
       for (let i = 0; i < docentesEnvolvidos.length; i++) {
         const dadosUser = await UserName(docentesEnvolvidos[i]);
-        console.log(dadosUser);
         const rve4 = rveData.getRves();
-        console.log(rve4);
-        console.log(rve4[0].id);
         const id_rve = rve4[0].id;
         const usuario_nif = dadosUser[0].nif;
         const datarve_usuario = { id_rve, usuario_nif };
-        console.log(datarve_usuario);
-        const userRve = await createrve_usuarios(datarve_usuario);
-        console.log('User rves', userRve);
-       
+        await createrve_usuarios(datarve_usuario);
       }  
       navigate('/SuasRve');  
     } catch (error) {  
       console.error('Erro ao criar RVE:', error);  
       alert('Ocorreu um erro ao criar o RVE.');  
     }  
-  
-
   };  
 
   return (  
@@ -316,5 +299,4 @@ const Rve = () => {
     </div>  
   );  
 };  
-
 export default Rve;
