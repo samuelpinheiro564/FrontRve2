@@ -120,7 +120,7 @@ const CriarRve = async (rveData) => {
 };
 const RveById =  async (id) => {
     try {
-        const response = await axios.post(`${URL}/rve/${id}`);
+        const response = await axios.get(`${URL}/rve/${id}`);
         return response.data;
     } catch (error) {
 if(error.response.status === 400) {

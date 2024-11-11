@@ -15,13 +15,15 @@ const SuasRve = () => {
         console.log(rves);
         setRve(rves); 
         for(let i = 0; i < rves.length; i++){
-            const rves2 = await RveById(rves[i].id_rve)
+            const rveid = rves[i].id_rve;
+            console.log(rveid);
+            const rves2 = await RveById(rveid)
             console.log(rves2)
         }
         }
         handleRves();
     }, []); // Empty array means this effect runs once on mount  
-
+console.log(rve);
     return (  
         <div>  
             {rve.length > 0 ? (  

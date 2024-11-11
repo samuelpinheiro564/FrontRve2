@@ -6,7 +6,7 @@ import styles from "../Rve/rve.module.css";
 import { useNavigate } from 'react-router-dom';
 
 const Rve = () => {  
-  const [autor, setAutor] = useState('');  
+  const [nifautor, setNifAutor] = useState('');  
   const [estudante, setEstudante] = useState('');  
   const [curso, setCurso] = useState('');  
   const [turma, setTurma] = useState('');  
@@ -29,7 +29,7 @@ const Rve = () => {
   useEffect(() => {  
     const dadosUser = userData.getUsers();   
     if (dadosUser.length > 0) {  
-      setAutor(dadosUser[0][0].nif);  
+      setNifAutor(dadosUser[0][0].nif);  
     }  
 
     const gerarIdNumber = () => {  
@@ -41,17 +41,16 @@ const Rve = () => {
 
   useEffect(() => {  
     const fetchDocentes = async () => {  
-        try {  
-            const docents = await AllUsers();  
-            console.log('Docentes:', docents);  
-            if (Array.isArray(docents)) {  
-                setListaDocentes(docents);  
-            } else {  
-                console.error('Expected an array but got:', docents);  
-            }  
-        } catch (error) {  
-            console.error('Erro ao buscar docentes:', error);  
-        }   
+      try {  
+        const docents = await AllUsers();  
+        if (Array.isArray(docents)) {  
+          setListaDocentes(docents);  
+        } else {  
+          console.error('Expected an array but got:', docents);  
+        }  
+      } catch (error) {  
+        console.error('Erro ao buscar docentes:', error);  
+      }   
     };  
     fetchDocentes();  
   }, []); 
@@ -76,27 +75,22 @@ const Rve = () => {
       }  
       setDocentesEnvolvidos([...docentesEnvolvidos, docenteAtual]);  
       setDocenteAtual('');   
-  
-      console.log('Docentes Selecionados:', [...docentesEnvolvidos, docenteAtual]);  
     } else {  
       alert('Selecione um docente antes de adicionar.');  
     }  
   };    
-  console.log('Docentes Envolvidos:', docentesEnvolvidos);
 
   const deleteDocente = (index) => {  
     const updatedDocentes = docentesEnvolvidos.filter((_, i) => i !== index);  
     setDocentesEnvolvidos(updatedDocentes);  
   };   
-  console.log('Docentes Envolvidos2:', docentesEnvolvidos);
-
 
   const handleCriarRVE = async (e) => {  
     e.preventDefault();  
     try {  
       const rve = {  
         id,  
-        autor,  
+        nifautor,  
         estudante,  
         curso,  
         turma,  
@@ -114,31 +108,22 @@ const Rve = () => {
       };  
       rveData.addRve(rve);
       const dataUser = userData.getUsers(); 
-      console.log("dataUser:",dataUser[0][0].nome)
-      docentesEnvolvidos.push(dataUser[0][0].nome)
-      console.log("rve", rve);
-      await CriarRve(rve);
-      console.log(id);
+      docentesEnvolvidos.push(dataUser[0][0].nome);
+     const resp= await CriarRve(rve);
+console.log(resp);
       for (let i = 0; i < docentesEnvolvidos.length; i++) {
         const dadosUser = await UserName(docentesEnvolvidos[i]);
-        console.log(dadosUser);
         const rve4 = rveData.getRves();
-        console.log(rve4[0].id);
         const id_rve = rve4[0].id;
         const usuario_nif = dadosUser[0].nif;
         const datarve_usuario = { id_rve, usuario_nif };
-        console.log(datarve_usuario);
-        const userRve = await createrve_usuarios(datarve_usuario);
-        console.log('User rves', userRve);
-       
+        await createrve_usuarios(datarve_usuario);
       }  
       navigate('/SuasRve');  
     } catch (error) {  
       console.error('Erro ao criar RVE:', error);  
       alert('Ocorreu um erro ao criar o RVE.');  
     }  
-  
-
   };  
 
   return (  
@@ -237,8 +222,8 @@ const Rve = () => {
             className={styles.select}
           >  
             <option value="">Selecione um Docente</option>  
-             {listaDocentes.map((docente) => (  
-              <option key={docente.nif} value={`${docente.nome}`}>{docente.nome}</option>  
+            {listaDocentes.map((docente) => (  
+              <option key={docente.nif} value={docente.nome}>{docente.nome}</option>  
             ))}   
           </select>  
           <button type='button' onClick={addDocente} className={styles.button}>  
@@ -304,7 +289,6 @@ const Rve = () => {
             ))}  
           </select>  
         </div>  
-      
         <button type="submit" className={styles.button}>Criar RVE</button>  
       </form>  
     </div>  
