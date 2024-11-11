@@ -17,7 +17,7 @@ const Rve = () => {
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
   const [motivo, setMotivo] = useState("");
-  const [orientacoesEstudante, setOrientacoesEstudante] = useState("");
+  const [orientacoesestudante, setOrientacoesEstudante] = useState("");
   const [descricaoocorrido, setDescricaoocorrido] = useState("");
   const [docenteAtual, setDocenteAtual] = useState("");
   const [docentesenvolvidos, setDocentesenvolvidos] = useState([]);
