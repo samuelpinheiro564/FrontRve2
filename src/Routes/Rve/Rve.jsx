@@ -99,8 +99,8 @@ const Rve = () => {
   console.log("Docentes Envolvidos2:", docentesEnvolvidos);
 
   const handleRve = (e) => {
-  setData(rveData.getRve());
-     
+  Dadosrve(rveData.getRve());
+     console.log(Dadosrve())
   }
   
 
@@ -146,7 +146,7 @@ const Rve = () => {
         console.log("User rves", userRve);
       }
       setChatAtivo(true);
-      handleRve();
+      handleRve(e);
     } catch (error) {
       console.error("Erro ao criar RVE:", error);
       alert("Ocorreu um erro ao criar o RVE.");
