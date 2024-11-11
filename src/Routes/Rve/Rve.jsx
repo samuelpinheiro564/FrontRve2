@@ -379,10 +379,10 @@ console.log(nifusuario)
 
                 <div className={styles.formGroup}></div>
                 <p className={styles.input}>{item.orientacoesEstudante}</p>
-
+                </div>
                 <div className={styles.formGroup}></div>
                 <p className={styles.input}>{item.elogios}</p>
-
+                </div>
                 <div className={styles.formGroup}></div>
                 <p className={styles.input}>{item.dificuldades}</p>
                 </div>
