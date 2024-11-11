@@ -87,7 +87,7 @@ const Rve = () => {
         ...docentesEnvolvidos,
         docenteAtual,
       ]);
-    } else {aaaa
+    } else {
       alert("Selecione um docente antes de adicionar.");
     }
   };
@@ -100,7 +100,7 @@ const Rve = () => {
   console.log("Docentes Envolvidos2:", docentesEnvolvidos);
 
   const handleRve = (e) => {
-  Dadosrve(rveData.getRve());aaa
+  Dadosrve(rveData.getRve());
      console.log(Dadosrve())
   }
   
