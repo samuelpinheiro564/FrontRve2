@@ -4,8 +4,6 @@ import { AllUsers, CriarRve, UserName, createrve_usuarios, AllCamposTextoRve, Cr
 import rveData from '../../Data/DadosRve'; // Adjust the import path as necessary
 import userData from '../../Data/dadosUser'; // Adjust the import path as necessary
 
-
-
 const Rve = () => {
   const [estudante, setEstudante] = useState("");
   const [curso, setCurso] = useState("");
