@@ -387,7 +387,7 @@ console.log(nifusuario)
               className={styles.input}
             />
           </div>
-          <button type="submit" className={styles.button} onclick={handleCampoTexto} >
+          <button type="submit" className={styles.button} onClick={handleCampoTexto} >
             Enviar mensagem
           </button>
         </>
