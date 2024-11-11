@@ -18,7 +18,7 @@ const Rve = () => {
   const [hora, setHora] = useState("");
   const [motivo, setMotivo] = useState("");
   const [orientacoesEstudante, setOrientacoesEstudante] = useState("");
-  const [descricaoOcorrido, setDescricaoOcorrido] = useState("");
+  const [descricaoocorrido, setDescricaoocorrido] = useState("");
   const [docenteAtual, setDocenteAtual] = useState("");
   const [docentesEnvolvidos, setDocentesEnvolvidos] = useState([]);
   const [assinaturas] = useState(null);
@@ -30,6 +30,7 @@ const Rve = () => {
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
   const [Dadosrve] = useState([]);
+  const [campoTexto, setCampoTexto] = useState("");
 
   useEffect(() => {
     const dadosUser = userData.getUsers();
@@ -86,7 +87,7 @@ const Rve = () => {
         ...docentesEnvolvidos,
         docenteAtual,
       ]);
-    } else {
+    } else {aaaa
       alert("Selecione um docente antes de adicionar.");
     }
   };
@@ -99,7 +100,7 @@ const Rve = () => {
   console.log("Docentes Envolvidos2:", docentesEnvolvidos);
 
   const handleRve = (e) => {
-  Dadosrve(rveData.getRve());
+  Dadosrve(rveData.getRve());aaa
      console.log(Dadosrve())
   }
   
@@ -117,7 +118,7 @@ const Rve = () => {
         hora,
         motivo,
         orientacoesEstudante,
-        descricaoOcorrido,
+        descricaoocorrido,
         docentesEnvolvidos,
         assinaturas: Array(assinaturas),
         elogios,
@@ -235,10 +236,10 @@ const Rve = () => {
             </div>
             <div className={styles.formGroup}>
               <textarea
-                name="descricaoOcorrido"
+                name="descricaoocorrido"
                 placeholder="Descrição do Ocorrido"
-                value={descricaoOcorrido}
-                onChange={(e) => setDescricaoOcorrido(e.target.value)}
+                value={descricaoocorrido}
+                onChange={(e) => setDescricaoocorrido(e.target.value)}
                 required
                 className={styles.textarea}
               />
@@ -336,12 +337,42 @@ const Rve = () => {
           </form>
         </>
       ) : (
-          <>
-            <h1>Chat</h1>
-            <div>
+        <>
+          <h1>Chat</h1>
+          <div>{
+            Dadosrve.map((item) => (
+              <div key={item.id}>
+                <h2>{item.estudante}</h2>
+                <p>{item.motivo}</p>
+                <p>{item.descricaoocorrido}</p>
+              <p>{item.curso}</p>
+              <p>{item.turma}</p>
+              <p>{item.data}</p>
+              <p>{item.hora}</p>
+              <p>{item.orientacoesEstudante}</p>
+              <p>{item.docentesEnvolvidos.join(", ")}</p>
+              <p>{item.elogios}</p>
+              <p>{item.dificuldades}</p>
+              <p>{item.presenca}</p>
+              <p>{item.categorias}</p>
+              </div>
+            ))
+          }</div>
 
-            </div>
-          </>
+          <div className={styles.formGroup}>
+            <input
+              type="text"
+              name="campoTexto"
+              placeholder="Escreva comentario aqui"
+              value={campoTexto}
+              onChange={(e) => setCampoTexto(e.target.value)}
+              className={styles.input}
+            />
+          </div>
+          <button type="submit" className={styles.button}>
+           Enviar mensagem
+          </button>
+        </>
       )}
     </div>
   );
