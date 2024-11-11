@@ -17,8 +17,8 @@ const CadastroUsuarios = () => {
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
     const [showUserList, setShowUserList] = useState(false);
-    const [showViewUsersButton, setShowViewUsersButton] = useState(false);
 
+    
     useEffect(() => {
         fetchAllUsers();
     }, []);
@@ -54,7 +54,6 @@ const CadastroUsuarios = () => {
             } else {
                 await CriarUser(form);
                 setSuccessMessage('Usuário cadastrado com sucesso');
-                setShowViewUsersButton(true);
             }
             fetchAllUsers();
             limparCampos();
@@ -142,11 +141,11 @@ const CadastroUsuarios = () => {
                 </form>
             )}
 
-{!showUserList && (
-    <button onClick={handleViewUsers} className={styles.viewUsersButton}>
-        Ver Usuários
-    </button>
-)}
+            {!showUserList && (
+                <button onClick={handleViewUsers} className={styles.viewUsersButton}>
+                    Ver Usuários
+                </button>
+            )}
 
             {showUserList && (
                 <div className={styles.userList}>
