@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from './rve.module.css'; // Assuming you have a CSS module for styles
-import { AllUsers, CriarRve, UserName, createrve_usuarios, AllCamposTextoRve, CriarCampoTexto, rveData, userData } from '../../api'; // Adjust the import paths as necessary
+import { AllUsers, CriarRve, UserName, createrve_usuarios, AllCamposTextoRve, CriarCampoTexto } from '../../Data/server'; // Adjust the import paths as necessary
+import rveData from '../../Data/DadosRve'; // Adjust the import path as necessary
+import userData from '../../Data/dadosUser'; // Adjust the import path as necessary
+
+
 
 const Rve = () => {
   const [estudante, setEstudante] = useState("");
