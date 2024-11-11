@@ -161,7 +161,7 @@ const Rve = () => {
     };
 
     fetchAllMsg();
-  }, [chatAtivo]);
+  });
 
   return (
     <div className={styles.container}>
