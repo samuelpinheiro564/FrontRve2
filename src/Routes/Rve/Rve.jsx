@@ -391,7 +391,7 @@ const Rve = () => {
         </>
       )}
     </div>
-  );
-};
+}));
+  };
 
 export default Rve;
