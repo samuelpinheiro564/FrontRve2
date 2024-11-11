@@ -4,6 +4,9 @@ import {
   CriarRve,
   createrve_usuarios,
   UserName,
+  CriarCampoTexto,
+  AllCamposTextoRve
+
 } from "../../Data/server";
 import userData from "../../Data/dadosUser";
 import rveData from "../../Data/DadosRve";
@@ -145,6 +148,33 @@ const Rve = () => {
     } catch (error) {
       console.error("Erro ao criar RVE:", error);
       alert("Ocorreu um erro ao criar o RVE.");
+    }
+  };
+
+  const handleCampoTexto = async (e) => {
+    e.preventDefault();
+    try {
+      const rve = rveData.getRves();
+      const Idrve = rve[0][0].id;
+      console.log("rve", rve);
+      const user = userData.getUsers();
+      const nifusuario = user[0][0].nif;
+      console.log("nifusuario", nifusuario);
+      console.log("Idrve", Idrve);
+      const campoTexto = {
+        id,
+        Idrve,
+        data,
+        hora,
+        nifusuario,
+        campoTexto
+      };
+      console.log("CampoTextoRve", campoTexto);
+     const CriarCampo= await CriarCampoTexto(campoTexto);
+      console.log("CampoTextoRve", CriarCampo);
+    } catch (error) {
+      console.error("Erro ao criar CampoTexto:", error);
+      alert("Ocorreu um erro ao criar o CampoTexto.");
     }
   };
 
@@ -363,7 +393,7 @@ const Rve = () => {
               className={styles.input}
             />
           </div>
-          <button type="submit" className={styles.button}>
+          <button type="submit" className={styles.button} onClick={handleCampoTexto}>
             Enviar mensagem
           </button>
         </>
