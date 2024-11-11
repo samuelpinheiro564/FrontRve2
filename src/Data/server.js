@@ -31,7 +31,7 @@ const UserName = async (nome) => {
 
 const createrve_usuarios  = async (datarve_usuario) => {
     try {
-        const response = await axios.post(`${URL}/rve_usuario`, datarve_usuario);
+        const response = await axios.post(`${URL}/rve_usuarios`, datarve_usuario);
         console.log('Resposta:', response.data);
         return response.data;
     } catch (error) {
@@ -43,7 +43,7 @@ const createrve_usuarios  = async (datarve_usuario) => {
 
 const getAllUsersrve_usuarios  = async (usuario_nif) => {
     try {
-        const requestURL = `${URL}/rve_usuario/${usuario_nif}`;
+        const requestURL = `${URL}/rve_usuarios/${usuario_nif}`;
         console.log(`Fazendo requisição para: ${requestURL}`);
         const response = await axios.get(requestURL);
         console.log('Resposta:', response.data);
