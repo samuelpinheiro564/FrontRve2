@@ -162,13 +162,13 @@ const Rve = () => {
      * @function fetchAllMsg
      * @returns {Promise<void>} A promise that resolves when the messages have been fetched and the state has been updated.
      */
-    const fetchAllMsg = async () => {
-      const allMessages = await AllCamposTextoRve();
-      setMsgs(allMessages);
-    };
+  //  const fetchAllMsg = async () => {
+  //    const allMessages = await AllCamposTextoRve();
+  //    setMsgs(allMessages);
+ //   };
 
-    fetchAllMsg();
-  }, [chatAtivo]);
+ //   fetchAllMsg();
+//  }, [chatAtivo]);
 
   return (
     <div className={styles.container}>
