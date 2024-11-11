@@ -126,9 +126,9 @@ const Rve = () => {
       console.log("dataUser:", dataUser[0][0].nome);
       const updatedDocentesEnvolvidos = [...docentesenvolvidos, dataUser[0][0].nome];
       console.log(updatedDocentesEnvolvidos);
-      for (let i = 0; i < updatedDocentesEnvolvidos.length; i++) {
+      for (const docente of updatedDocentesEnvolvidos) {
         console.log(updatedDocentesEnvolvidos);
-        const dadosUser = await UserName(updatedDocentesEnvolvidos[i]);
+        const dadosUser = await UserName(docente);
         console.log(dadosUser);
         const rve4 = rveData.getRve();
         console.log(rve4[0]);
@@ -139,7 +139,6 @@ const Rve = () => {
         console.log(datarve_usuario);
         const userRve = await createrve_usuarios(datarve_usuario);
         console.log("User rves", userRve);
-        console.log(i);
       }
       setChatAtivo(true);
       handleRve(e);
@@ -180,11 +179,9 @@ const Rve = () => {
   useEffect(() => {
     if(chatAtivo === true) return
     const AllMsg = async () => {
-      try {
+   
         msgs(await AllCamposTextoRve());
-      } catch (error) {
-        console.error("Erro ao buscar campos de texto:", error);
-      }
+    
     };
   
     AllMsg();
