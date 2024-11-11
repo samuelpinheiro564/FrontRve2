@@ -142,11 +142,11 @@ const CadastroUsuarios = () => {
                 </form>
             )}
 
-            {showViewUsersButton && !showUserList && (
-                <button onClick={handleViewUsers} className={styles.viewUsersButton}>
-                    Ver Usuários
-                </button>
-            )}
+{!showUserList && (
+    <button onClick={handleViewUsers} className={styles.viewUsersButton}>
+        Ver Usuários
+    </button>
+)}
 
             {showUserList && (
                 <div className={styles.userList}>
