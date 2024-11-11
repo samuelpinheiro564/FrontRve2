@@ -126,31 +126,32 @@ const Rve = () => {
     }
   };
 
-  const handleCampoTexto = async (e) => {
-    e.preventDefault();
-    try {
-      const id = generateCampoTextoId();
-      const rve = rveData.getRve();
-      const Idrve = rve[0][0].id;
-      const user = userData.getUsers();
-      const nifusuario = user[0][0].nif;
-console.log(nifusuario)
-      const conteudoCampo = {
-        id,
-        Idrve,
-        data,
-        hora,
-        nifusuario,
-        campoTexto,
-      };
+ // const handleCampoTexto = async (e) => {
+  //  e.preventDefault();
+  //  try {
+     // const id = generateCampoTextoId();
+    //  const rve = rveData.getRve();
+    //  const Idrve = rve[0][0].id;
+    //  console.log(Idrve)
+     // const user = userData.getUsers();
+    //  const nifusuario = user[0][0].nif;
+//console.log(nifusuario)
+   //   const conteudoCampo = {
+  //      id,
+   //     Idrve,
+   //     data,
+   //     hora,
+   //     nifusuario,
+   //     campoTexto,
+  //    };
 
-      await CriarCampoTexto(conteudoCampo);
-      console.log("CampoTextoRve created:", conteudoCampo);
-    } catch (error) {
-      console.error("Erro ao criar CampoTexto:", error);
-      alert("Ocorreu um erro ao criar o CampoTexto.");
-    }
-  };
+  //    await CriarCampoTexto(conteudoCampo);
+ //     console.log("CampoTextoRve created:", conteudoCampo);
+  //  } catch (error) {
+  //    console.error("Erro ao criar CampoTexto:", error);
+  ///    alert("Ocorreu um erro ao criar o CampoTexto.");
+ //   }
+//  };
 
   ///useEffect(() => {
     //if (chatAtivo) return;
@@ -378,7 +379,7 @@ console.log(nifusuario)
               className={styles.input}
             />
           </div>
-          <button type="submit" className={styles.button} onClick={handleCampoTexto}>
+          <button type="submit" className={styles.button} >
             Enviar mensagem
           </button>
         </>
