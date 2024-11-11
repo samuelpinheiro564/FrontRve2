@@ -351,7 +351,7 @@ const Rve = () => {
         <>
           <h1>Chat</h1>
           <div>
-            {Dadosrve.map((item) => (
+            {rveData.map((item) => (
               <div key={item.id}>
                 <h2>{item.estudante}</h2>
                 <p>{item.motivo}</p>
