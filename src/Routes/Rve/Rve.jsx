@@ -178,7 +178,7 @@ const Rve = () => {
   };
 
   useEffect(() => {
-    if(chatAtivo) return;
+    if(chatAtivo === true) return
     const AllMsg = async () => {
       try {
         msgs(await AllCamposTextoRve());
@@ -186,6 +186,7 @@ const Rve = () => {
         console.error("Erro ao buscar campos de texto:", error);
       }
     };
+  
     AllMsg();
   });
   
