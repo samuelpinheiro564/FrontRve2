@@ -13,7 +13,7 @@ import rveData from "../../Data/DadosRve";
 import styles from "../Rve/rve.module.css";
 
 const Rve = () => {
-  const [nifautor, setAutor] = useState("");
+  const [nifautor] = useState("");
   const [estudante, setEstudante] = useState("");
   const [curso, setCurso] = useState("");
   const [turma, setTurma] = useState("");
@@ -28,24 +28,11 @@ const Rve = () => {
   const [dificuldades, setDificuldades] = useState("");
   const [presenca, setPresenca] = useState("");
   const [categorias, setCategorias] = useState("");
-  const [id, setId] = useState(0);
+  const [id] = useState(0);
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
   const [Dadosrve] = useState([]);
   const [campoTexto, setCampoTexto] = useState("");
-
-  useEffect(() => {
-    const dadosUser = userData.getUsers();
-    if (dadosUser.length > 0) {
-      setAutor(dadosUser[0][0].nif);
-    }
-
-    const gerarIdNumber = () => {
-      const randomId = Math.floor(Math.random() * 1000000);
-      setId(randomId);
-    };
-    gerarIdNumber();
-  }, []);
 
   useEffect(() => {
     const fetchDocentes = async () => {
@@ -180,6 +167,17 @@ const Rve = () => {
       alert("Ocorreu um erro ao criar o CampoTexto.");
     }
   };
+
+  useEffect(() => {
+    const AllMsg = async () => {
+      try {
+        await AllCamposTextoRve();
+      } catch (error) {
+        console.error("Erro ao buscar campos de texto:", error);
+      }
+    };
+    AllMsg();
+  }, []);
 
   return (
     <div className={styles.container}>
