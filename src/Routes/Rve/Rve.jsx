@@ -339,7 +339,25 @@ const Rve = () => {
       ) : (
         <>
           <h1>Chat</h1>
-          <div>{}</div>
+          <div>{
+            Dadosrve.map((item) => (
+              <div key={item.id}>
+                <h2>{item.estudante}</h2>
+                <p>{item.motivo}</p>
+                <p>{item.descricaoOcorrido}</p>
+              <p>{item.curso}</p>
+              <p>{item.turma}</p>
+              <p>{item.data}</p>
+              <p>{item.hora}</p>
+              <p>{item.orientacoesEstudante}</p>
+              <p>{item.docentesEnvolvidos.join(", ")}</p>
+              <p>{item.elogios}</p>
+              <p>{item.dificuldades}</p>
+              <p>{item.presenca}</p>
+              <p>{item.categorias}</p>
+              </div>
+            ))
+          }</div>
 
           <div className={styles.formGroup}>
             <input
