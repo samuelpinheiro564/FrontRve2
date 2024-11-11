@@ -112,6 +112,7 @@ const Rve = () => {
     docentesenvolvidos.push(nomeAutor);
       for (let i = 0; i < docentesenvolvidos.length; i++) {
         console.log("Docente:", docentesenvolvidos[i].nome);
+        console.log("Docentes",docentesenvolvidos)
         const dadosUser = await UserName(docentesenvolvidos[i].nome);
         const rveId = rveData.getRve().id;
         console.log("RVE ID:", rveId);
