@@ -361,17 +361,28 @@ console.log(nifusuario)
             rveDados.map((item) => (
               <div key={item.id}>
                 <h2>{item.estudante}</h2>
-                <p>{item.motivo}</p>
-                <p>{item.descricaoocorrido}</p>
-                <p>{item.curso}</p>
-                <p>{item.turma}</p>
-                <p>{item.data}</p>
-                <p>{item.hora}</p>
-                <p>{item.orientacoesEstudante}</p>
-                <p>{item.elogios}</p>
-                <p>{item.dificuldades}</p>
-                <p>{item.presenca}</p>
-                <p>{item.categorias}</p>
+                <div className={styles.formGroup}>
+                <p className={styles.input}>{item.motivo}</p>
+
+                <div className={styles.formGroup}></div>
+                <p className={styles.input}>{item.descricaoocorrido}</p>
+                <p className={styles.input}>{item.curso}</p>
+
+                <div className={styles.formGroup}></div>
+                <p className={styles.input}>{item.turma}</p>
+
+                <div className={styles.formGroup}></div>
+                <p className={styles.input}>{item.data}</p>
+
+                <div className={styles.formGroup}></div>
+                <p className={styles.input}>{item.hora}</p>
+
+                <div className={styles.formGroup}></div>
+                <p className={styles.input}>{item.orientacoesEstudante}</p>
+                <p className={styles.input}>{item.elogios}</p>
+                <p className={styles.input}>{item.dificuldades}</p>
+                <p className={styles.input}>{item.presenca}</p>
+                <p className={styles.input}>{item.categorias}</p>
               </div>
             ))}
           </div>
