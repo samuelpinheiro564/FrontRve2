@@ -367,16 +367,16 @@ console.log(nifusuario)
                 <div className={styles.formGroup}></div>
                 <p className={styles.input}>{item.descricaoocorrido}</p>
                 <p className={styles.input}>{item.curso}</p>
-
+                </div>
                 <div className={styles.formGroup}></div>
                 <p className={styles.input}>{item.turma}</p>
-
+                </div>
                 <div className={styles.formGroup}></div>
                 <p className={styles.input}>{item.data}</p>
-
+                </div>
                 <div className={styles.formGroup}></div>
                 <p className={styles.input}>{item.hora}</p>
-
+                </div>
                 <div className={styles.formGroup}></div>
                 <p className={styles.input}>{item.orientacoesEstudante}</p>
                 </div>
