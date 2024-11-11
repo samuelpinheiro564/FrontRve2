@@ -30,6 +30,7 @@ const Rve = () => {
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
   const [Dadosrve] = useState([]);
+  const [campoTexto, setCampoTexto] = useState("");
 
   useEffect(() => {
     const dadosUser = userData.getUsers();
@@ -336,12 +337,22 @@ const Rve = () => {
           </form>
         </>
       ) : (
-          <>
-            <h1>Chat</h1>
-            <div>
-
-            </div>
-          </>
+        <>
+          <h1>Chat</h1>
+            <div>{
+            }</div>
+            
+          <div className={styles.formGroup}>
+            <input
+              type="text"
+              name="campoTexto"
+              placeholder="Escreva comentario aqui"
+              value={campoTexto}
+              onChange={(e) => setCampoTexto(e.target.value)}
+              className={styles.input}
+            />
+          </div>
+        </>
       )}
     </div>
   );
