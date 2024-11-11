@@ -18,7 +18,7 @@ const Rve = () => {
   const [hora, setHora] = useState("");
   const [motivo, setMotivo] = useState("");
   const [orientacoesEstudante, setOrientacoesEstudante] = useState("");
-  const [descricaoOcorrido, setDescricaoOcorrido] = useState("");
+  const [descricaoocorrido, setDescricaoocorrido] = useState("");
   const [docenteAtual, setDocenteAtual] = useState("");
   const [docentesEnvolvidos, setDocentesEnvolvidos] = useState([]);
   const [assinaturas] = useState(null);
@@ -118,7 +118,7 @@ const Rve = () => {
         hora,
         motivo,
         orientacoesEstudante,
-        descricaoOcorrido,
+        descricaoocorrido,
         docentesEnvolvidos,
         assinaturas: Array(assinaturas),
         elogios,
@@ -236,10 +236,10 @@ const Rve = () => {
             </div>
             <div className={styles.formGroup}>
               <textarea
-                name="descricaoOcorrido"
+                name="descricaoocorrido"
                 placeholder="Descrição do Ocorrido"
-                value={descricaoOcorrido}
-                onChange={(e) => setDescricaoOcorrido(e.target.value)}
+                value={descricaoocorrido}
+                onChange={(e) => setDescricaoocorrido(e.target.value)}
                 required
                 className={styles.textarea}
               />
@@ -344,7 +344,7 @@ const Rve = () => {
               <div key={item.id}>
                 <h2>{item.estudante}</h2>
                 <p>{item.motivo}</p>
-                <p>{item.descricaoOcorrido}</p>
+                <p>{item.descricaoocorrido}</p>
               <p>{item.curso}</p>
               <p>{item.turma}</p>
               <p>{item.data}</p>
