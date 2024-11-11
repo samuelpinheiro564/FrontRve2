@@ -1,163 +1,166 @@
-const Rve = () => {  
-  const [estudante, setEstudante] = useState("");  
-  const [curso, setCurso] = useState("");  
-  const [turma, setTurma] = useState("");  
-  const [data, setData] = useState("");  
-  const [hora, setHora] = useState("");  
-  const [motivo, setMotivo] = useState("");  
-  const [orientacoesestudante, setOrientacoesEstudante] = useState("");  
-  const [descricaoocorrido, setDescricaoocorrido] = useState("");  
-  const [docenteAtual, setDocenteAtual] = useState("");  
-  const [docentesenvolvidos, setDocentesenvolvidos] = useState([]);  
-  const [elogios, setElogios] = useState("");  
-  const [dificuldades, setDificuldades] = useState("");  
-  const [presenca, setPresenca] = useState("");  
-  const [categorias, setCategorias] = useState("");  
-  
-  const [listaDocentes, setListaDocentes] = useState([]);  
-  const [chatAtivo, setChatAtivo] = useState(false);  
-  const [campoTexto, setCampoTexto] = useState("");  
-  const [msgs, setMsgs] = useState([]);  
+import React, { useState, useEffect } from 'react';
+import styles from './Rve.module.css'; // Assuming you have a CSS module for styles
+import { AllUsers, CriarRve, UserName, createrve_usuarios, AllCamposTextoRve, CriarCampoTexto, rveData, userData } from '../../api'; // Adjust the import paths as necessary
 
-  useEffect(() => {  
-    const fetchDocentes = async () => {  
-      try {  
-        const docents = await AllUsers();  
-        console.log("Docentes:", docents);  
-        if (Array.isArray(docents)) {  
-          setListaDocentes(docents);  
-        } else {  
-          console.error("Expected an array but got:", docents);  
-        }  
-      } catch (error) {  
-        console.error("Erro ao buscar docentes:", error);  
-      }  
-    };  
-    fetchDocentes();  
-  }, []);  
+const Rve = () => {
+  const [estudante, setEstudante] = useState("");
+  const [curso, setCurso] = useState("");
+  const [turma, setTurma] = useState("");
+  const [data, setData] = useState("");
+  const [hora, setHora] = useState("");
+  const [motivo, setMotivo] = useState("");
+  const [orientacoesestudante, setOrientacoesEstudante] = useState("");
+  const [descricaoocorrido, setDescricaoocorrido] = useState("");
+  const [docenteAtual, setDocenteAtual] = useState("");
+  const [docentesenvolvidos, setDocentesenvolvidos] = useState([]);
+  const [elogios, setElogios] = useState("");
+  const [dificuldades, setDificuldades] = useState("");
+  const [presenca, setPresenca] = useState("");
+  const [categorias, setCategorias] = useState("");
+  const [listaDocentes, setListaDocentes] = useState([]);
+  const [chatAtivo, setChatAtivo] = useState(false);
+  const [campoTexto, setCampoTexto] = useState("");
+  const [msgs, setMsgs] = useState([]);
 
-  const categories = [  
-    "Aprendizagem",  
-    "Atitude/postura/comportamento",  
-    "Frequência",  
-    "Oficina/Segurança",  
-    "Relacionamento interpessoal",  
-    "Rendimento",  
-    "Saúde física",  
-    "Saúde mental",  
-    "Outras",  
-  ];  
+  useEffect(() => {
+    const fetchDocentes = async () => {
+      try {
+        const docents = await AllUsers();
+        console.log("Docentes:", docents);
+        if (Array.isArray(docents)) {
+          setListaDocentes(docents);
+        } else {
+          console.error("Expected an array but got:", docents);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar docentes:", error);
+      }
+    };
+    fetchDocentes();
+  }, []);
 
-  const addDocente = () => {  
-    if (docenteAtual) {  
-      if (docentesenvolvidos.includes(docenteAtual)) {  
-        alert("Este docente já está na lista de envolvidos.");  
-        return;  
-      }  
-      setDocentesenvolvidos([...docentesenvolvidos, docenteAtual]);  
-      setDocenteAtual("");  
-      console.log("Docentes Selecionados:", docentesenvolvidos);  
-    } else {  
-      alert("Selecione um docente antes de adicionar.");  
-    }  
-  };  
+  const categories = [
+    "Aprendizagem",
+    "Atitude/postura/comportamento",
+    "Frequência",
+    "Oficina/Segurança",
+    "Relacionamento interpessoal",
+    "Rendimento",
+    "Saúde física",
+    "Saúde mental",
+    "Outras",
+  ];
 
-  const deleteDocente = (index) => {  
-    const updatedDocentes = docentesenvolvidos.filter((_, i) => i !== index);  
-    setDocentesenvolvidos(updatedDocentes);  
-  };  
+  const addDocente = () => {
+    if (docenteAtual) {
+      if (docentesenvolvidos.includes(docenteAtual)) {
+        alert("Este docente já está na lista de envolvidos.");
+        return;
+      }
+      setDocentesenvolvidos([...docentesenvolvidos, docenteAtual]);
+      setDocenteAtual("");
+      console.log("Docentes Selecionados:", docentesenvolvidos);
+    } else {
+      alert("Selecione um docente antes de adicionar.");
+    }
+  };
 
-  const handleRve = async () => {  
-    try {  
-      const rve = rveData.getRve();  
-      console.log("RVE Data:", rve);  
-    } catch (error) {  
-      console.error("Erro ao buscar RVE:", error);  
-    }  
-  };  
+  const deleteDocente = (index) => {
+    const updatedDocentes = docentesenvolvidos.filter((_, i) => i !== index);
+    setDocentesenvolvidos(updatedDocentes);
+  };
 
-  const generateCampoTextoId = () => Math.floor(Math.random() * 1000000);  
+  const handleRve = async () => {
+    try {
+      const rve = rveData.getRve();
+      console.log("RVE Data:", rve);
+    } catch (error) {
+      console.error("Erro ao buscar RVE:", error);
+    }
+  };
 
-  const handleCriarRVE = async (e) => {  
-    e.preventDefault();  
-    try {  
-      const id = generateCampoTextoId();  
-      const user = userData.getUsers();  
-      const nifautor = user[0][0].nif;  
+  const generateCampoTextoId = () => Math.floor(Math.random() * 1000000);
 
-      const rve = {  
-        id,  
-        nifautor,  
-        estudante,  
-        curso,  
-        turma,  
-        data,  
-        hora,  
-        motivo,  
-        orientacoesestudante,  
-        descricaoocorrido,  
-        dificuldades,  
-        presenca,  
-      };  
+  const handleCriarRVE = async (e) => {
+    e.preventDefault();
+    try {
+      const id = generateCampoTextoId();
+      const user = userData.getUsers();
+      const nifautor = user[0][0].nif;
 
-      await CriarRve(rve);  
-      console.log("RVE created:", rve);  
+      const rve = {
+        id,
+        nifautor,
+        estudante,
+        curso,
+        turma,
+        data,
+        hora,
+        motivo,
+        orientacoesestudante,
+        descricaoocorrido,
+        dificuldades,
+        presenca,
+      };
 
-      const updatedDocentesEnvolvidos = [...docentesenvolvidos, user[0][0].nome];  
-      for (const nomeDocente of updatedDocentesEnvolvidos) {  
-        const dadosUser = await UserName(nomeDocente);  
-        const rveId = rveData.getRve()[0].id;  
-        const usuario_nif = dadosUser[0].nif;  
+      await CriarRve(rve);
+      console.log("RVE created:", rve);
 
-        const datarve_usuario = { id_rve: rveId, usuario_nif };  
-        await createrve_usuarios(datarve_usuario);  
-      }  
+      const updatedDocentesEnvolvidos = [...docentesenvolvidos, user[0][0].nome];
+      for (const nomeDocente of updatedDocentesEnvolvidos) {
+        const dadosUser = await UserName(nomeDocente);
+        const rveId = rveData.getRve()[0].id;
+        const usuario_nif = dadosUser[0].nif;
 
-      setChatAtivo(true);  
-      handleRve();  
-    } catch (error) {  
-      console.error("Erro ao criar RVE:", error);  
-      alert("Ocorreu um erro ao criar o RVE.");  
-    }  
-  };  
+        const datarve_usuario = { id_rve: rveId, usuario_nif };
+        await createrve_usuarios(datarve_usuario);
+      }
 
-  const handleCampoTexto = async (e) => {  
-    e.preventDefault();  
-    try {  
-      const id = generateCampoTextoId();  
-      const rve = rveData.getRve();  
-      const Idrve = rve[0][0].id;  
-      const user = userData.getUsers();  
-      const nifusuario = user[0][0].nif;  
+      setChatAtivo(true);
+      handleRve();
+    } catch (error) {
+      console.error("Erro ao criar RVE:", error);
+      alert("Ocorreu um erro ao criar o RVE.");
+    }
+  };
 
-      const conteudoCampo = {  
-        id,  
-        Idrve,  
-        data,  
-        hora,  
-        nifusuario,  
-        campoTexto,  
-      };  
+  const handleCampoTexto = async (e) => {
+    e.preventDefault();
+    try {
+      const id = generateCampoTextoId();
+      const rve = rveData.getRve();
+      const Idrve = rve[0][0].id;
+      const user = userData.getUsers();
+      const nifusuario = user[0][0].nif;
 
-      await CriarCampoTexto(conteudoCampo);  
-      console.log("CampoTextoRve created:", conteudoCampo);  
-    } catch (error) {  
-      console.error("Erro ao criar CampoTexto:", error);  
-      alert("Ocorreu um erro ao criar o CampoTexto.");  
-    }  
-  };  
+      const conteudoCampo = {
+        id,
+        Idrve,
+        data,
+        hora,
+        nifusuario,
+        campoTexto,
+      };
 
-  useEffect(() => {  
-    if (chatAtivo) return;  
+      await CriarCampoTexto(conteudoCampo);
+      console.log("CampoTextoRve created:", conteudoCampo);
+    } catch (error) {
+      console.error("Erro ao criar CampoTexto:", error);
+      alert("Ocorreu um erro ao criar o CampoTexto.");
+    }
+  };
 
-    const fetchAllMsg = async () => {  
-      const allMessages = await AllCamposTextoRve();  
-      setMsgs(allMessages);  
-    };  
+  useEffect(() => {
+    if (chatAtivo) return;
 
-    fetchAllMsg();  
-  }, [chatAtivo]);  
-  
+    const fetchAllMsg = async () => {
+      const allMessages = await AllCamposTextoRve();
+      setMsgs(allMessages);
+    };
+
+    fetchAllMsg();
+  }, [chatAtivo]);
+
   return (
     <div className={styles.container}>
       {!chatAtivo ? (
