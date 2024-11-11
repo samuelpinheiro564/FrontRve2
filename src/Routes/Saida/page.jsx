@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { CriarSaida, AllSaida, ObterSaidaPorId, EditarSaida, DeletarSaida } from '../../Data/server';
+import { useNavigate } from 'react-router-dom';
+import { CriarSaida, ObterSaidaPorId, EditarSaida } from '../../Data/server';
 import styles from '../Saida/saida.module.css';
 
 const Saida = () => {
@@ -15,13 +16,9 @@ const Saida = () => {
         assinaturaProf: '',
         assinaturaAnaq: '',
     });
-    const [historico, setHistorico] = useState([]);
     const [editId, setEditId] = useState(null);
     const [message, setMessage] = useState({ type: '', text: '' });
-
-    useEffect(() => {
-        fetchSaidaRecords();
-    }, []);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (editId) {
@@ -38,16 +35,6 @@ const Saida = () => {
             return () => clearTimeout(timer);
         }
     }, [message]);
-
-    const fetchSaidaRecords = async () => {
-        try {
-            const records = await AllSaida();
-            setHistorico(records);
-        } catch (error) {
-            console.error("Error fetching records:", error);
-            setMessage({ type: 'error', text: 'Erro ao buscar registros.' });
-        }
-    };
 
     const fetchSaidaById = async (id) => {
         try {
@@ -99,7 +86,6 @@ const Saida = () => {
                 await CriarSaida(submissionData);
                 setMessage({ type: 'success', text: 'Saída criada com sucesso.' });
             }
-            fetchSaidaRecords();
             setFormData({
                 nomealuno: '',
                 curso: '',
@@ -118,34 +104,10 @@ const Saida = () => {
         }
     };
 
-    const handleEdit = (id) => {
-        setEditId(id);
-    };
-
-    const handleDelete = async (id) => {
-        try {
-            await DeletarSaida(id);
-            fetchSaidaRecords();
-            setMessage({ type: 'success', text: 'Saída deletada com sucesso.' });
-        } catch (error) {
-            console.error("Error deleting record:", error);
-            setMessage({ type: 'error', text: 'Erro ao deletar registro.' });
-        }
-    };
-
-    const formatarData = (dataString) => {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return new Date(dataString).toLocaleDateString(undefined, options);
-    };
-
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>JUSTIFICATIVA SAÍDA</h1>
-            {message.text && (
-                <div className={message.type === 'error' ? styles.error : styles.success}>
-                    {message.text}
-                </div>
-            )}
+           
             <form onSubmit={handleSubmit} className={styles.form}>
                 <input type="text" name="nomealuno" placeholder="Aluno" value={formData.nomealuno} onChange={handleChange} required className={styles.input} />
                 <input type="text" name="curso" placeholder="Curso" value={formData.curso} onChange={handleChange} required className={styles.input} />
@@ -171,43 +133,12 @@ const Saida = () => {
                 <input type="text" name="assinaturaAnaq" placeholder="Assinatura do analista de qualidade" value={formData.assinaturaAnaq} onChange={handleChange} required className={styles.input} />
                 <button type="submit" className={styles.button}>{editId ? 'Editar Saída' : 'Enviar Saída'}</button>
             </form>
-
-            <h2 className={styles.subtitle}>Histórico de Saídas e Atestados</h2>
-            <table className={styles.table}>
-                <thead>
-                    <tr>
-                        <th>Nome do Aluno</th>
-                        <th>Curso</th>
-                        <th>Turma</th>
-                        <th>RA</th>
-                        <th>Maioridade</th>
-                        <th>Data/Hora da Saída</th>
-                        <th>Justificativa</th>
-                        <th>Assinatura do Professor</th>
-                        <th>Assinatura do Analista</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {historico.map((item) => (
-                        <tr key={item.id}>
-                            <td className='td'>{item.nomealuno}</td>
-                            <td className='td'>{item.curso}</td>
-                            <td className='td'>{item.turma}</td>
-                            <td className='td'>{item.alunora}</td>
-                            <td className='td'>{item.maioridade ? 'Sim' : 'Não'}</td>
-                            <td className='td'>{`${formatarData(item.datasaida)} ${item.horasaida}`}</td>
-                            <td className='td'>{item.justificativa}</td>
-                            <td className='td'>{item.assinaturaprof}</td>
-                            <td className='td'>{item.assinaturaanaq}</td>
-                            <td className='td'>
-                                <button onClick={() => handleEdit(item.id)} className={styles.buttonEditar}>Editar</button>
-                                <button onClick={() => handleDelete(item.id)} className={styles.buttonDeletar}>Deletar</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+             {message.text && (
+                <div className={message.type === 'error' ? styles.error : styles.success}>
+                    {message.text}
+                </div>
+            )}
+            <button onClick={() => navigate('/HistoricoSaida')} className={styles.button}>Ver Histórico de Saídas</button>
         </div>
     );
 };

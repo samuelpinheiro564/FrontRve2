@@ -8,7 +8,8 @@ import Login from '../src/Routes/Login/Login';
 import CadastroUsuarios from '../src/Routes/CadastroUsuarios/CadastroUsuarios';
 import CategoriaAdmin from './Routes/CategoriaAdmin/page';  
 import CategoriaDocente from "../src/Routes/CategoriaDocente/page";  
-import NotificacaoSec from "../src/Routes/NotificacaoSec/page";  
+import NotificacaoSec from "../src/Routes/NotificacaoSec/page"; 
+import HistoricoSaida from "./Routes/HistoricoSaida/HistoricoSaida"; 
 import ErrorPage from './Routes/ErrorPage';  
 import { useLocation } from 'react-router-dom';  
 import NavBar from '../src/components/Navbar'; // Importe o NavBar  
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
         path: "Login",  
         element: <Login />,  
       },  
+        {
+          path: "HistoricoSaida",
+          element: <HistoricoSaida />,
+
+        },
       {  
         path: "Saida",  
         element: <Saida />,  
@@ -66,7 +72,8 @@ const router = createBrowserRouter([
       {  
         path: "NotificacaoSec",  
         element: <NotificacaoSec />,  
-      },  
+      },
+       
      
     ],  
   },  
@@ -76,6 +83,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>  
     <RouterProvider router={router} />  
   </React.StrictMode>  
-);  
+);
 
 export default App;
