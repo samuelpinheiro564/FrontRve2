@@ -136,7 +136,7 @@ const Rve = () => {
       const id = generateCampoTextoId();
       const rve = rveData.getRve();
       console.log("RVE Data:", rve);
-      const Idrve = rve[0][0].id;
+      const Idrve = rve[0].id;
       console.log(Idrve)
       const user = userData.getUsers();
       const nifusuario = user[0][0].nif;
