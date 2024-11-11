@@ -134,7 +134,7 @@ const Rve = () => {
       const Idrve = rve[0][0].id;
       const user = userData.getUsers();
       const nifusuario = user[0][0].nif;
-
+console.log(nifusuario)
       const conteudoCampo = {
         id,
         Idrve,
