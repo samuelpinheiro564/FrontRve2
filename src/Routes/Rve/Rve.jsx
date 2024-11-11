@@ -152,16 +152,16 @@ const Rve = () => {
     }
   };
 
-  useEffect(() => {
-    if (chatAtivo) return;
+  ///useEffect(() => {
+    //if (chatAtivo) return;
+//
+   // const fetchAllMsg = async () => {
+   //   const allMessages = await AllCamposTextoRve();
+   //   setMsgs(allMessages);
+  //  };
 
-    const fetchAllMsg = async () => {
-      const allMessages = await AllCamposTextoRve();
-      setMsgs(allMessages);
-    };
-
-    fetchAllMsg();
-  });
+  //  fetchAllMsg();
+ // });
 
   return (
     <div className={styles.container}>
