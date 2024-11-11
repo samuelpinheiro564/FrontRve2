@@ -96,6 +96,10 @@ const Rve = () => {
   const handleCriarRVE = async (e) => {
     e.preventDefault();
     try {
+      const user = userData.getUsers();
+      console.log("user", user);
+      const nifautor = user[0][0].nif;
+      console.log("nifautor", nifautor);
       const rve = {
         id,
         nifautor, 

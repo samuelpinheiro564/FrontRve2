@@ -1,3 +1,5 @@
+import { clear } from "@testing-library/user-event/dist/clear";
+
 class dadosRve {  
     constructor() {  
         // Inicializa o rve a partir do sessionStorage, se disponível  
@@ -31,6 +33,11 @@ class dadosRve {
     getRveFromStorage() {  
         const storedRve = sessionStorage.getItem('rve');  
         return storedRve ? JSON.parse(storedRve) : null;  
+    }  
+    addRve(rve) {  
+        this.clearRve(); // Limpa a rve existente
+        this.rve = [rve];  // Define o array rve para conter apenas o novo rve
+        this.saveRveToStorage();  // Salva o rve no sessionStorage
     }  
 }  
   
