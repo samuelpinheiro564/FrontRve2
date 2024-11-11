@@ -150,7 +150,7 @@ const CadastroUsuarios = () => {
 
             {showUserList && (
                 <div className={styles.userList}>
-                    <h2>Lista de Usuários</h2>
+                    <h2 className={styles.h21}>Lista de Usuários</h2>
                     <ul>
                         {users.map(user => (
                             <li key={user.nif} className={styles.userItem}>
