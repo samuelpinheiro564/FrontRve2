@@ -167,7 +167,7 @@ console.log(nifusuario)
 
         fetchAllMsg();  
     }  
-}, [chatAtivo]); 
+}); 
 
   const rveDados = rveData.getRve();
 
