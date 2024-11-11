@@ -93,9 +93,11 @@ const Rve = () => {
   const handleUSerRve = async (e) => {
     e.preventDefault();
     console.log(docentesEnvolvidos);
+    let userRve = rveData.getRves();
+    console.log(userRve);
     for (let i = 0; i < docentesEnvolvidos.length; i++) {
-      const userRve = await createrve_usuarios(id, docentesEnvolvidos[i].nif);
-      console.log(userRve);
+      const userRveResponse = await createrve_usuarios(userRve[0].id, docentesEnvolvidos[i].nif);
+      console.log(userRveResponse);
     }
   };
 
@@ -120,13 +122,12 @@ const Rve = () => {
         presenca,  
         categorias,  
       };  
-      handleUSerRve();
+
       const res = rveData.addRve(rve);
       console.log(res);
-
+      handleUSerRve(e);
       await CriarRve(rve);
-      console.log(rveData.getRves());
-      
+      console.log(rveData.getRves());      
       alert('RVE criado com sucesso!');  
       navigate('/SuasRve');
 

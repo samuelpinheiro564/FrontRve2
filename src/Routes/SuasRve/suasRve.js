@@ -9,8 +9,8 @@ const SuasRve = () => {
         const handleRves = async () => {
         const userNif = userData.getUsers();  
         console.log(userNif);  
-        console.log(userNif[0].nif);
-        const rves = await getAllUsersrve_usuarios(userNif[0].nif);
+        console.log(userNif[0][0].nif);
+        const rves = await getAllUsersrve_usuarios(userNif[0][0].nif);
         console.log(rves);
         setRve(rves); 
         }
