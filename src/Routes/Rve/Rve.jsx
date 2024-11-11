@@ -135,6 +135,7 @@ const Rve = () => {
     try {
       const id = generateCampoTextoId();
       const rve = rveData.getRve();
+      console.log("RVE Data:", rve);
       const Idrve = rve[0][0].id;
       console.log(Idrve)
       const user = userData.getUsers();
@@ -148,7 +149,7 @@ console.log(nifusuario)
         nifusuario,
         campoTexto,
       };
-
+ console.log(conteudoCampo)
       await CriarCampoTexto(conteudoCampo);
       console.log("CampoTextoRve created:", conteudoCampo);
     } catch (error) {
@@ -368,7 +369,6 @@ console.log(nifusuario)
                 <p>{item.data}</p>
                 <p>{item.hora}</p>
                 <p>{item.orientacoesEstudante}</p>
-                <p>{item.docentesenvolvidos.join(", ")}</p>
                 <p>{item.elogios}</p>
                 <p>{item.dificuldades}</p>
                 <p>{item.presenca}</p>
