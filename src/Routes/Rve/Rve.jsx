@@ -151,7 +151,7 @@ const Rve = () => {
     }
   };
 
-  const handleCampoTexto = async (e) => {
+  const handleCampoTexto = async () => {
     e.preventDefault();
     try {
       const rve = rveData.getRves();
@@ -161,7 +161,7 @@ const Rve = () => {
       const nifusuario = user[0][0].nif;
       console.log("nifusuario", nifusuario);
       console.log("Idrve", Idrve);
-      const campoTexto = {
+      const conteudoCampo = {
         id,
         Idrve,
         data,
@@ -169,8 +169,8 @@ const Rve = () => {
         nifusuario,
         campoTexto
       };
-      console.log("CampoTextoRve", campoTexto);
-     const CriarCampo= await CriarCampoTexto(campoTexto);
+      console.log("CampoTextoRve", conteudoCampo);
+     const CriarCampo= await CriarCampoTexto(conteudoCampo);
       console.log("CampoTextoRve", CriarCampo);
     } catch (error) {
       console.error("Erro ao criar CampoTexto:", error);
