@@ -105,7 +105,7 @@ const Rve = () => {
         dificuldades,
         presenca,
       };
-
+     rveData.addRve(rve);
       await CriarRve(rve);
       console.log("RVE created:", rve);
        
