@@ -22,7 +22,7 @@ const Rve = () => {
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
   const [campoTexto, setCampoTexto] = useState("");
-  const [msgs,setMsgs] = useState([]);
+  const [setMsgs] = useState([]);
 
   useEffect(() => {
     const fetchDocentes = async () => {
