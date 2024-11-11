@@ -22,7 +22,7 @@ const Rve = () => {
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
   const [campoTexto, setCampoTexto] = useState("");
-  const [msgs, setMsgs] = useState([]);
+  const [ setMsgs] = useState([]);
 
   useEffect(() => {
     const fetchDocentes = async () => {
@@ -155,13 +155,20 @@ const Rve = () => {
   useEffect(() => {
     if (chatAtivo) return;
 
-    const fetchAllMsg = async () => {
-      const allMessages = await AllCamposTextoRve();
-      setMsgs(allMessages);
-    };
+    /**
+     * Fetches all messages by calling the AllCamposTextoRve function and updates the state with the retrieved messages.
+     * 
+     * @async
+     * @function fetchAllMsg
+     * @returns {Promise<void>} A promise that resolves when the messages have been fetched and the state has been updated.
+     */
+  //  const fetchAllMsg = async () => {
+  //    const allMessages = await AllCamposTextoRve();
+  //    setMsgs(allMessages);
+ //   };
 
-    fetchAllMsg();
-  }, [chatAtivo]);
+ //   fetchAllMsg();
+//  }, [chatAtivo]);
 
   return (
     <div className={styles.container}>
