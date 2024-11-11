@@ -13,7 +13,6 @@ import rveData from "../../Data/DadosRve";
 import styles from "../Rve/rve.module.css";
 
 const Rve = () => {
-  const [nifautor] = useState("");
   const [estudante, setEstudante] = useState("");
   const [curso, setCurso] = useState("");
   const [turma, setTurma] = useState("");
@@ -28,11 +27,12 @@ const Rve = () => {
   const [dificuldades, setDificuldades] = useState("");
   const [presenca, setPresenca] = useState("");
   const [categorias, setCategorias] = useState("");
-  const [id] = useState(0);
+
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
   const [Dadosrve] = useState([]);
   const [campoTexto, setCampoTexto] = useState("");
+  const [msgs]=useState([]);
 
   useEffect(() => {
     const fetchDocentes = async () => {
@@ -92,10 +92,14 @@ const Rve = () => {
     Dadosrve(rveData.getRve());
     console.log(Dadosrve());
   };
+  const generateCampoTextoId = () => {
+    return Math.floor(Math.random() * 1000000);
+  };
 
   const handleCriarRVE = async (e) => {
     e.preventDefault();
     try {
+      const id = generateCampoTextoId();
       const user = userData.getUsers();
       console.log("user", user);
       const nifautor = user[0][0].nif;
@@ -115,17 +119,19 @@ const Rve = () => {
         presenca
       };
       rveData.addRve(rve);
-      const dataUser = userData.getUsers();
-      console.log("dataUser:", dataUser[0][0].nome);
-      docentesenvolvidos.push(dataUser[0][0].nome);
       console.log("rve", rve);
       await CriarRve(rve);
       console.log(id);
-      for (let i = 0; i < docentesenvolvidos.length; i++) {
-        const dadosUser = await UserName(docentesenvolvidos[i]);
+      const dataUser = userData.getUsers();
+      console.log("dataUser:", dataUser[0][0].nome);
+      const updatedDocentesEnvolvidos = [...docentesenvolvidos, dataUser[0][0].nome];
+      console.log(updatedDocentesEnvolvidos);
+      for (let i = 0; i < updatedDocentesEnvolvidos.length; i++) {
+        console.log(updatedDocentesEnvolvidos);
+        const dadosUser = await UserName(updatedDocentesEnvolvidos[i]);
         console.log(dadosUser);
-        const rve4 = rveData.getRves();
-        console.log(rve4);
+        const rve4 = rveData.getRve();
+        console.log(rve4[0]);
         console.log(rve4[0].id);
         const id_rve = rve4[0].id;
         const usuario_nif = dadosUser[0].nif;
@@ -133,6 +139,7 @@ const Rve = () => {
         console.log(datarve_usuario);
         const userRve = await createrve_usuarios(datarve_usuario);
         console.log("User rves", userRve);
+        console.log(i);
       }
       setChatAtivo(true);
       handleRve(e);
@@ -141,9 +148,7 @@ const Rve = () => {
       alert("Ocorreu um erro ao criar o RVE.");
     }
   };
-  const generateCampoTextoId = () => {
-    return Math.floor(Math.random() * 1000000);
-  };
+
   const handleCampoTexto = async (e) => {
     e.preventDefault();
     try {
@@ -173,16 +178,17 @@ const Rve = () => {
   };
 
   useEffect(() => {
+    if(chatAtivo) return;
     const AllMsg = async () => {
       try {
-        await AllCamposTextoRve();
+        msgs(await AllCamposTextoRve());
       } catch (error) {
         console.error("Erro ao buscar campos de texto:", error);
       }
     };
     AllMsg();
-  }, []);
-
+  });
+  
   return (
     <div className={styles.container}>
       {!chatAtivo ? (
