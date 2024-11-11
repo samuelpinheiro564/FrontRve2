@@ -12,7 +12,6 @@ import NotificacaoSec from "../src/Routes/NotificacaoSec/page";
 import ErrorPage from './Routes/ErrorPage';  
 import { useLocation } from 'react-router-dom';  
 import NavBar from '../src/components/Navbar'; // Importe o NavBar  
-import Forum from '../src/Routes/Forum/Forum';
 
 function App() {  
   const location = useLocation(); // Obtém a localização atual  
@@ -68,10 +67,7 @@ const router = createBrowserRouter([
         path: "NotificacaoSec",  
         element: <NotificacaoSec />,  
       },  
-      {  
-        path: "Forum",  
-        element: <Forum />,  
-      },
+     
     ],  
   },  
 ]);  

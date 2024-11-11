@@ -17,6 +17,7 @@ const Saida = () => {
     });
     const [historico, setHistorico] = useState([]);
     const [editId, setEditId] = useState(null);
+    const [message, setMessage] = useState({ type: '', text: '' });
 
     useEffect(() => {
         fetchSaidaRecords();
@@ -28,12 +29,23 @@ const Saida = () => {
         }
     }, [editId]);
 
+    useEffect(() => {
+        if (message.text) {
+            const timer = setTimeout(() => {
+                setMessage({ type: '', text: '' });
+            }, 3000); // 3 seconds
+
+            return () => clearTimeout(timer);
+        }
+    }, [message]);
+
     const fetchSaidaRecords = async () => {
         try {
             const records = await AllSaida();
             setHistorico(records);
         } catch (error) {
             console.error("Error fetching records:", error);
+            setMessage({ type: 'error', text: 'Erro ao buscar registros.' });
         }
     };
 
@@ -54,6 +66,7 @@ const Saida = () => {
             });
         } catch (error) {
             console.error("Error fetching record for edit:", error);
+            setMessage({ type: 'error', text: 'Erro ao buscar registro para edição.' });
         }
     };
 
@@ -81,8 +94,10 @@ const Saida = () => {
             if (editId) {
                 await EditarSaida(editId, submissionData);
                 setEditId(null);
+                setMessage({ type: 'success', text: 'Saída editada com sucesso.' });
             } else {
                 await CriarSaida(submissionData);
+                setMessage({ type: 'success', text: 'Saída criada com sucesso.' });
             }
             fetchSaidaRecords();
             setFormData({
@@ -99,6 +114,7 @@ const Saida = () => {
             });
         } catch (error) {
             console.error("Error submitting form:", error);
+            setMessage({ type: 'error', text: 'Erro ao enviar formulário.' });
         }
     };
 
@@ -110,8 +126,10 @@ const Saida = () => {
         try {
             await DeletarSaida(id);
             fetchSaidaRecords();
+            setMessage({ type: 'success', text: 'Saída deletada com sucesso.' });
         } catch (error) {
             console.error("Error deleting record:", error);
+            setMessage({ type: 'error', text: 'Erro ao deletar registro.' });
         }
     };
 
@@ -123,6 +141,11 @@ const Saida = () => {
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>JUSTIFICATIVA SAÍDA</h1>
+            {message.text && (
+                <div className={message.type === 'error' ? styles.error : styles.success}>
+                    {message.text}
+                </div>
+            )}
             <form onSubmit={handleSubmit} className={styles.form}>
                 <input type="text" name="nomealuno" placeholder="Aluno" value={formData.nomealuno} onChange={handleChange} required className={styles.input} />
                 <input type="text" name="curso" placeholder="Curso" value={formData.curso} onChange={handleChange} required className={styles.input} />
@@ -178,8 +201,8 @@ const Saida = () => {
                             <td className='td'>{item.assinaturaprof}</td>
                             <td className='td'>{item.assinaturaanaq}</td>
                             <td className='td'>
-                                <button onClick={() => handleEdit(item.id)} className={styles.button}>Editar</button>
-                                <button onClick={() => handleDelete(item.id)} className={styles.button}>Deletar</button>
+                                <button onClick={() => handleEdit(item.id)} className={styles.buttonEditar}>Editar</button>
+                                <button onClick={() => handleDelete(item.id)} className={styles.buttonDeletar}>Deletar</button>
                             </td>
                         </tr>
                     ))}

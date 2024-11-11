@@ -14,6 +14,20 @@ const LoginUser = async (nif) => {
         
     }
 };
+const UserName = async (nome) => {
+    try {
+        const requestURL = `${URL}/usuarios/nome/${nome}`;
+        console.log(`Fazendo requisição para: ${requestURL}`);
+        const response = await axios.get(requestURL);
+        console.log('Resposta:', response.data);
+        return response.data;
+    } catch (error) {
+            console.error('Erro interno do servidor:', error);
+            throw error;
+        
+    }
+};
+
 
 const createrve_usuarios  = async (datarve_usuario) => {
     try {
@@ -65,12 +79,12 @@ const CriarUser = async (userData) => {
     }
 };
 
-const EditarUser = async (nif, userData) => {
+const AtualizaUser = async (userData) => {
     try {
-        const response = await axios.put(`${URL}/usuarios/${nif}`, userData);
+        const response = await axios.put(`${URL}/usuarios/${userData.nif}`, userData);
         return response.data;
     } catch (error) {
-        console.error('Erro na edição do usuário:', error);
+        console.error('Erro na atualização do usuário:', error);
         throw error;
     }
 };
@@ -104,9 +118,9 @@ const CriarRve = async (rveData) => {
         throw error;
     }
 };
-const RveById =  async (nif) => {
+const RveById =  async (id) => {
     try {
-        const response = await axios.post(`${URL}/rve/${nif}`);
+        const response = await axios.get(`${URL}/rve/${id}`);
         return response.data;
     } catch (error) {
 if(error.response.status === 400) {
@@ -357,7 +371,7 @@ const DeletarSaidaProfessor = async (id) => {
 export {
     LoginUser,
     CriarUser,
-    EditarUser,
+    AtualizaUser,
     DeleteUser,
     AllUsers,
     CriarRve,
@@ -387,6 +401,7 @@ export {
     DeletarSaidaProfessor,
     createrve_usuarios,
     getAllUsersrve_usuarios,
-    getAllRVErve_usuarios
+    getAllRVErve_usuarios,
+    UserName
 
 };

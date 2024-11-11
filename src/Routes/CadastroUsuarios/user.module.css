@@ -1,120 +1,119 @@
-/* Variáveis globais */
+/* Variáveis para cores e efeitos */
 :root {
-  --primary-color: #df0a0a;
-  --primary-hover: #a31010;
-  --text-color: #000000;
+  --red-vivid: #ff0000;
+  --red-light: #ff4d4d;
   --white: #ffffff;
-  --form-width: 600px;
-  --animation-timing: 0.3s;
+  --shadow-color: rgba(255, 0, 0, 0.15);
+  --gradient: linear-gradient(135deg, var(--red-vivid), var(--red-light));
 }
 
-/* Container principal com gradiente animado */
+/* Estilo base do container */
 .container {
-  min-height: 100vh;
-  padding: 4rem 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: linear-gradient(-45deg, #ff0000, #ff4444, #c91a1a, #ff8585);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
+  margin: 2rem auto;
+  padding: 3em; /* Aumentado */
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 
+    0 10px 30px var(--shadow-color),
+    0 -10px 30px var(--shadow-color);
+  transition: transform 0.3s ease;
 }
 
-@keyframes gradientBG {
-  0% { background-position: 0% 50% }
-  50% { background-position: 100% 50% }
-  100% { background-position: 0% 50% }
+.container:hover {
+  transform: translateY(-5px);
 }
 
-/* Título com efeito de destaque */
+/* Título com efeito gradiente */
 .title {
-  font-size: 3.5rem;
-  color: var(--white);
-  margin-bottom: 3rem;
-  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 3.5rem; /* Aumentado */
   text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-shadow: 
-    2px 2px 0px var(--primary-color),
-    4px 4px 0px rgba(0,0,0,0.2);
+  margin-bottom: 2.5rem; /* Aumentado */
   animation: titleFloat 3s ease-in-out infinite;
 }
 
-@keyframes titleFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Formulário com efeito de vidro */
+/* Formulário com efeitos modernos */
 .form {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 3.5rem;
-  border-radius: 30px;
-  width: 90%;
-  max-width: var(--form-width);
+  display: grid;
+  gap: 2rem; /* Aumentado */
+  padding: 3rem; /* Aumentado */
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
   backdrop-filter: blur(10px);
-  box-shadow: 
-    0 20px 40px rgba(0,0,0,0.1),
-    0 0 0 1px rgba(255,255,255,0.1);
-  transform-style: preserve-3d;
-  transition: all var(--animation-timing) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.form:hover {
-  box-shadow: 
-    0 30px 60px rgba(0,0,0,0.15),
-    0 0 0 2px rgba(255,255,255,0.2);
+.userItem {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Grupos de formulário melhorados */
+.userItem p {
+  margin: 4px 0;
+  color: #555;
+}
+
+/* Grupos de formulário com animação hover */
 .formGroup {
-  margin-bottom: 2.5rem;
   position: relative;
-  transform-style: preserve-3d;
+  transition: transform 0.2s ease;
 }
 
+.formGroup:hover {
+  transform: scale(1.02);
+}
+
+/* Labels flutuantes */
 .label {
-  display: block;
-  margin-bottom: 0.8rem;
-  color: var(--text-color);
-  font-weight: 600;
-  font-size: 1.1rem;
-  transform: translateZ(20px);
+  position: absolute;
+  left: 1.5rem; /* Aumentado */
+  top: 10%;
+  transform: translateY(-50%);
+  color: var(--red-vivid);
+  transition: all 0.3s ease;
+  pointer-events: none;
 }
 
-/* Input com efeitos de foco aprimorados */
+.input:focus ~ .label,
+.input:not(:placeholder-shown) ~ .label {
+  top: -0.10rem;
+  left: 1rem; /* Aumentado */
+  font-size: 1rem; /* Aumentado */
+  background: var(--white);
+  padding: 0 0.5rem;
+}
+
+/* Inputs estilizados */
 .input {
   width: 100%;
-  padding: 1.2rem;
-  border: 2px solid rgba(0,0,0,0.1);
-  border-radius: 15px;
-  font-size: 1.1rem;
-  transition: all var(--animation-timing) ease;
-  background: rgba(255,255,255,0.9);
+  padding: 1.5rem; /* Aumentado */
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .input:focus {
+  border-color: var(--red-vivid);
+  box-shadow: 0 0 0 4px var(--shadow-color);
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 
-    0 0 0 4px rgba(223,10,10,0.1),
-    0 10px 20px rgba(0,0,0,0.1);
-  transform: translateY(-2px);
 }
 
-/* Botão com efeitos modernos */
+/* Botão com efeito hover surreal */
 .button {
-  width: 100%;
-  padding: 1.3rem;
-  background: var(--primary-color);
+  background: var(--gradient);
   color: var(--white);
+  padding: 1.5rem 3rem; /* Aumentado */
   border: none;
-  border-radius: 15px;
-  font-size: 1.2rem;
-  font-weight: 700;
+  border-radius: 10px;
   cursor: pointer;
-  transition: all var(--animation-timing) ease;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
@@ -122,59 +121,154 @@
 .button::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,0.2),
-    transparent
-  );
-  transition: var(--animation-timing);
-}
-
-.button:hover {
-  background: var(--primary-hover);
-  transform: translateY(-3px);
-  box-shadow: 
-    0 10px 20px rgba(223,10,10,0.3),
-    0 6px 6px rgba(223,10,10,0.2);
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
 }
 
 .button:hover::before {
-  left: 100%;
+  width: 300px;
+  height: 300px;
 }
 
-/* Mensagens de feedback aprimoradas */
-.error, .success {
-  padding: 1rem;
+/* Lista de usuários com efeitos */
+.userList {
+  margin-top: 2.5rem; /* Aumentado */
+  padding: 1.5rem; /* Aumentado */
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+}
+  .viewUsersButton{
+  background: var(--gradient);
+  color: var(--white);
+  padding: 1.5rem 3rem; /* Aumentado */
+  border: none;
   border-radius: 10px;
-  margin-top: 1rem;
-  font-weight: 500;
+  
+  }
+.backButton{
+  background: var(--gradient);
+  color: var(--white);
+  padding: 1.5rem 3rem; /* Aumentado */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.userList li {
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem; /* Aumentado */
+  margin: 0.5rem 0;
+  border-radius: 10px;
+  background: var(--white);
+  box-shadow: 0 2px 10px var(--shadow-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.userList li:hover {
+  transform: translateX(10px);
+  box-shadow: 0 4px 20px var(--shadow-color);
+}
+
+/* Animações */
+@keyframes titleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Mensagens de feedback */
+.error, .success {
+  padding: 1.5rem; /* Aumentado */
+  border-radius: 10px;
+  margin: 1.5rem 0; /* Aumentado */
   animation: slideIn 0.3s ease;
 }
 
 .error {
-  background: rgba(255,0,0,0.1);
+  background: rgba(255, 0, 0, 0.1);
   color: #ff0000;
-  border-left: 4px solid #ff0000;
 }
 
 .success {
-  background: rgba(0,255,0,0.1);
+  background: rgba(0, 255, 0, 0.1);
   color: #008000;
-  border-left: 4px solid #008000;
 }
 
-/* Responsividade melhorada */
-@media (max-width: 768px) {
-  .container { padding: 2rem 1rem; }
-  .form { 
-    padding: 2rem;
-    max-width: 100%;
+.editButton {
+  background: var(--gradient);
+  color: var(--white);
+  padding: 1rem 2rem; /* Aumentado */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.editButton::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.editButton:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.deleteButton {
+  background: var(--gradient);
+  color: var(--white);
+  padding: 1rem 2rem; /* Aumentado */
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.deleteButton::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
   }
-  .title { font-size: 2.5rem; }
-  .input, .button { padding: 1rem; }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
