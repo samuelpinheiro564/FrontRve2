@@ -29,6 +29,7 @@ const Rve = () => {
   const [id, setId] = useState(0);
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
+  const [Dadosrve] = useState([]);
 
   useEffect(() => {
     const dadosUser = userData.getUsers();
@@ -96,6 +97,11 @@ const Rve = () => {
     setDocentesEnvolvidos(updatedDocentes);
   };
   console.log("Docentes Envolvidos2:", docentesEnvolvidos);
+
+  const handleRve = (e) => {
+   rveData.getRve();
+     
+}
 
   const handleCriarRVE = async (e) => {
     e.preventDefault();
@@ -331,7 +337,7 @@ const Rve = () => {
           <>
             <h1>Chat</h1>
             <div>
-              
+
             </div>
           </>
       )}
