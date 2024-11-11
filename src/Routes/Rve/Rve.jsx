@@ -22,7 +22,7 @@ const Rve = () => {
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
   const [campoTexto, setCampoTexto] = useState("");
-  const [setMsgs] = useState([]);
+  const [msgs,setMsgs] = useState([]);
 
   useEffect(() => {
     const fetchDocentes = async () => {
@@ -159,14 +159,14 @@ console.log(nifusuario)
 
   useEffect(() => {  
     if (!chatAtivo) {  
-      const fetchAllMsg = async () => {  
-        const allMessages = await AllCamposTextoRve();  
-        setMsgs(allMessages);  
-      };  
+        const fetchAllMsg = async () => {  
+            const allMessages = await AllCamposTextoRve();  
+            setMsgs(allMessages);  
+        };  
 
-      fetchAllMsg();  
+        fetchAllMsg();  
     }  
-  }, [chatAtivo, setMsgs]); 
+}, [chatAtivo]); 
 
   const rveDados = rveData.getRve();
 
