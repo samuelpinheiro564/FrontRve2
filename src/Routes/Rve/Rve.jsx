@@ -114,8 +114,9 @@ const Rve = () => {
         console.log("Docente:", docentesenvolvidos[i].nome);
         const dadosUser = await UserName(docentesenvolvidos[i].nome);
         const rveId = rveData.getRve()[0].id;
+        console.log("RVE ID:", rveId);
         const usuario_nif = dadosUser[0].nif;
-
+     console.log("NIF:", usuario_nif);
         const datarve_usuario = { id_rve: rveId, usuario_nif };
         await createrve_usuarios(datarve_usuario);
       }
