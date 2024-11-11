@@ -178,14 +178,14 @@ const Rve = () => {
   };
 
   useEffect(() => {
-    if(chatAtivo === true){
+    if(chatAtivo === true) return
     const AllMsg = async () => {
 
         msgs(await AllCamposTextoRve());
   
 
 
-    };}
+    };
 
     AllMsg();
   });
