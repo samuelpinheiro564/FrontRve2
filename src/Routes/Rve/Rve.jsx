@@ -181,7 +181,7 @@ const Rve = () => {
 
   return (
     <div className={styles.container}>
-      {chatAtivo ? (
+      {!chatAtivo ? (
         <>
           <h1 className={styles.title}>Criar RVE</h1>
           <form onSubmit={handleCriarRVE} className={styles.form}>
