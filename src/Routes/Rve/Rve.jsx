@@ -20,7 +20,7 @@ const Rve = () => {
   const [orientacoesEstudante, setOrientacoesEstudante] = useState("");
   const [descricaoocorrido, setDescricaoocorrido] = useState("");
   const [docenteAtual, setDocenteAtual] = useState("");
-  const [docentesEnvolvidos, setDocentesEnvolvidos] = useState([]);
+  const [docentesenvolvidos, setDocentesenvolvidos] = useState([]);
   const [assinaturas] = useState(null);
   const [elogios, setElogios] = useState("");
   const [dificuldades, setDificuldades] = useState("");
@@ -76,34 +76,33 @@ const Rve = () => {
 
   const addDocente = () => {
     if (docenteAtual) {
-      if (docentesEnvolvidos.includes(docenteAtual)) {
+      if (docentesenvolvidos.includes(docenteAtual)) {
         alert("Este docente já está na lista de envolvidos.");
         return;
       }
-      setDocentesEnvolvidos([...docentesEnvolvidos, docenteAtual]);
+      setDocentesenvolvidos([...docentesenvolvidos, docenteAtual]);
       setDocenteAtual("");
 
       console.log("Docentes Selecionados:", [
-        ...docentesEnvolvidos,
+        ...docentesenvolvidos,
         docenteAtual,
       ]);
     } else {
       alert("Selecione um docente antes de adicionar.");
     }
   };
-  console.log("Docentes Envolvidos:", docentesEnvolvidos);
+  console.log("Docentes Envolvidos:", docentesenvolvidos);
 
   const deleteDocente = (index) => {
-    const updatedDocentes = docentesEnvolvidos.filter((_, i) => i !== index);
-    setDocentesEnvolvidos(updatedDocentes);
+    const updatedDocentes = docentesenvolvidos.filter((_, i) => i !== index);
+    setDocentesenvolvidos(updatedDocentes);
   };
-  console.log("Docentes Envolvidos2:", docentesEnvolvidos);
+  console.log("Docentes Envolvidos2:", docentesenvolvidos);
 
   const handleRve = (e) => {
-  Dadosrve(rveData.getRve());
-     console.log(Dadosrve())
-  }
-  
+    Dadosrve(rveData.getRve());
+    console.log(Dadosrve());
+  };
 
   const handleCriarRVE = async (e) => {
     e.preventDefault();
@@ -119,7 +118,7 @@ const Rve = () => {
         motivo,
         orientacoesEstudante,
         descricaoocorrido,
-        docentesEnvolvidos,
+        docentesenvolvidos,
         assinaturas: Array(assinaturas),
         elogios,
         dificuldades,
@@ -129,12 +128,12 @@ const Rve = () => {
       rveData.addRve(rve);
       const dataUser = userData.getUsers();
       console.log("dataUser:", dataUser[0][0].nome);
-      docentesEnvolvidos.push(dataUser[0][0].nome);
+      docentesenvolvidos.push(dataUser[0][0].nome);
       console.log("rve", rve);
       await CriarRve(rve);
       console.log(id);
-      for (let i = 0; i < docentesEnvolvidos.length; i++) {
-        const dadosUser = await UserName(docentesEnvolvidos[i]);
+      for (let i = 0; i < docentesenvolvidos.length; i++) {
+        const dadosUser = await UserName(docentesenvolvidos[i]);
         console.log(dadosUser);
         const rve4 = rveData.getRves();
         console.log(rve4);
@@ -266,11 +265,11 @@ const Rve = () => {
                 Adicionar Docente
               </button>
             </div>
-            {docentesEnvolvidos.length > 0 && (
+            {docentesenvolvidos.length > 0 && (
               <div className={styles.formGroup}>
                 <h3>Docentes Envolvidos:</h3>
                 <ul className={styles.list}>
-                  {docentesEnvolvidos.map((docente, index) => (
+                  {docentesenvolvidos.map((docente, index) => (
                     <li key={index} className={styles.listItem}>
                       {docente}
                       <button
@@ -339,25 +338,25 @@ const Rve = () => {
       ) : (
         <>
           <h1>Chat</h1>
-          <div>{
-            Dadosrve.map((item) => (
+          <div>
+            {Dadosrve.map((item) => (
               <div key={item.id}>
                 <h2>{item.estudante}</h2>
                 <p>{item.motivo}</p>
                 <p>{item.descricaoocorrido}</p>
-              <p>{item.curso}</p>
-              <p>{item.turma}</p>
-              <p>{item.data}</p>
-              <p>{item.hora}</p>
-              <p>{item.orientacoesEstudante}</p>
-              <p>{item.docentesEnvolvidos.join(", ")}</p>
-              <p>{item.elogios}</p>
-              <p>{item.dificuldades}</p>
-              <p>{item.presenca}</p>
-              <p>{item.categorias}</p>
+                <p>{item.curso}</p>
+                <p>{item.turma}</p>
+                <p>{item.data}</p>
+                <p>{item.hora}</p>
+                <p>{item.orientacoesEstudante}</p>
+                <p>{item.docentesenvolvidos.join(", ")}</p>
+                <p>{item.elogios}</p>
+                <p>{item.dificuldades}</p>
+                <p>{item.presenca}</p>
+                <p>{item.categorias}</p>
               </div>
-            ))
-          }</div>
+            ))}
+          </div>
 
           <div className={styles.formGroup}>
             <input
@@ -370,7 +369,7 @@ const Rve = () => {
             />
           </div>
           <button type="submit" className={styles.button}>
-           Enviar mensagem
+            Enviar mensagem
           </button>
         </>
       )}
