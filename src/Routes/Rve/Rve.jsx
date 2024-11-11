@@ -9,7 +9,6 @@ import userData from "../../Data/dadosUser";
 import rveData from "../../Data/DadosRve";
 import styles from "../Rve/rve.module.css";
 
-
 const Rve = () => {
   const [autor, setAutor] = useState("");
   const [estudante, setEstudante] = useState("");
@@ -29,7 +28,6 @@ const Rve = () => {
   const [categorias, setCategorias] = useState("");
   const [id, setId] = useState(0);
   const [listaDocentes, setListaDocentes] = useState([]);
-
   const [chatAtivo, setChatAtivo] = useState(false);
 
   useEffect(() => {
@@ -140,7 +138,7 @@ const Rve = () => {
         const userRve = await createrve_usuarios(datarve_usuario);
         console.log("User rves", userRve);
       }
-      chatAtivo(true);
+      setChatAtivo(true);
     } catch (error) {
       console.error("Erro ao criar RVE:", error);
       alert("Ocorreu um erro ao criar o RVE.");
