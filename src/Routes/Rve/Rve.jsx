@@ -89,7 +89,8 @@ const Rve = () => {
       const id = generateCampoTextoId();
       const user = userData.getUsers();
       const nifautor = user[0][0].nif;
-
+ const nomeAutor = user[0][0].nome;
+ console.log(nomeAutor)
       const rve = {
         id,
         nifautor,
@@ -107,10 +108,11 @@ const Rve = () => {
 
       await CriarRve(rve);
       console.log("RVE created:", rve);
-
-      const updatedDocentesEnvolvidos = [...docentesenvolvidos, user[0][0].nome];
-      for (const nomeDocente of updatedDocentesEnvolvidos) {
-        const dadosUser = await UserName(nomeDocente);
+       
+    docentesenvolvidos.push(nomeAutor);
+      for (let i = 0; i < docentesenvolvidos.length; i++) {
+        console.log("Docente:", docentesenvolvidos[i].nome);
+        const dadosUser = await UserName(docentesenvolvidos[i].nome);
         const rveId = rveData.getRve()[0].id;
         const usuario_nif = dadosUser[0].nif;
 
