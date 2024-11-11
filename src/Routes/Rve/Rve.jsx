@@ -100,7 +100,7 @@ const Rve = () => {
   console.log("Docentes Envolvidos2:", docentesEnvolvidos);
 
   const handleRve = (e) => {
-  Dadosrve(rveData.getRve());
+  Dadosrve(rveData.getRve());aaa
      console.log(Dadosrve())
   }
   
