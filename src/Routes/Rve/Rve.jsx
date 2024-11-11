@@ -158,15 +158,14 @@ console.log(nifusuario)
   };
 
   useEffect(() => {  
-    // Verifica se o chat não está ativo e se isEstado é true ou false  
-    if (chatAtivo) return;  
+    if (!chatAtivo) {  
+      const fetchAllMsg = async () => {  
+        const allMessages = await AllCamposTextoRve();  
+        setMsgs(allMessages);  
+      };  
 
-    const fetchAllMsg = async () => {  
-      const allMessages = await AllCamposTextoRve();  
-      setMsgs(allMessages);  
-    };  
-
-    fetchAllMsg();  
+      fetchAllMsg();  
+    }  
   }, [chatAtivo]);
 
   return (
