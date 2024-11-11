@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';  
 import userData from '../../Data/dadosUser';  
-import { getAllUsersrve_usuarios,RveById } from '../../Data/server';  
+import { getAllUsersrve_usuarios, RveById } from '../../Data/server';  
 
 const SuasRve = () => {  
-    const [rve, setRve] = useState([]); 
-     
+    const [listRve, setListRve] = useState([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const ITEMS_PER_PAGE = 5; // Define o número de itens por página
 
     useEffect(() => {  
         const handleRves = async () => {
@@ -26,14 +27,17 @@ const SuasRve = () => {
 console.log(rve);
     return (  
         <div>  
-            {rve.length > 0 ? (  
-                rve.map((item) => (  
-                    <div key={item.id_rve}>  
-                        <p>{item.estudante}</p>  
-                        <p>{item.data}</p>  
-                        <p>{item.motivo}</p>  
-                    </div>  
-                ))  
+            {listRve.length > 0 ? (  
+                <div>
+                    {currentItems.map((rveItem) => (
+                        <div key={rveItem[0].id} style={{ border: '1px solid black', margin: '10px', padding: '10px' }}>
+                            <p>ID: {rveItem[0].id}</p>
+                            <p>Estudante: {rveItem[0].estudante}</p>
+                        </div>
+                    ))}
+                    <button onClick={handlePrev}>Previous</button>
+                    <button onClick={handleNext}>Next</button>
+                </div>  
             ) : (  
                 <p>No RVE data available.</p>  
             )}  

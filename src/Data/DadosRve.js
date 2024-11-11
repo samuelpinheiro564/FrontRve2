@@ -1,49 +1,45 @@
-class dadosRVE {  
+
+class dadosRve {  
     constructor() {  
-        // Inicializa a lista de RVE a partir do sessionStorage, se disponível  
-        this.rves = this.getRvesFromStorage();  
+        // Inicializa o rve a partir do sessionStorage, se disponível  
+        this.rve = this.getRveFromStorage();  
     }  
-
-    // Adiciona um RVE ao array e ao sessionStorage  
+  
+    // Define um rve e salva no sessionStorage  
+    setRve(rve) {  
+        this.clearRve(); // Limpa a rve existente
+        this.rve = rve;  
+        this.saveRveToStorage();  
+    }  
+  
+    // Obtém o rve  
+    getRve() {  
+        return this.rve;  
+    }  
+  
+    // Limpa o rve  
+    clearRve() {  
+        this.rve = null;  
+        sessionStorage.removeItem('rve'); // Limpa os dados do sessionStorage  
+    }  
+  
+    // Salva o rve no sessionStorage  
+    saveRveToStorage() {  
+        sessionStorage.setItem('rve', JSON.stringify(this.rve));  
+    }  
+  
+    // Obtém o rve do sessionStorage  
+    getRveFromStorage() {  
+        const storedRve = sessionStorage.getItem('rve');  
+        return storedRve ? JSON.parse(storedRve) : null;  
+    }  
     addRve(rve) {  
-        this.rves.push(rve);  
-        this.saveRvesToStorage();  
-    }  
-
-    // Adiciona assinaturas a um RVE e salva no sessionStorage  
-    addAssinaturas(assinaturas) {  
-        this.rves.push(assinaturas);  
-        this.saveRvesToStorage();  
-    }  
-
-    // Obtém todos os RVE  
-    getRves() {  
-        return this.rves;  
-    }  
-
-    // Encontra um RVE pelo ID  
-    findRve(rveId) {  
-        return this.rves.find((rve) => rve.rveId === rveId);  
-    }  
-
-    // Limpa todos os dados dos RVE  
-    clearRves() {  
-        this.rves = [];  
-        sessionStorage.removeItem('rves'); // Limpa os dados do sessionStorage  
-    }  
-
-    // Salva os RVE no sessionStorage  
-    saveRvesToStorage() {  
-        sessionStorage.setItem('rves', JSON.stringify(this.rves));  
-    }  
-
-    // Obtém os RVE do sessionStorage  
-    getRvesFromStorage() {  
-        const storedRves = sessionStorage.getItem('rves');  
-        return storedRves ? JSON.parse(storedRves) : [];  
+        this.clearRve(); // Limpa a rve existente
+        this.rve = [rve];  // Define o array rve para conter apenas o novo rve
+        this.saveRveToStorage();  // Salva o rve no sessionStorage
     }  
 }  
-
+  
 // Instância única da classe para ser usada em toda a aplicação  
-const rveData = new dadosRVE();  
+const rveData = new dadosRve();  
 export default rveData;

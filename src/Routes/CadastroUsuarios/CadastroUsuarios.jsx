@@ -16,6 +16,8 @@ const CadastroUsuarios = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
+    const [showUserList, setShowUserList] = useState(false);
+    const [showViewUsersButton, setShowViewUsersButton] = useState(false);
 
     useEffect(() => {
         fetchAllUsers();
@@ -37,12 +39,13 @@ const CadastroUsuarios = () => {
 
     const handleCadastro = async (e) => {
         e.preventDefault();
-        const usersList = await AllUsers();
-        const res = usersList.find(user => user.nif === form.nif);
-        if (!editingUser && res) {
-            setError('O campo NIF já existe');
-            setTimeout(() => setError(''), 3000);
-            return;
+        if (!editingUser) {
+            const res = users.find(user => user.nif === form.nif);
+            if (res) {
+                setError('O campo NIF já existe');
+                setTimeout(() => setError(''), 3000);
+                return;
+            }
         }
         try {
             if (editingUser) {
@@ -51,6 +54,7 @@ const CadastroUsuarios = () => {
             } else {
                 await CriarUser(form);
                 setSuccessMessage('Usuário cadastrado com sucesso');
+                setShowViewUsersButton(true);
             }
             fetchAllUsers();
             limparCampos();
@@ -78,6 +82,7 @@ const CadastroUsuarios = () => {
     const handleEditUser = (user) => {
         setForm(user);
         setEditingUser(user);
+        setShowUserList(false);
     };
 
     const handleDeleteUser = async (nif) => {
@@ -97,52 +102,71 @@ const CadastroUsuarios = () => {
         setShowPassword(prevShowPassword => !prevShowPassword);
     };
 
+    const handleViewUsers = () => {
+        setShowUserList(true);
+    };
+
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Cadastro de Usuários</h1>
-            <form className={styles.form} onSubmit={handleCadastro}>
-                <div className={styles.formGroup}>
-                    <label htmlFor="number" className={styles.label}>NIF:</label>
-                    <input type="number" id="nif" name="nif" value={form.nif} onChange={handleInputChange} className={styles.input} />
-                </div>
-                <div className={styles.formGroup}>
-                    <label htmlFor="nome" className={styles.label}>Nome:</label>
-                    <input type="text" id="nome" name="nome" value={form.nome} onChange={handleInputChange} className={styles.input} />
-                </div>
-                <div className={styles.formGroup}>
-                    <label htmlFor="email" className={styles.label}>Email:</label>
-                    <input type="email" id="email" name="email" value={form.email} onChange={handleInputChange} className={styles.input} />
-                </div>
-                <div className={styles.formGroup}>
-                    <label htmlFor="senha" className={styles.label}>Senha:</label>
-                    <input type={showPassword ? "text" : "password"} id="senha" name="senha" value={form.senha} onChange={handleInputChange} className={styles.input} />
-                    <span onClick={toggleShowPassword} className={styles.togglePassword}>{showPassword ? '🙈' : '👁️'}</span>
-                </div>
-                <div className={styles.formGroup}>
-                    <label htmlFor="telefone" className={styles.label}>Telefone:</label>
-                    <input type="tel" id="telefone" name="telefone" value={form.telefone} onChange={handleInputChange} className={styles.input} />
-                </div>
-                <div className={styles.formGroup}>
-                    <label htmlFor="tipo" className={styles.label}>Tipo:</label>
-                    <input type="text" id="tipo" name="tipo" value={form.tipo} onChange={handleInputChange} className={styles.input} />
-                </div>
-                {error && <p className={styles.error}>{error}</p>}
-                {successMessage && <p className={styles.success}>{successMessage}</p>}
-                <button type="submit" className={styles.button}>{editingUser ? 'Salvar Alterações' : 'Cadastrar'}</button>
-            </form>
+            {!showUserList && (
+                <form className={styles.form} onSubmit={handleCadastro}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="nif" className={styles.label}>NIF:</label>
+                        <input type="number" id="nif" name="nif" value={form.nif} onChange={handleInputChange} className={styles.input} />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="nome" className={styles.label}>Nome:</label>
+                        <input type="text" id="nome" name="nome" value={form.nome} onChange={handleInputChange} className={styles.input} />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="email" className={styles.label}>Email:</label>
+                        <input type="email" id="email" name="email" value={form.email} onChange={handleInputChange} className={styles.input} />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="senha" className={styles.label}>Senha:</label>
+                        <input type={showPassword ? "text" : "password"} id="senha" name="senha" value={form.senha} onChange={handleInputChange} className={styles.input} />
+                        <span onClick={toggleShowPassword} className={styles.togglePassword}>{showPassword ? '🙈' : '👁️'}</span>
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="telefone" className={styles.label}>Telefone:</label>
+                        <input type="tel" id="telefone" name="telefone" value={form.telefone} onChange={handleInputChange} className={styles.input} />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="tipo" className={styles.label}>Tipo:</label>
+                        <input type="text" id="tipo" name="tipo" value={form.tipo} onChange={handleInputChange} className={styles.input} />
+                    </div>
+                    {error && <p className={styles.error}>{error}</p>}
+                    {successMessage && <p className={styles.success}>{successMessage}</p>}
+                    <button type="submit" className={styles.button}>{editingUser ? 'Salvar Alterações' : 'Cadastrar'}</button>
+                </form>
+            )}
 
-            {users.length > 0 && (
+{!showUserList && (
+    <button onClick={handleViewUsers} className={styles.viewUsersButton}>
+        Ver Usuários
+    </button>
+)}
+
+            {showUserList && (
                 <div className={styles.userList}>
-                    <h2>Lista de Usuários</h2>
+                    <h2 className={styles.h21}>Lista de Usuários</h2>
                     <ul>
                         {users.map(user => (
-                            <li key={user.nif}>
-                                <span>{user.nome} ({user.nif})</span>
+                            <li key={user.nif} className={styles.userItem}>
+                                <p><strong>NIF:</strong> {user.nif}</p>
+                                <p><strong>Nome:</strong> {user.nome}</p>
+                                <p><strong>Email:</strong> {user.email}</p>
+                                <p><strong>Telefone:</strong> {user.telefone}</p>
+                                <p><strong>Tipo:</strong> {user.tipo}</p>
                                 <button onClick={() => handleEditUser(user)} className={styles.editButton}>Editar</button>
                                 <button onClick={() => handleDeleteUser(user.nif)} className={styles.deleteButton}>Deletar</button>
                             </li>
                         ))}
                     </ul>
+                    <button onClick={() => setShowUserList(false)} className={styles.backButton}>
+                        Voltar
+                    </button>
                 </div>
             )}
         </div>
