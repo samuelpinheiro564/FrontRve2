@@ -339,9 +339,8 @@ const Rve = () => {
       ) : (
         <>
           <h1>Chat</h1>
-            <div>{
-            }</div>
-            
+          <div>{}</div>
+
           <div className={styles.formGroup}>
             <input
               type="text"
@@ -352,6 +351,9 @@ const Rve = () => {
               className={styles.input}
             />
           </div>
+          <button type="submit" className={styles.button}>
+           Enviar mensagem
+          </button>
         </>
       )}
     </div>
