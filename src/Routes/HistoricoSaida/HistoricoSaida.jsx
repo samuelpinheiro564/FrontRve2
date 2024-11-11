@@ -44,7 +44,7 @@ const HistoricoSaida = () => {
     };
 
     const handleEdit = (id) => {
-        navigate(`/saida/${id}`);
+        navigate(`/saida`);
     };
 
     const formatarData = (dataString) => {
