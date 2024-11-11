@@ -10,7 +10,7 @@ import rveData from "../../Data/DadosRve";
 import styles from "../Rve/rve.module.css";
 
 const Rve = () => {
-  const [autor, setAutor] = useState("");
+  const [nifautor, setAutor] = useState("");
   const [estudante, setEstudante] = useState("");
   const [curso, setCurso] = useState("");
   const [turma, setTurma] = useState("");
@@ -21,7 +21,6 @@ const Rve = () => {
   const [descricaoocorrido, setDescricaoocorrido] = useState("");
   const [docenteAtual, setDocenteAtual] = useState("");
   const [docentesenvolvidos, setDocentesenvolvidos] = useState([]);
-  const [assinaturas] = useState(null);
   const [elogios, setElogios] = useState("");
   const [dificuldades, setDificuldades] = useState("");
   const [presenca, setPresenca] = useState("");
@@ -109,21 +108,17 @@ const Rve = () => {
     try {
       const rve = {
         id,
-        autor,
-        estudante,
-        curso,
-        turma,
-        data,
-        hora,
-        motivo,
-        orientacoesEstudante,
-        descricaoocorrido,
-        docentesenvolvidos,
-        assinaturas: Array(assinaturas),
-        elogios,
-        dificuldades,
-        presenca,
-        categorias,
+        nifautor, 
+        estudante, 
+        curso, 
+        turma, 
+        data, 
+        hora, 
+        motivo, 
+        orientacoesestudante, 
+        descricaoocorrido, 
+        dificuldades, 
+        presenca
       };
       rveData.addRve(rve);
       const dataUser = userData.getUsers();
