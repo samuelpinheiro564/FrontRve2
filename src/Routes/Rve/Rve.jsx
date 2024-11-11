@@ -166,7 +166,7 @@ console.log(nifusuario)
 
       fetchAllMsg();  
     }  
-  }, [chatAtivo]);
+  }, [!chatAtivo]);
 
   return (
     <div className={styles.container}>
