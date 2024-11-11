@@ -358,7 +358,6 @@ console.log(nifusuario)
           <h1>Chat</h1>
           <div>
             {
-  
             rveDados.map((item) => (
               <div key={item.id}>
                 <h2>{item.estudante}</h2>
@@ -376,7 +375,13 @@ console.log(nifusuario)
               </div>
             ))}
           </div>
-
+{msgs.map((msg) => (
+                <div key={msg.id}>
+                    <h3>{msg.campoTexto}</h3>
+                    <p>{msg.data}</p>
+                    <p>{msg.hora}</p>
+                </div>
+            ))} 
           <div className={styles.formGroup}>
             <input
               type="text"
