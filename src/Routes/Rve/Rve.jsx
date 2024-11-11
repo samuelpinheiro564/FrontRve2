@@ -360,6 +360,7 @@ const Rve = () => {
             {rveDados.map((item) => (
               <div key={item.id}>
                 <h2>{item.estudante}</h2>
+                <div  className={styles.form}>
                 <div className={styles.formGroup}>
                   <p className={styles.input}>{item.motivo}</p>
                 </div>
@@ -393,6 +394,7 @@ const Rve = () => {
                 <div className={styles.formGroup}>
                   <p className={styles.input}>{item.categorias}</p>
                 </div>
+              </div>
               </div>
             ))}
           </div>
