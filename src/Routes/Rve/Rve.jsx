@@ -222,7 +222,7 @@ const Rve = () => {
               <textarea
                 name="orientacoesEstudante"
                 placeholder="Orientações ao Estudante"
-                value={orientacoesEstudante}
+                value={orientacoesestudante}
                 onChange={(e) => setOrientacoesEstudante(e.target.value)}
                 required
                 className={styles.textarea}
