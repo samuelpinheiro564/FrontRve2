@@ -87,7 +87,7 @@ const Rve = () => {
         ...docentesEnvolvidos,
         docenteAtual,
       ]);
-    } else {
+    } else {aaaa
       alert("Selecione um docente antes de adicionar.");
     }
   };
