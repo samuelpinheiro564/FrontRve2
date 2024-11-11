@@ -155,6 +155,13 @@ const Rve = () => {
   useEffect(() => {
     if (chatAtivo) return;
 
+    /**
+     * Fetches all messages by calling the AllCamposTextoRve function and updates the state with the retrieved messages.
+     * 
+     * @async
+     * @function fetchAllMsg
+     * @returns {Promise<void>} A promise that resolves when the messages have been fetched and the state has been updated.
+     */
     const fetchAllMsg = async () => {
       const allMessages = await AllCamposTextoRve();
       setMsgs(allMessages);
