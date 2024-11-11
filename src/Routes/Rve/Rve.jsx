@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './rve.module.css'; // Assuming you have a CSS module for styles
-import { AllUsers, CriarRve, UserName, createrve_usuarios,AllCamposTextoRve,CriarCampoTexto } from '../../Data/server'; // Adjust the import paths as necessary
+import { AllUsers, CriarRve, UserName, createrve_usuarios, AllCamposTextoRve, CriarCampoTexto } from '../../Data/server'; // Adjust the import paths as necessary
 import rveData from '../../Data/DadosRve'; // Adjust the import path as necessary
 import userData from '../../Data/dadosUser'; // Adjust the import path as necessary
 
@@ -22,7 +22,7 @@ const Rve = () => {
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
   const [campoTexto, setCampoTexto] = useState("");
-  const [msgs,setMsgs] = useState([]);
+  const [msgs, setMsgs] = useState([]);
 
   useEffect(() => {
     const fetchDocentes = async () => {
@@ -89,8 +89,8 @@ const Rve = () => {
       const id = generateCampoTextoId();
       const user = userData.getUsers();
       const nifautor = user[0][0].nif;
- const nomeAutor = user[0][0].nome;
- console.log(nomeAutor)
+      const nomeAutor = user[0][0].nome;
+      console.log(nomeAutor);
       const rve = {
         id,
         nifautor,
@@ -105,13 +105,13 @@ const Rve = () => {
         dificuldades,
         presenca,
       };
-     rveData.addRve(rve);
+      rveData.addRve(rve);
       await CriarRve(rve);
       console.log("RVE created:", rve);
-    docentesenvolvidos.push(nomeAutor);
+      docentesenvolvidos.push(nomeAutor);
       for (let i = 0; i < docentesenvolvidos.length; i++) {
         console.log("Docente:", docentesenvolvidos[i]);
-        console.log("Docentes",docentesenvolvidos)
+        console.log("Docentes", docentesenvolvidos);
         const dadosUser = await UserName(docentesenvolvidos[i]);
         console.log("Dados do Docente:", dadosUser);
         const rveId = rveData.getRve()[0].id;
@@ -137,10 +137,10 @@ const Rve = () => {
       const rve = rveData.getRve();
       console.log("RVE Data:", rve);
       const Idrve = rve[0].id;
-      console.log(Idrve)
+      console.log(Idrve);
       const user = userData.getUsers();
       const nifusuario = user[0][0].nif;
-console.log(nifusuario)
+      console.log(nifusuario);
       const conteudoCampo = {
         id,
         Idrve,
@@ -149,25 +149,25 @@ console.log(nifusuario)
         nifusuario,
         campoTexto,
       };
- console.log(conteudoCampo)
+      console.log(conteudoCampo);
       await CriarCampoTexto(conteudoCampo);
       console.log("CampoTextoRve created:", conteudoCampo);
     } catch (error) {
       console.error("Erro ao criar CampoTexto:", error);
-     alert("Ocorreu um erro ao criar o CampoTexto.");
+      alert("Ocorreu um erro ao criar o CampoTexto.");
     }
   };
 
-  useEffect(() => {  
-    if (!chatAtivo) {  
-        const fetchAllMsg = async () => {  
-            const allMessages = await AllCamposTextoRve();  
-            setMsgs(allMessages);  
-        };  
+  useEffect(() => {
+    if (!chatAtivo) {
+      const fetchAllMsg = async () => {
+        const allMessages = await AllCamposTextoRve();
+        setMsgs(allMessages);
+      };
 
-        fetchAllMsg();  
-    }  
-}); 
+      fetchAllMsg();
+    }
+  }, [chatAtivo]);
 
   const rveDados = rveData.getRve();
 
@@ -357,52 +357,52 @@ console.log(nifusuario)
         <>
           <h1>Chat</h1>
           <div>
-            {
-            rveDados.map((item) => (
+            {rveDados.map((item) => (
               <div key={item.id}>
                 <h2>{item.estudante}</h2>
                 <div className={styles.formGroup}>
-                <p className={styles.input}>{item.motivo}</p>
+                  <p className={styles.input}>{item.motivo}</p>
                 </div>
-                <div className={styles.formGroup}></div>
-                <p className={styles.input}>{item.descricaoocorrido}</p>
+                <div className={styles.formGroup}>
+                  <p className={styles.input}>{item.descricaoocorrido}</p>
                 </div>
-                <p className={styles.input}>{item.curso}</p>
+                <div className={styles.formGroup}>
+                  <p className={styles.input}>{item.curso}</p>
                 </div>
-                <div className={styles.formGroup}></div>
-                <p className={styles.input}>{item.turma}</p>
+                <div className={styles.formGroup}>
+                  <p className={styles.input}>{item.turma}</p>
                 </div>
-                <div className={styles.formGroup}></div>
-                <p className={styles.input}>{item.data}</p>
+                <div className={styles.formGroup}>
+                  <p className={styles.input}>{item.data}</p>
                 </div>
-                <div className={styles.formGroup}></div>
-                <p className={styles.input}>{item.hora}</p>
+                <div className={styles.formGroup}>
+                  <p className={styles.input}>{item.hora}</p>
                 </div>
-                <div className={styles.formGroup}></div>
-                <p className={styles.input}>{item.orientacoesEstudante}</p>
+                <div className={styles.formGroup}>
+                  <p className={styles.input}>{item.orientacoesEstudante}</p>
                 </div>
-                <div className={styles.formGroup}></div>
-                <p className={styles.input}>{item.elogios}</p>
+                <div className={styles.formGroup}>
+                  <p className={styles.input}>{item.elogios}</p>
                 </div>
-                <div className={styles.formGroup}></div>
-                <p className={styles.input}>{item.dificuldades}</p>
+                <div className={styles.formGroup}>
+                  <p className={styles.input}>{item.dificuldades}</p>
                 </div>
-                <div className={styles.formGroup}></div>
-                <p className={styles.input}>{item.presenca}</p>
+                <div className={styles.formGroup}>
+                  <p className={styles.input}>{item.presenca}</p>
                 </div>
-                <div className={styles.formGroup}></div>
-                <p className={styles.input}>{item.categorias}</p>
+                <div className={styles.formGroup}>
+                  <p className={styles.input}>{item.categorias}</p>
                 </div>
               </div>
             ))}
           </div>
-{msgs.map((msg) => (
-                <div key={msg.id}>
-                    <h3>{msg.campoTexto}</h3>
-                    <p>{msg.data}</p>
-                    <p>{msg.hora}</p>
-                </div>
-            ))} 
+          {msgs.map((msg) => (
+            <div key={msg.id}>
+              <h3>{msg.campoTexto}</h3>
+              <p>{msg.data}</p>
+              <p>{msg.hora}</p>
+            </div>
+          ))}
           <div className={styles.formGroup}>
             <input
               type="text"
@@ -413,7 +413,7 @@ console.log(nifusuario)
               className={styles.input}
             />
           </div>
-          <button type="submit" className={styles.button} onClick={handleCampoTexto} >
+          <button type="submit" className={styles.button} onClick={handleCampoTexto}>
             Enviar mensagem
           </button>
         </>
