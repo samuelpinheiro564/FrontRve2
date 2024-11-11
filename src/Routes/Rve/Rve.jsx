@@ -22,7 +22,7 @@ const Rve = () => {
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
   const [campoTexto, setCampoTexto] = useState("");
-  const [ setMsgs] = useState([]);
+  const [msgs,setMsgs] = useState([]);
 
   useEffect(() => {
     const fetchDocentes = async () => {
@@ -166,7 +166,9 @@ console.log(nifusuario)
 
       fetchAllMsg();  
     }  
-  }, [!chatAtivo]);
+  }, [chatAtivo, setMsgs]); 
+
+  const rveDados = rveData.getRve();
 
   return (
     <div className={styles.container}>
@@ -354,7 +356,9 @@ console.log(nifusuario)
         <>
           <h1>Chat</h1>
           <div>
-            {rveData.map((item) => (
+            {
+  
+            rveDados.map((item) => (
               <div key={item.id}>
                 <h2>{item.estudante}</h2>
                 <p>{item.motivo}</p>
