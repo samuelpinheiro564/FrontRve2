@@ -6,7 +6,6 @@ import {
   UserName,
   CriarCampoTexto,
   AllCamposTextoRve
-
 } from "../../Data/server";
 import userData from "../../Data/dadosUser";
 import rveData from "../../Data/DadosRve";
@@ -30,9 +29,9 @@ const Rve = () => {
 
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
-  const [Dadosrve] = useState([]);
+  const [Dadosrve, setDadosrve] = useState([]);
   const [campoTexto, setCampoTexto] = useState("");
-  const [msgs]=useState([]);
+  const [msgs, setMsgs] = useState([]);
 
   useEffect(() => {
     const fetchDocentes = async () => {
@@ -71,27 +70,23 @@ const Rve = () => {
       }
       setDocentesenvolvidos([...docentesenvolvidos, docenteAtual]);
       setDocenteAtual("");
-
-      console.log("Docentes Selecionados:", [
-        ...docentesenvolvidos,
-        docenteAtual,
-      ]);
+      console.log("Docentes Selecionados:", [...docentesenvolvidos, docenteAtual]);
     } else {
       alert("Selecione um docente antes de adicionar.");
     }
   };
-  console.log("Docentes Envolvidos:", docentesenvolvidos);
 
   const deleteDocente = (index) => {
     const updatedDocentes = docentesenvolvidos.filter((_, i) => i !== index);
     setDocentesenvolvidos(updatedDocentes);
   };
-  console.log("Docentes Envolvidos2:", docentesenvolvidos);
 
-  const handleRve = (e) => {
-    Dadosrve(rveData.getRve());
-    console.log(Dadosrve());
+  const handleRve = () => {
+    const rve = rveData.getRve();
+    setDadosrve(rve);
+    console.log(rve);
   };
+
   const generateCampoTextoId = () => {
     return Math.floor(Math.random() * 1000000);
   };
@@ -101,48 +96,34 @@ const Rve = () => {
     try {
       const id = generateCampoTextoId();
       const user = userData.getUsers();
-      console.log("user", user);
       const nifautor = user[0][0].nif;
-      console.log("nifautor", nifautor);
       const rve = {
         id,
-        nifautor, 
-        estudante, 
-        curso, 
-        turma, 
-        data, 
-        hora, 
-        motivo, 
-        orientacoesestudante, 
-        descricaoocorrido, 
-        dificuldades, 
+        nifautor,
+        estudante,
+        curso,
+        turma,
+        data,
+        hora,
+        motivo,
+        orientacoesestudante,
+        descricaoocorrido,
+        dificuldades,
         presenca
       };
       rveData.addRve(rve);
-      console.log("rve", rve);
       await CriarRve(rve);
-      console.log(id);
       const dataUser = userData.getUsers();
-      console.log("dataUser:", dataUser[0][0].nome);
       const updatedDocentesEnvolvidos = [...docentesenvolvidos, dataUser[0][0].nome];
-      console.log(updatedDocentesEnvolvidos);
       for (let i = 0; i < updatedDocentesEnvolvidos.length; i++) {
-        console.log(updatedDocentesEnvolvidos);
-        const dadosUser = await UserName(updatedDocentesEnvolvidos[i]);
-        console.log(dadosUser);
-        const rve4 = rveData.getRve();
-        console.log(rve4[0]);
-        console.log(rve4[0].id);
-        const id_rve = rve4[0].id;
-        const usuario_nif = dadosUser[0].nif;
-        const datarve_usuario = { id_rve, usuario_nif };
-        console.log(datarve_usuario);
-        const userRve = await createrve_usuarios(datarve_usuario);
-        console.log("User rves", userRve);
-        console.log(i);
+        let dadosUser = await UserName(updatedDocentesEnvolvidos[i]);
+        let rve4 = rveData.getRve();
+        let id_rve = rve4[0].id;
+        let usuario_nif = dadosUser[0].nif;
+        let datarve_usuario = { id_rve, usuario_nif };
+        await createrve_usuarios(datarve_usuario);
       }
-      setChatAtivo(true);
-      handleRve(e);
+      handleRve();
     } catch (error) {
       console.error("Erro ao criar RVE:", error);
       alert("Ocorreu um erro ao criar o RVE.");
@@ -152,14 +133,11 @@ const Rve = () => {
   const handleCampoTexto = async (e) => {
     e.preventDefault();
     try {
-      const  id = generateCampoTextoId();
+      const id = generateCampoTextoId();
       const rve = rveData.getRve();
       const Idrve = rve[0][0].id;
-      console.log("rve", rve);
       const user = userData.getUsers();
       const nifusuario = user[0][0].nif;
-      console.log("nifusuario", nifusuario);
-      console.log("Idrve", Idrve);
       const conteudoCampo = {
         id,
         Idrve,
@@ -168,9 +146,7 @@ const Rve = () => {
         nifusuario,
         campoTexto
       };
-      console.log("CampoTextoRve", conteudoCampo);
-     const CriarCampo= await CriarCampoTexto(conteudoCampo);
-      console.log("CampoTextoRve", CriarCampo);
+      await CriarCampoTexto(conteudoCampo);
     } catch (error) {
       console.error("Erro ao criar CampoTexto:", error);
       alert("Ocorreu um erro ao criar o CampoTexto.");
@@ -178,17 +154,18 @@ const Rve = () => {
   };
 
   useEffect(() => {
-    if(chatAtivo) return;
+    if (chatAtivo) return;
     const AllMsg = async () => {
       try {
-        msgs(await AllCamposTextoRve());
+        const msgsData = await AllCamposTextoRve();
+        setMsgs(msgsData);
       } catch (error) {
         console.error("Erro ao buscar campos de texto:", error);
       }
     };
     AllMsg();
-  });
-  
+  }, [chatAtivo]);
+
   return (
     <div className={styles.container}>
       {!chatAtivo ? (
@@ -360,13 +337,13 @@ const Rve = () => {
               >
                 <option value="">Selecione uma categoria</option>
                 {categories.map((category, index) => (
-                  <option key={index} value={category}>
+                  <option key={index} value={category}></option>
                     {category}
                   </option>
                 ))}
               </select>
             </div>
-            <button type="submit" className={styles.button}>
+            <button type="submit" className={styles.button}></button>
               Criar RVE
             </button>
           </form>
@@ -376,7 +353,7 @@ const Rve = () => {
           <h1>Chat</h1>
           <div>
             {Dadosrve.map((item) => (
-              <div key={item.id}>
+              <div key={item.id}></div>
                 <h2>{item.estudante}</h2>
                 <p>{item.motivo}</p>
                 <p>{item.descricaoocorrido}</p>
@@ -393,7 +370,6 @@ const Rve = () => {
               </div>
             ))}
           </div>
-
           <div className={styles.formGroup}>
             <input
               type="text"
