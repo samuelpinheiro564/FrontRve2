@@ -150,11 +150,14 @@ const Rve = () => {
       alert("Ocorreu um erro ao criar o RVE.");
     }
   };
-
-  const handleCampoTexto = async () => {
+  const generateCampoTextoId = () => {
+    return Math.floor(Math.random() * 1000000);
+  };
+  const handleCampoTexto = async (e) => {
     e.preventDefault();
     try {
-      const rve = rveData.getRves();
+      const  id = generateCampoTextoId();
+      const rve = rveData.getRve();
       const Idrve = rve[0][0].id;
       console.log("rve", rve);
       const user = userData.getUsers();
