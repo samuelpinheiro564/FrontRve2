@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './rve.module.css'; // Assuming you have a CSS module for styles
-import { AllUsers, CriarRve, UserName, createrve_usuarios } from '../../Data/server'; // Adjust the import paths as necessary
+import { AllUsers, CriarRve, UserName, createrve_usuarios,AllCamposTextoRve,CriarCampoTexto } from '../../Data/server'; // Adjust the import paths as necessary
 import rveData from '../../Data/DadosRve'; // Adjust the import path as necessary
 import userData from '../../Data/dadosUser'; // Adjust the import path as necessary
 
@@ -22,7 +22,7 @@ const Rve = () => {
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
   const [campoTexto, setCampoTexto] = useState("");
- // const [ setMsgs] = useState([]);
+  const [ setMsgs] = useState([]);
 
   useEffect(() => {
     const fetchDocentes = async () => {
@@ -130,43 +130,44 @@ const Rve = () => {
     }
   };
 
- // const handleCampoTexto = async (e) => {
-  //  e.preventDefault();
-  //  try {
-     // const id = generateCampoTextoId();
-    //  const rve = rveData.getRve();
-    //  const Idrve = rve[0][0].id;
-    //  console.log(Idrve)
-     // const user = userData.getUsers();
-    //  const nifusuario = user[0][0].nif;
-//console.log(nifusuario)
-   //   const conteudoCampo = {
-  //      id,
-   //     Idrve,
-   //     data,
-   //     hora,
-   //     nifusuario,
-   //     campoTexto,
-  //    };
+  const handleCampoTexto = async (e) => {
+    e.preventDefault();
+    try {
+      const id = generateCampoTextoId();
+      const rve = rveData.getRve();
+      const Idrve = rve[0][0].id;
+      console.log(Idrve)
+      const user = userData.getUsers();
+      const nifusuario = user[0][0].nif;
+console.log(nifusuario)
+      const conteudoCampo = {
+        id,
+        Idrve,
+        data,
+        hora,
+        nifusuario,
+        campoTexto,
+      };
 
-  //    await CriarCampoTexto(conteudoCampo);
- //     console.log("CampoTextoRve created:", conteudoCampo);
-  //  } catch (error) {
-  //    console.error("Erro ao criar CampoTexto:", error);
-  ///    alert("Ocorreu um erro ao criar o CampoTexto.");
- //   }
-//  };
+      await CriarCampoTexto(conteudoCampo);
+      console.log("CampoTextoRve created:", conteudoCampo);
+    } catch (error) {
+      console.error("Erro ao criar CampoTexto:", error);
+     alert("Ocorreu um erro ao criar o CampoTexto.");
+    }
+  };
 
-  ///useEffect(() => {
-    //if (chatAtivo) return;
-//
-   // const fetchAllMsg = async () => {
-   //   const allMessages = await AllCamposTextoRve();
-   //   setMsgs(allMessages);
-  //  };
+  useEffect(() => {  
+    // Verifica se o chat não está ativo e se isEstado é true ou false  
+    if (chatAtivo) return;  
 
-  //  fetchAllMsg();
- // });
+    const fetchAllMsg = async () => {  
+      const allMessages = await AllCamposTextoRve();  
+      setMsgs(allMessages);  
+    };  
+
+    fetchAllMsg();  
+  }, [chatAtivo]);
 
   return (
     <div className={styles.container}>
@@ -383,7 +384,7 @@ const Rve = () => {
               className={styles.input}
             />
           </div>
-          <button type="submit" className={styles.button} >
+          <button type="submit" className={styles.button} onclick={handleCampoTexto} >
             Enviar mensagem
           </button>
         </>
