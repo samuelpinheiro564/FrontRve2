@@ -173,7 +173,7 @@ const CriarCampoTexto = async (campoData) => {
 
 const AllCamposTextoRve = async (idrve) => {
     try {
-        const response = await axios.get(`${URL}/camposTexto${idrve}`);
+        const response = await axios.get(`${URL}/camposTextoRve/${idrve}`);
         return response.data;
     } catch (error) {
         console.error('Erro ao buscar todos os campos de texto:', error);
