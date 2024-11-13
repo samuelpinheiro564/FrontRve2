@@ -21,7 +21,7 @@ const Rve = () => {
   const [categorias, setCategorias] = useState("");
   const [listaDocentes, setListaDocentes] = useState([]);
   const [chatAtivo, setChatAtivo] = useState(false);
-  const [campoTexto, setCampoTexto] = useState("");
+  const [campotexto, setCampoTexto] = useState("");
   const [msgs, setMsgs] = useState([]);
 
   useEffect(() => {
@@ -88,7 +88,9 @@ const Rve = () => {
     try {
       const id = generateCampoTextoId();
       const user = userData.getUsers();
+      console.log("User Data:", user);
       const nifautor = user[0][0].nif;
+      console.log(nifautor);
       const nomeAutor = user[0][0].nome;
       console.log(nomeAutor);
       const rve = {
@@ -136,18 +138,22 @@ const Rve = () => {
       const id = generateCampoTextoId();
       const rve = rveData.getRve();
       console.log("RVE Data:", rve);
-      const Idrve = rve[0].id;
-      console.log(Idrve);
+      const idrve = rve[0].id;
+      console.log(idrve);
       const user = userData.getUsers();
       const nifusuario = user[0][0].nif;
       console.log(nifusuario);
+      const data = new Date().toLocaleDateString();
+      console.log(data);
+      const hora = new Date().toLocaleTimeString();
+      console.log(hora);
       const conteudoCampo = {
         id,
-        Idrve,
+        idrve,
         data,
         hora,
         nifusuario,
-        campoTexto,
+        campotexto,
       };
       console.log(conteudoCampo);
       await CriarCampoTexto(conteudoCampo);
@@ -161,15 +167,16 @@ const Rve = () => {
   useEffect(() => {
     if (!chatAtivo) return;
       const fetchAllMsg = async () => {
-        const idRve = rveData.getRve()[0].id;
-        console.log(idRve);
-        const allMessages = await AllCamposTextoRve(idRve);
+        const idrve = rveData.getRve()[0].id;
+        console.log(idrve);
+        const allMessages = await AllCamposTextoRve(idrve);
         setMsgs(allMessages);
+     
       };
 
       fetchAllMsg();
 
-  }, [chatAtivo]);
+  });
 
   const rveDados = rveData.getRve();
 
@@ -364,6 +371,9 @@ const Rve = () => {
                 <h2>{item.estudante}</h2>
                 <div  className={styles.form}>
                 <div className={styles.formGroup}>
+                  <p className={styles.input}>{item.nifautor}</p>
+                </div>
+                <div className={styles.formGroup}>
                   <p className={styles.input}>{item.motivo}</p>
                 </div>
                 <div className={styles.formGroup}>
@@ -382,19 +392,13 @@ const Rve = () => {
                   <p className={styles.input}>{item.hora}</p>
                 </div>
                 <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.orientacoesEstudante}</p>
-                </div>
-                <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.elogios}</p>
+                  <p className={styles.input}>{item.orientacoesestudante}</p>
                 </div>
                 <div className={styles.formGroup}>
                   <p className={styles.input}>{item.dificuldades}</p>
                 </div>
                 <div className={styles.formGroup}>
                   <p className={styles.input}>{item.presenca}</p>
-                </div>
-                <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.categorias}</p>
                 </div>
               </div>
               </div>
@@ -403,8 +407,8 @@ const Rve = () => {
           {msgs.map((msg) => (
             <div key={msg.id}>
               <h3>{msg.campoTexto}</h3>
-              <p>{msg.data}</p>
               <p>{msg.hora}</p>
+              <p>{msg.nifusuario}</p>
             </div>
           ))}
           <div className={styles.formGroup}>
@@ -412,7 +416,7 @@ const Rve = () => {
               type="text"
               name="campoTexto"
               placeholder="Escreva comentario aqui"
-              value={campoTexto}
+              value={campotexto}
               onChange={(e) => setCampoTexto(e.target.value)}
               className={styles.input}
             />
