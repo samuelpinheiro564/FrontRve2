@@ -3,6 +3,7 @@ import styles from './rve.module.css'; // Assuming you have a CSS module for sty
 import { AllUsers, CriarRve, UserName, createrve_usuarios, AllCamposTextoRve, CriarCampoTexto } from '../../Data/server'; // Adjust the import paths as necessary
 import rveData from '../../Data/DadosRve'; // Adjust the import path as necessary
 import userData from '../../Data/dadosUser'; // Adjust the import path as necessary
+import Notificacaozap from '../../components/NotificacaoZap/Notificazaozap'; // Adjust the import path as necessary
 
 const Rve = () => {
   const [estudante, setEstudante] = useState("");
@@ -122,8 +123,11 @@ const Rve = () => {
         console.log("NIF do Docente:", usuario_nif);
         const datarve_usuario = { id_rve: rveId, usuario_nif };
         await createrve_usuarios(datarve_usuario);
+        console.log('Telefone', dadosUser[0].telefone);
+        console.log('Nome do Convidado', docentesenvolvidos[i]);
+        console.log('ID do RVE', rveId);
+        <Notificacaozap phone={dadosUser[0].telefone} nomeConvidado={docentesenvolvidos[i]} rveId={rveId} />
       }
-
       setChatAtivo(true);
       handleRve();
     } catch (error) {
@@ -158,6 +162,7 @@ const Rve = () => {
       console.log(conteudoCampo);
       await CriarCampoTexto(conteudoCampo);
       console.log("CampoTextoRve created:", conteudoCampo);
+      setCampoTexto("");
     } catch (error) {
       console.error("Erro ao criar CampoTexto:", error);
       alert("Ocorreu um erro ao criar o CampoTexto.");
@@ -168,7 +173,6 @@ const Rve = () => {
     if (!chatAtivo) return;
       const fetchAllMsg = async () => {
         const idrve = rveData.getRve()[0].id;
-        console.log(idrve);
         const allMessages = await AllCamposTextoRve(idrve);
         setMsgs(allMessages);
      
