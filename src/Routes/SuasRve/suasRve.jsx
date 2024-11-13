@@ -39,19 +39,21 @@ const SuasRve = () => {
 
             {listRve.length > 0 ? (  
                 <div>  
-                    <button onClick={handleRve()}>
+        
                     {Array.isArray(currentItems) && currentItems.length > 0 ? (  
                         currentItems.map((rveItem) => (  
+                            <button onClick={handleRve()}>
                             <div key={rveItem.id} className="card">  
                                 <p>ID: {rveItem.id}</p>  
                                 <p>Estudante: {rveItem.estudante}</p>  
                             </div>  
+                            </button>
                         ))  
                       
                     ) : (  
                         <p>No items to display.</p>  
                     )}  
-                      </button>
+                
                     <div className="pagination">  
                         <button className="button" onClick={handlePrev} disabled={currentIndex === 0}>Previous</button>  
                         <button className="button" onClick={handleNext} disabled={currentIndex + ITEMS_PER_PAGE >= listRve.length}>Next</button>  
