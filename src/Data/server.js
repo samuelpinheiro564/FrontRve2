@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:4040';
+const URL = 'https://4bf3-200-231-33-146.ngrok-free.app/';
 const LoginUser = async (nif) => {
     try {
         const requestURL = `${URL}/usuarios/${nif}`;
