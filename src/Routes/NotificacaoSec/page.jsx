@@ -1,81 +1,85 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import styles from '../NotificacaoSec/notic.module.css';
+import { useState, useEffect } from 'react';  
+import axios from 'axios';  
+import { parsePhoneNumber } from 'libphonenumber-js'; // Biblioteca para formatação e validação de números  
 
-const Page = () => {
-    const [phone, setPhone] = useState('');
-    const [message, setMessage] = useState('');
-    const [success, setSuccess] = useState(null);
-    const [error, setError] = useState(null);
+const Page = () => {  
+    const [phone, setPhone] = useState('');  
+    const [message, setMessage] = useState('');  
+    const [success, setSuccess] = useState(null);  
+    const [error, setError] = useState(null);  
+    const [loading, setLoading] = useState(false);  
 
-    const postData = async (url, data) => {
-        try {
-            console.log('Sending to URL:', url);
-            console.log('Data:', data);
-            const response = await axios.post(url, data, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            console.log('Response:', response);
-            return response;
-        } catch (error) {
-            console.error('Error response:', error.response);
-            throw new Error(error.response?.data?.message || error.message);
-        }
-    };
+    const postData = async (url, data) => {  
+        try {  
+            const response = await axios.post(url, data, {  
+                headers: {  
+                    'Content-Type': 'application/json'  
+                }  
+            });  
+            return response;  
+        } catch (error) {  
+            throw new Error(error.response?.data?.message || error.message);  
+        }  
+    };  
 
-    const handleSubmit = async () => {
-        const url = 'http://localhost:4000/api/sendText';
-        const data = {
-            chatId: `${phone}@c.us`,
-            text: message,
-            session: 'default' // Usando a sessão padrão
+    const handleSubmit = async (e) => {  
+        e.preventDefault();
+        if (!phone || !message) {  
+            setError('Por favor, preencha todos os campos.');  
+            return;  
+        }  
+
+        // Validação e formatação do número  
+        try {  
+            const phoneNumber = parsePhoneNumber(phone, 'BR'); // 'BR' é o código do Brasil  
+            if (!phoneNumber.isValid()) {  
+                setError('Número de telefone inválido.');  
+                return;  
+            }  
+            const formattedPhone = phoneNumber.formatInternational(); // Formato internacional: ex: +55 11 91234-5678  
+
+            const url = 'http://localhost:4000/api/sendText';  
+            const data = {  
+                chatId: `${formattedPhone.replace(/\s+/g, '').replace(/-/g, '')}@c.us`, // Remove espaços e hifens  
+                text: message,  
+                session: 'default'  
+            };  
+
+            setLoading(true);  
+            setError(null);  
+
+            try {  
+                const response = await postData(url, data);  
+                    const response = await postData(url, data);  
+                    if (response.status === 200) {  
+                        setSuccess('Mensagem enviada com sucesso!');  
+                        setMessage('');  
+                        setPhone('');  
+                    } else {  
+                        setError('Mensagem enviada, mas houve um problema.');  
+                    }  
+                } catch (err) {  
+                    setError('Erro ao enviar a mensagem: ' + (err.message));  
+                } finally {  
+                    setLoading(false);  
+                }  
+            } catch (err) {  
+                setError('Erro ao formatar o número: ' + err.message);  
+            }  
         };
 
-        try {
-            const response = await postData(url, data);
-            if (response.status === 200) {
-                setSuccess('Mensagem enviada com sucesso!');
-                setError(null);
-                // Limpar os campos após o envio
-                setPhone('');
-                setMessage('');
-            } else {
-                setError('Mensagem enviada.');
-            }
-        } catch (err) {
-            setError('Erro ao enviar a mensagem: ' + (err.response?.data?.message || err.message));
-            setSuccess(null);
-            console.error('Erro:', err);
-        }
-    };
+        handleSubmit();
+    }, [phone, message]);
 
-    return (
-        <div className={styles.container}>
-            <h2 className={styles.header}>Enviar Mensagem para WhatsApp</h2>
-            <div className={styles.formGroup}>
-                <label htmlFor="phone">Número (formato internacional):</label>
-                <input
-                    type="text"
-                    id="phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                />
-            </div>
-            <div className={styles.formGroup}>
-                <label htmlFor="message">Mensagem:</label>
-                <textarea
-                    id="message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                />
-            </div>
-            <button onClick={handleSubmit} className={styles.button}>Enviar</button>
-            {success && <p className={styles.success}>{success}</p>}
-            {error && <p className={styles.error}>{error}</p>}
-        </div>
-    );
-};
+    useEffect(() => {  
+        if (success) {  
+            const timer = setTimeout(() => {  
+                setSuccess(null);  
+            }, 3000);  
+            return () => clearTimeout(timer);  
+        }  
+    }, [success]);  efault Page;
+    return (  
 
-export default Page;
+    );  
+};  
