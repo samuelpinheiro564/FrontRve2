@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import userData from '../../Data/dadosUser';  
 import { getAllUsersrve_usuarios } from '../../Data/server';  
 import './styles.modules.css'; // Importando o CSS  
+import { Navigate } from 'react-router-dom';
 
 const SuasRve = () => {  
     const [listRve, setListRve] = useState([]);  
@@ -30,10 +31,15 @@ const SuasRve = () => {
     const currentItems = listRve.slice(currentIndex, currentIndex + ITEMS_PER_PAGE);  
     console.log('Current items:', currentItems); // Log current items for debugging  
 
-    return (  
-        <div className="container">  
+    const handleRve = () => {
+        return <Navigate to="/rve" chatAtivo={true} />;
+    }
+  return (  
+        <div className="container"> 
+
             {listRve.length > 0 ? (  
                 <div>  
+                    <button onClick={handleRve()}>
                     {Array.isArray(currentItems) && currentItems.length > 0 ? (  
                         currentItems.map((rveItem) => (  
                             <div key={rveItem.id} className="card">  
@@ -41,9 +47,11 @@ const SuasRve = () => {
                                 <p>Estudante: {rveItem.estudante}</p>  
                             </div>  
                         ))  
+                      
                     ) : (  
                         <p>No items to display.</p>  
                     )}  
+                      </button>
                     <div className="pagination">  
                         <button className="button" onClick={handlePrev} disabled={currentIndex === 0}>Previous</button>  
                         <button className="button" onClick={handleNext} disabled={currentIndex + ITEMS_PER_PAGE >= listRve.length}>Next</button>  
