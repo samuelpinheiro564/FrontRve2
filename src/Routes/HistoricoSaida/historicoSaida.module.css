@@ -1,9 +1,5 @@
 /* Estilos base */  
-body {  
-    font-family: 'Arial', sans-serif;  
-    background-color: #f7f9fc;  
-    color: #333;  
-}  
+
 
 .container {  
     padding: 30px;  
@@ -15,7 +11,7 @@ body {
 }  
 
 .subtitle {  
-    font-size: 28px;  
+    font-size: 50px;  
     margin-bottom: 20px;  
     text-align: center;  
     color: #ff0000;  
@@ -27,13 +23,14 @@ body {
     width: 100%;  
     border-collapse: collapse;  
     margin-bottom: 20px;  
+   
 }  
 
 .table th, .table td {  
-    border: 1px solid #e0e0e0;  
     padding: 12px;  
     text-align: left;  
     font-size: 16px;  
+    border-bottom: 2px solid #ddd;
 }  
 
 .table th {  
