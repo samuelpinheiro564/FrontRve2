@@ -128,7 +128,7 @@ const Rve = () => {
         console.log('ID do RVE', rveId);
         console.log(` 55${dadosUser[0].telefone}`);
 
-        <Notificacaozap phone={`55${dadosUser[0].telefone}`} nomeConvidado={docentesenvolvidos[i]} rveId={rveId} />
+        <Notificacaozap phone={`55${dadosUser[0].telefone}`}/>
       }
       setChatAtivo(true);
       handleRve();

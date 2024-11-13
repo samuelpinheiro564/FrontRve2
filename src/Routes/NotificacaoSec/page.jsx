@@ -1,76 +1,49 @@
 import { useState, useEffect } from 'react';  
 import axios from 'axios';  
-import { parsePhoneNumber } from 'libphonenumber-js'; // Biblioteca para formatação e validação de números  
+// import { parsePhoneNumberWithError } from 'libphonenumber-js';  
 
-const Page = () => {  
-    const [phone, setPhone] = useState('');  
-    const [message, setMessage] = useState('');  
-    const [success, setSuccess] = useState(null);  
-    const [error, setError] = useState(null);  
-    const [loading, setLoading] = useState(false);  
+const url = 'http://localhost:4000/api/sendText';  
 
-    const postData = async (url, data) => {  
+
+const Page = (phone) => {  
+    const [success, setSuccess] = useState(null); 
+    const [umaVez] = useState(true); 
+
+    const postData = async (data) => {  
         try {  
-            const response = await axios.post(url, data, {  
-                headers: {  
-                    'Content-Type': 'application/json'  
-                }  
-            });  
+            const response = await axios.post(url, data);  
             return response;  
         } catch (error) {  
+            console.error('Error during POST request:', error);  
             throw new Error(error.response?.data?.message || error.message);  
         }  
     };  
 
-    const handleSubmit = async (e) => {  
-        e.preventDefault();
-        if (!phone || !message) {  
-            setError('Por favor, preencha todos os campos.');  
-            return;  
-        }  
-
-        // Validação e formatação do número  
-        try {  
-            const phoneNumber = parsePhoneNumber(phone, 'BR'); // 'BR' é o código do Brasil  
-            if (!phoneNumber.isValid()) {  
-                setError('Número de telefone inválido.');  
-                return;  
-            }  
-            const formattedPhone = phoneNumber.formatInternational(); // Formato internacional: ex: +55 11 91234-5678  
-
-            const url = 'http://localhost:4000/api/sendText';  
-            const data = {  
-                chatId: `${formattedPhone.replace(/\s+/g, '').replace(/-/g, '')}@c.us`, // Remove espaços e hifens  
-                text: message,  
-                session: 'default'  
-            };  
-
-            setLoading(true);  
-            setError(null);  
-
+    for (let i = 0; i < 1; i++) {
+   
+        const handleSubmit = async () => {  
             try {  
-                const response = await postData(url, data);  
-                    const response = await postData(url, data);  
-                    if (response.status === 200) {  
-                        setSuccess('Mensagem enviada com sucesso!');  
-                        setMessage('');  
-                        setPhone('');  
-                    } else {  
-                        setError('Mensagem enviada, mas houve um problema.');  
+                const phonePronto ={phone}.replace(/[^0-9]/g, '');
+                const data = {  
+                    chatId: `${phonePronto}@c.us`,  
+                    text: `O senhor(a) foi convidado para comentar em uma rve6.`,   
+                    session: 'default'  
+                };  
+
+               // Adjust the loop condition as needed
+                    const response = await postData(data);  
+                    if (umaVez && response.status === 200) {  
+                        setSuccess('Mensagem enviada com sucesso!');           
                     }  
-                } catch (err) {  
-                    setError('Erro ao enviar a mensagem: ' + (err.message));  
-                } finally {  
-                    setLoading(false);  
-                }  
-            } catch (err) {  
-                setError('Erro ao formatar o número: ' + err.message);  
+              
+            } catch (error) {  
+                console.error('Failed to send message:', error);  
             }  
-        };
+        };  
 
-        handleSubmit();
-    }, [phone, message]);
-
+        handleSubmit();    
+    console.log(umaVez);
+}
     useEffect(() => {  
         if (success) {  
             const timer = setTimeout(() => {  
@@ -78,8 +51,7 @@ const Page = () => {
             }, 3000);  
             return () => clearTimeout(timer);  
         }  
-    }, [success]);  efault Page;
-    return (  
+    }, [success]);  
+};   
 
-    );  
-};  
+export default Page;
