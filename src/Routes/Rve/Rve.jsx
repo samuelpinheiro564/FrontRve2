@@ -159,14 +159,16 @@ const Rve = () => {
   };
 
   useEffect(() => {
-    if (!chatAtivo) {
+    if (!chatAtivo) return;
       const fetchAllMsg = async () => {
-        const allMessages = await AllCamposTextoRve();
+        const idRve = rveData.getRve()[0].id;
+        console.log(idRve);
+        const allMessages = await AllCamposTextoRve(idRve);
         setMsgs(allMessages);
       };
 
       fetchAllMsg();
-    }
+
   }, [chatAtivo]);
 
   const rveDados = rveData.getRve();
