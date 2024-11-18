@@ -18,7 +18,6 @@ const CadastroUsuarios = () => {
     const [editingUser, setEditingUser] = useState(null);
     const [showUserList, setShowUserList] = useState(false);
 
-    
     useEffect(() => {
         fetchAllUsers();
     }, []);
@@ -112,7 +111,7 @@ const CadastroUsuarios = () => {
                 <form className={styles.form} onSubmit={handleCadastro}>
                     <div className={styles.formGroup}>
                         <label htmlFor="nif" className={styles.label}>NIF:</label>
-                        <input type="number" id="nif" name="nif" value={form.nif} onChange={handleInputChange} className={styles.input} />
+                        <input type="number" id="nif" name="nif" value={form.nif} onChange={handleInputChange} className={styles.input} disabled={!!editingUser} />
                     </div>
                     <div className={styles.formGroup}>
                         <label htmlFor="nome" className={styles.label}>Nome:</label>
