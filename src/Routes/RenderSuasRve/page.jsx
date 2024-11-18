@@ -8,6 +8,7 @@ const RenderSuasRve = () => {
     const [campotexto, setCampoTexto] = useState("");
     const [msgs, setMsgs] = useState([]);
     const rveDados = rveData.getRve();
+    console.log("RVE Dados:", rveDados);
     const currentUser = userData.getUsers()[0][0];
 
     const handleCampoTexto = async (e) => {
@@ -17,7 +18,7 @@ const RenderSuasRve = () => {
             const data = new Date().toLocaleDateString();
             const hora = new Date().toLocaleTimeString();
             const nomeusuario = currentUser.nome;
-            const idrve = rveDados[0][0].id;
+            const idrve = rveDados[0].id;
             const conteudoCampo = {
                 idrve,
                 data,
@@ -36,7 +37,8 @@ const RenderSuasRve = () => {
 
     useEffect(() => {
         const fetchAllMsg = async () => {
-            const idrve = rveDados[0][0].id;
+            const idrve = rveDados[0].id;
+            console.log("ID RVE:", idrve);
             const allMessages = await AllCamposTextoRve(Number(idrve));
             setMsgs(allMessages);
         };
@@ -108,5 +110,4 @@ const RenderSuasRve = () => {
         </>
     );
 };
-
 export default RenderSuasRve;
