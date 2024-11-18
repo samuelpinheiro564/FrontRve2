@@ -83,19 +83,21 @@ const CadastroUsuarios = () => {
         setShowUserList(false);
     };
 
-    const handleDeleteUser = async (nif) => {
-        try {
-            await DeleteUser(nif);
-            setSuccessMessage('Usuário deletado com sucesso');
-            fetchAllUsers();
-            setTimeout(() => setSuccessMessage(''), 3000);
-        } catch (error) {
-            console.error('Erro ao deletar usuário:', error);
-            setError('Erro ao deletar usuário.');
-            setTimeout(() => setError(''), 3000);
-        }
+    const handleDeleteUser = async (nif) => {  
+        const confirmDelete = window.confirm('Você tem certeza que deseja deletar este usuário?');  
+        if (!confirmDelete) return;  
+    
+        try {  
+            await DeleteUser(nif);  
+            setSuccessMessage('Usuário deletado com sucesso');  
+            fetchAllUsers();  
+            setTimeout(() => setSuccessMessage(''), 3000);  
+        } catch (error) {  
+            console.error('Erro ao deletar usuário:', error);  
+            setError('Erro ao deletar usuário. Tente novamente.');  
+            setTimeout(() => setError(''), 3000);  
+        }  
     };
-
     const toggleShowPassword = () => {
         setShowPassword(prevShowPassword => !prevShowPassword);
     };
