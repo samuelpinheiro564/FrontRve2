@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';  
 import userData from '../../Data/dadosUser';  
-import { getAllUsersrve_usuarios } from '../../Data/server';  
+import { getAllUsersrve_usuarios,RveById } from '../../Data/server';  
 import './styles.modules.css'; // Importando o CSS  
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import rveData from '../../Data/DadosRve';
+
 
 const SuasRve = () => {  
     const [listRve, setListRve] = useState([]);  
     const [currentIndex, setCurrentIndex] = useState(0);  
-    const ITEMS_PER_PAGE = 5;  
+    const ITEMS_PER_PAGE = 5;
+    const navigate = useNavigate();  // Inicializa o hook useNavigate  
 
     useEffect(() => {  
         const handleRves = async () => {  
@@ -31,29 +34,31 @@ const SuasRve = () => {
     const currentItems = listRve.slice(currentIndex, currentIndex + ITEMS_PER_PAGE);  
     console.log('Current items:', currentItems); // Log current items for debugging  
 
-    const handleRve = () => {
-        return <Navigate to="/rve" chatAtivo={true} />;
+    const handleRve  = async (id) => {
+        localStorage.setItem('selectedRveId', id);
+        console.log('Selected RVE ID:', id); // Log selected RVE ID for debugging
+        const rveSelected = await RveById(id);
+        console.log('Selected RVE:', rveSelected); // Log selected RVE for debugging
+        rveData.addRve(rveSelected);
+        navigate("/Rve", { chatAtivo: true } ); // o chatAtivo é um parâmetro que indica que o chat está ativo 
     }
-  return (  
-        <div className="container"> 
 
+    return (  
+        <div className="container"> 
             {listRve.length > 0 ? (  
                 <div>  
-        
                     {Array.isArray(currentItems) && currentItems.length > 0 ? (  
                         currentItems.map((rveItem) => (  
-                            <button onClick={handleRve()}>
-                            <div key={rveItem.id} className="card">  
-                                <p>ID: {rveItem.id}</p>  
-                                <p>Estudante: {rveItem.estudante}</p>  
-                            </div>  
+                            <button key={rveItem.id} onClick={() => handleRve(rveItem.id_rve)}>
+                                <div className="card">  
+                                    <p>ID: {rveItem.id_rve}</p>  
+                                    <p>Estudante: {rveItem.estudante}</p>  
+                                </div>  
                             </button>
                         ))  
-                      
                     ) : (  
                         <p>No items to display.</p>  
                     )}  
-                
                     <div className="pagination">  
                         <button className="button" onClick={handlePrev} disabled={currentIndex === 0}>Previous</button>  
                         <button className="button" onClick={handleNext} disabled={currentIndex + ITEMS_PER_PAGE >= listRve.length}>Next</button>  

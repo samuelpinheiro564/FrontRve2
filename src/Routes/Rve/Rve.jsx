@@ -25,6 +25,9 @@ const Rve = () => {
   const [campotexto, setCampoTexto] = useState("");
   const [msgs, setMsgs] = useState([]);
 
+
+  
+
   useEffect(() => {
     const fetchDocentes = async () => {
       try {
@@ -183,6 +186,8 @@ const Rve = () => {
       fetchAllMsg();
 
   });
+  
+  console.log("Chat Ativo:", chatAtivo);
 
   const rveDados = rveData.getRve();
 
