@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';  
 import userData from '../../Data/dadosUser';  
-import { getAllUsersrve_usuarios,RveById } from '../../Data/server';  
-import './styles.modules.css'; // Importando o CSS  
+import { getAllUsersrve_usuarios, RveById } from '../../Data/server';  
+import styles from "../SuasRve/styles.module.css"; // Importando o CSS  
 import { useNavigate } from 'react-router-dom';
 import rveData from '../../Data/DadosRve';
-
 
 const SuasRve = () => {  
     const [listRve, setListRve] = useState([]);  
@@ -44,28 +43,28 @@ const SuasRve = () => {
     }
 
     return (  
-        <div className="container"> 
+        <div className={styles.container}> 
             {listRve.length > 0 ? (  
                 <div>  
                     {Array.isArray(currentItems) && currentItems.length > 0 ? (  
                         currentItems.map((rveItem) => (  
-                            <button key={rveItem.id} onClick={() => handleRve(rveItem.id_rve)}>
-                                <div className="card">  
-                                    <p>ID: {rveItem.id_rve}</p>  
-                                    <p>Estudante: {rveItem.estudante}</p>  
+                            <button key={rveItem.id} onClick={() => handleRve(rveItem.id_rve)} className={styles.cardButton}>
+                                <div className={styles.card}>  
+                                    <p className={styles.cardText}>ID: {rveItem.id_rve}</p>  
+                                    <p className={styles.cardText}>Estudante: {rveItem.estudante}</p>  
                                 </div>  
                             </button>
                         ))  
                     ) : (  
-                        <p>No items to display.</p>  
+                        <p className={styles.noItems}>No items to display.</p>  
                     )}  
-                    <div className="pagination">  
-                        <button className="button" onClick={handlePrev} disabled={currentIndex === 0}>Previous</button>  
-                        <button className="button" onClick={handleNext} disabled={currentIndex + ITEMS_PER_PAGE >= listRve.length}>Next</button>  
+                    <div className={styles.pagination}>  
+                        <button className={styles.button} onClick={handlePrev} disabled={currentIndex === 0}>Previous</button>  
+                        <button className={styles.button} onClick={handleNext} disabled={currentIndex + ITEMS_PER_PAGE >= listRve.length}>Next</button>  
                     </div>  
                 </div>  
             ) : (  
-                <p className="no-data">No RVE data available.</p>  
+                <p className={styles.noData}>No RVE data available.</p>  
             )}  
         </div>  
     );  
