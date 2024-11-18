@@ -73,14 +73,6 @@ const Rve = () => {
     setDocentesenvolvidos(updatedDocentes);
   };
 
-  const handleRve = async () => {
-    try {
-      const rve = rveData.getRve();
-      console.log("RVE Data:", rve);
-    } catch (error) {
-      console.error("Erro ao buscar RVE:", error);
-    }
-  };
 
   const generateCampoTextoId = () => Math.floor(Math.random() * 1000000);
 
@@ -130,7 +122,6 @@ const Rve = () => {
         <Notificacaozap phone={`55${dadosUser[0].telefone}`}/>
         navigate('/RenderSuasRve');
       }
-      handleRve();
     } catch (error) {
       console.error("Erro ao criar RVE:", error);
       alert("Ocorreu um erro ao criar o RVE.");
@@ -313,7 +304,7 @@ const Rve = () => {
                 ))}
               </select>
             </div>
-            <button type="submit" className={styles.button} onClick={CriarRve()}>
+            <button type="submit" className={styles.button} onClick={handleCriarRVE}>
               Criar RVE
             </button>
           </form>

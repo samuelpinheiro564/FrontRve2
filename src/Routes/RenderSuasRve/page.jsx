@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.modules.css'; // Certifique-se de importar os estilos corretamente
-import { CriarCampoTexto, AllCamposTextoRve } from '../../Data/server';
+import { CriarCampoTexto, AllCamposTextoRve,LoginUser } from '../../Data/server';
 import userData from '../../Data/dadosUser';
 import rveData from '../../Data/DadosRve';
+
 
 const RenderSuasRve = () => {
     const [campotexto, setCampoTexto] = useState("");
     const [msgs,setMsgs] = useState([]);
    // const [chatAtivo] = useState(true); // Adicionei um estado para chatAtivo
-
-   
    const rveDados = rveData.getRve();
-   
 
 
     const handleCampoTexto = async (e) => {
@@ -25,7 +23,7 @@ const RenderSuasRve = () => {
             const hora = new Date().toLocaleTimeString();
             console.log("Hora:", hora);
             console.log("rve", rveDados);
-                        const idrve =rveDados[0][0].id; // Define the id variable
+                        const idrve =rveDados[0].id; // Define the id variable
             console.log("ID:", idrve);
             const conteudoCampo = {
                 idrve,
@@ -46,13 +44,17 @@ const RenderSuasRve = () => {
 
     useEffect(() => {
         const fetchAllMsg = async () => {
-            const idrve = rveData.getRve()[0][0].id;
+            const idrve = rveData.getRve()[0].id;
             const allMessages = await AllCamposTextoRve(Number(idrve));
-        setMsgs(allMessages);
+            setMsgs(allMessages);
        };
         fetchAllMsg();
     }, );
-
+ const nomeUser = () =>{
+    const users = await LoginUser(msgs.nifusuario || 0);
+    console.log('All messages:', allMessages);
+    console.log('Users:', users);
+ }
 
     return (
         <>
