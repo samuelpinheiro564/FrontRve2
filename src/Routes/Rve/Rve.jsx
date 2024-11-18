@@ -4,6 +4,7 @@ import { AllUsers, CriarRve, UserName, createrve_usuarios} from '../../Data/serv
 import rveData from '../../Data/DadosRve'; // Adjust the import path as necessary
 import userData from '../../Data/dadosUser'; // Adjust the import path as necessary
 import Notificacaozap from '../../components/NotificacaoZap/Notificazaozap'; // Adjust the import path as necessary
+import { useNavigate } from 'react-router-dom';
 
 const Rve = () => {
   const [estudante, setEstudante] = useState("");
@@ -21,6 +22,8 @@ const Rve = () => {
   const [presenca, setPresenca] = useState("");
   const [categorias, setCategorias] = useState("");
   const [listaDocentes, setListaDocentes] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDocentes = async () => {
@@ -124,8 +127,8 @@ const Rve = () => {
         console.log('Nome do Convidado', docentesenvolvidos[i]);
         console.log('ID do RVE', rveId);
         console.log(` 55${dadosUser[0].telefone}`);
-
         <Notificacaozap phone={`55${dadosUser[0].telefone}`}/>
+        navigate('/RenderSuasRve');
       }
       handleRve();
     } catch (error) {
