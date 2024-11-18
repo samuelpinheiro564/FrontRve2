@@ -53,11 +53,11 @@ const RenderSuasRve = () => {
             setMsgs(allMessages);
         };
         fetchAllMsg();
-    }, []);
+    });
 
     useEffect(() => {
         if (msgs.length > 0) fetchUserNames();
-    }, [msgs]);
+    });
 
     return (
         <>
