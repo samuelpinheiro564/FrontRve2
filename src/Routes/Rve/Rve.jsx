@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './rve.module.css'; // Assuming you have a CSS module for styles
+import styles from '../Rve/rve.module.css'; // Assuming you have a CSS module for styles
 import { AllUsers, CriarRve, UserName, createrve_usuarios} from '../../Data/server'; // Adjust the import paths as necessary
 import rveData from '../../Data/DadosRve'; // Adjust the import path as necessary
 import userData from '../../Data/dadosUser'; // Adjust the import path as necessary
@@ -241,7 +241,7 @@ const Rve = () => {
             </div>
             {docentesenvolvidos.length > 0 && (
               <div className={styles.formGroup}>
-                <h3>Docentes Envolvidos:</h3>
+                <h3 className={styles.h3}>Docentes Envolvidos:</h3>
                 <ul className={styles.list}>
                   {docentesenvolvidos.map((docente, index) => (
                     <li key={index} className={styles.listItem}>
