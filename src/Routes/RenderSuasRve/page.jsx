@@ -7,7 +7,7 @@ import rveData from '../../Data/DadosRve';
 const RenderSuasRve = () => {
     const [campotexto, setCampoTexto] = useState("");
     const [msgs, setMsgs] = useState([]);
-    const rveDados = rveData.getRve();
+    const rveDados = [rveData.getRve()[0]];
     console.log("RVE Dados:", rveDados);
     const currentUser = userData.getUsers()[0][0];
 
