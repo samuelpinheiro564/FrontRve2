@@ -109,15 +109,15 @@ const Rve = () => {
         console.log("Docentes", docentesenvolvidos);
         const dadosUser = await UserName(docentesenvolvidos[i]);
         console.log("Dados do Docente:", dadosUser);
-        const rveId = rveData.getRve()[0].id;
-        console.log("RVE ID:", rveId);
+        const id_rve = rveData.getRve()[0][0].id;
+        console.log("RVE ID:", id_rve);
         const usuario_nif = dadosUser[0].nif;
         console.log("NIF do Docente:", usuario_nif);
-        const datarve_usuario = { id_rve: rveId, usuario_nif };
+        const datarve_usuario = { id_rve, usuario_nif };
         await createrve_usuarios(datarve_usuario);
         console.log('Telefone', dadosUser[0].telefone);
         console.log('Nome do Convidado', docentesenvolvidos[i]);
-        console.log('ID do RVE', rveId);
+        console.log('ID do RVE', id_rve);
         console.log(` 55${dadosUser[0].telefone}`);
         <Notificacaozap phone={`55${dadosUser[0].telefone}`}/>
         navigate('/RenderSuasRve');
