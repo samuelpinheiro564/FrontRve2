@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.modules.css'; // Certifique-se de importar os estilos corretamente
-import { CriarCampoTexto, AllCamposTextoRve, LoginUser } from '../../Data/server';
+import { CriarCampoTexto, AllCamposTextoRve } from '../../Data/server';
 import userData from '../../Data/dadosUser';
 import rveData from '../../Data/DadosRve';
 
@@ -8,6 +8,7 @@ const RenderSuasRve = () => {
     const [campotexto, setCampoTexto] = useState("");
     const [msgs, setMsgs] = useState([]);
     const rveDados = rveData.getRve();
+    console.log('RVE Data:', rveDados); // Log RVE data for debugging
     const currentUser = userData.getUsers()[0][0];
 
     const handleCampoTexto = async (e) => {
@@ -16,14 +17,17 @@ const RenderSuasRve = () => {
             const nifusuario = currentUser.nif;
             const data = new Date().toLocaleDateString();
             const hora = new Date().toLocaleTimeString();
-            const idrve = rveDados[0].id;
+            const nomeusuario = currentUser.nome;
+            const idrve = rveDados[0][0].id;
             const conteudoCampo = {
                 idrve,
                 data,
                 hora,
+                nomeusuario,
                 nifusuario,
                 campotexto
             };
+            console.log(conteudoCampo);
             await CriarCampoTexto(conteudoCampo);
             setCampoTexto("");
         } catch (error) {
@@ -32,32 +36,15 @@ const RenderSuasRve = () => {
         }
     };
 
-    const fetchUserNames = async () => {
-        try {
-            const updatedMsgs = await Promise.all(
-                msgs.map(async (msg) => {
-                    const user = await LoginUser(msg.nifusuario);
-                    return { ...msg, username: user[0].nome };
-                })
-            );
-            setMsgs(updatedMsgs);
-        } catch (error) {
-            console.error("Erro ao buscar nomes dos usuários:", error);
-        }
-    };
-
     useEffect(() => {
         const fetchAllMsg = async () => {
-            const idrve = rveDados[0].id;
+            const idrve = rveDados[0][0].id;
             const allMessages = await AllCamposTextoRve(Number(idrve));
             setMsgs(allMessages);
         };
         fetchAllMsg();
     });
-
-    useEffect(() => {
-        if (msgs.length > 0) fetchUserNames();
-    });
+    
 
     return (
         <>
