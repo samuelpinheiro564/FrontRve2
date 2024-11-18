@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './rve.module.css'; // Assuming you have a CSS module for styles
-import { AllUsers, CriarRve, UserName, createrve_usuarios, AllCamposTextoRve, CriarCampoTexto } from '../../Data/server'; // Adjust the import paths as necessary
+import { AllUsers, CriarRve, UserName, createrve_usuarios} from '../../Data/server'; // Adjust the import paths as necessary
 import rveData from '../../Data/DadosRve'; // Adjust the import path as necessary
 import userData from '../../Data/dadosUser'; // Adjust the import path as necessary
 import Notificacaozap from '../../components/NotificacaoZap/Notificazaozap'; // Adjust the import path as necessary
@@ -21,12 +21,6 @@ const Rve = () => {
   const [presenca, setPresenca] = useState("");
   const [categorias, setCategorias] = useState("");
   const [listaDocentes, setListaDocentes] = useState([]);
-  const [chatAtivo, setChatAtivo] = useState(false);
-  const [campotexto, setCampoTexto] = useState("");
-  const [msgs, setMsgs] = useState([]);
-
-
-  
 
   useEffect(() => {
     const fetchDocentes = async () => {
@@ -133,7 +127,6 @@ const Rve = () => {
 
         <Notificacaozap phone={`55${dadosUser[0].telefone}`}/>
       }
-      setChatAtivo(true);
       handleRve();
     } catch (error) {
       console.error("Erro ao criar RVE:", error);
@@ -141,60 +134,9 @@ const Rve = () => {
     }
   };
 
-  const handleCampoTexto = async (e) => {
-    e.preventDefault();
-    try {
-      const id = generateCampoTextoId();
-      const rve = rveData.getRve();
-      console.log("RVE Data:", rve);
-      const idrve = rve[0].id;
-      console.log(idrve);
-      const user = userData.getUsers();
-      const nifusuario = user[0][0].nif;
-      console.log(nifusuario);
-      const data = new Date().toLocaleDateString();
-      console.log(data);
-      const hora = new Date().toLocaleTimeString();
-      console.log(hora);
-      const conteudoCampo = {
-        id,
-        idrve,
-        data,
-        hora,
-        nifusuario,
-        campotexto,
-      };
-      console.log(conteudoCampo);
-      await CriarCampoTexto(conteudoCampo);
-      console.log("CampoTextoRve created:", conteudoCampo);
-      setCampoTexto("");
-    } catch (error) {
-      console.error("Erro ao criar CampoTexto:", error);
-      alert("Ocorreu um erro ao criar o CampoTexto.");
-    }
-  };
-
-  useEffect(() => {
-    if (!chatAtivo) return;
-      const fetchAllMsg = async () => {
-        const idrve = rveData.getRve()[0].id;
-        const allMessages = await AllCamposTextoRve(idrve);
-        setMsgs(allMessages);
-     
-      };
-
-      fetchAllMsg();
-
-  });
-  
-  console.log("Chat Ativo:", chatAtivo);
-
-  const rveDados = rveData.getRve();
-
   return (
     <div className={styles.container}>
-      {!chatAtivo ? (
-        <>
+
           <h1 className={styles.title}>Criar RVE</h1>
           <form onSubmit={handleCriarRVE} className={styles.form}>
             <div className={styles.formGroup}>
@@ -368,75 +310,11 @@ const Rve = () => {
                 ))}
               </select>
             </div>
-            <button type="submit" className={styles.button}>
+            <button type="submit" className={styles.button} onClick={CriarRve()}>
               Criar RVE
             </button>
           </form>
-        </>
-      ) : (
-        <>
-          <h1>Chat</h1>
-          <div>
-            {rveDados.map((item) => (
-              <div key={item.id}>
-                <h2>{item.estudante}</h2>
-                <div  className={styles.form}>
-                <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.nifautor}</p>
-                </div>
-                <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.motivo}</p>
-                </div>
-                <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.descricaoocorrido}</p>
-                </div>
-                <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.curso}</p>
-                </div>
-                <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.turma}</p>
-                </div>
-                <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.data}</p>
-                </div>
-                <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.hora}</p>
-                </div>
-                <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.orientacoesestudante}</p>
-                </div>
-                <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.dificuldades}</p>
-                </div>
-                <div className={styles.formGroup}>
-                  <p className={styles.input}>{item.presenca}</p>
-                </div>
-              </div>
-              </div>
-            ))}
-          </div>
-          {msgs.map((msg) => (
-            <div key={msg.id}>
-              <h3>{msg.campoTexto}</h3>
-              <p>{msg.hora}</p>
-              <p>{msg.nifusuario}</p>
-            </div>
-          ))}
-          <div className={styles.formGroup}>
-            <input
-              type="text"
-              name="campoTexto"
-              placeholder="Escreva comentario aqui"
-              value={campotexto}
-              onChange={(e) => setCampoTexto(e.target.value)}
-              className={styles.input}
-            />
-          </div>
-          <button type="submit" className={styles.button} onClick={handleCampoTexto}>
-            Enviar mensagem
-          </button>
-        </>
-      )}
+    
     </div>
   );
 };
