@@ -40,7 +40,7 @@ const SuasRve = () => {
         const rveSelected = await RveById(id);
         console.log('Selected RVE:', rveSelected); // Log selected RVE for debugging
         rveData.addRve(rveSelected);
-        navigate("/RenderSuasRve", { chatAtivo: true } ); // o chatAtivo é um parâmetro que indica que o chat está ativo 
+        navigate("/RenderSuasRve" ); // o chatAtivo é um parâmetro que indica que o chat está ativo 
     }
 
     return (  

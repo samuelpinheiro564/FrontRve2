@@ -1,33 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import styles from './styles'; // Certifique-se de importar os estilos corretamente
+import styles from './styles.modules.css'; // Certifique-se de importar os estilos corretamente
 import { CriarCampoTexto, AllCamposTextoRve } from '../../Data/server';
 import userData from '../../Data/dadosUser';
 import rveData from '../../Data/DadosRve';
 
 const RenderSuasRve = () => {
     const [campotexto, setCampoTexto] = useState("");
-    const [msgs, setMsgs] = useState([]);
-    const [chatAtivo] = useState(true); // Adicionei um estado para chatAtivo
+    const [msgs,setMsgs] = useState([]);
+   // const [chatAtivo] = useState(true); // Adicionei um estado para chatAtivo
+
+   
+   const rveDados = rveData.getRve();
+   console.log("RVE Data:", rveDados);
 
     const handleCampoTexto = async (e) => {
         e.preventDefault();
         try {
             const user = userData.getUsers();
             const nifusuario = user[0][0].nif;
+            console.log("NIF do usuário:", nifusuario);
             const data = new Date().toLocaleDateString();
+            console.log("Data:", data);
             const hora = new Date().toLocaleTimeString();
-            const id = rveData.getRve()[0].id; // Define the id variable
-            const idrve = rveData.getRve()[0].id; // Define the idrve variable
-
+            console.log("Hora:", hora);
+            const idrve = rveData.getRve()[0].id; // Define the id variable
+            console.log("ID:", idrve);
             const conteudoCampo = {
-                id,
                 idrve,
                 data,
                 hora,
                 nifusuario,
                 campotexto,
             };
-
             await CriarCampoTexto(conteudoCampo);
             console.log("CampoTextoRve created:", conteudoCampo);
             setCampoTexto("");
@@ -38,17 +42,15 @@ const RenderSuasRve = () => {
     };
 
     useEffect(() => {
-        if (!chatAtivo) return;
         const fetchAllMsg = async () => {
-            const idrve = rveData.getRve()[0].id;
-            const allMessages = await AllCamposTextoRve(idrve);
-            setMsgs(allMessages);
-        };
-
+            const idrve = rveData.getRve()[0][0].id;
+            console.log("ID:", idrve);
+            const allMessages = await AllCamposTextoRve(Number(idrve));
+        setMsgs(allMessages);
+       };
         fetchAllMsg();
-    }, [chatAtivo]);
+    }, );
 
-    const rveDados = rveData.getRve();
 
     return (
         <>
