@@ -35,11 +35,11 @@ const SuasRve = () => {
 
     const handleRve  = async (id) => {
         localStorage.setItem('selectedRveId', id);
-        console.log('Selected RVE ID:', id); // Log selected RVE ID for debugging
+        console.log('Selected RVE ID:',id); // Log selected RVE ID for debugging
         const rveSelected = await RveById(id);
         console.log('Selected RVE:', rveSelected); // Log selected RVE for debugging
-        rveData.addRve(rveSelected);
-        navigate("/RenderSuasRve" ); // o chatAtivo é um parâmetro que indica que o chat está ativo 
+        rveData.addRve(rveSelected); // Wrap the result in an array
+       navigate("/RenderSuasRve" ); // o chatAtivo é um parâmetro que indica que o chat está ativo 
     }
 
     return (  

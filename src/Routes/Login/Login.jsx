@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LoginUser } from '../../Data/server';  
 import userData from '../../Data/dadosUser';  
 import { useNavigate } from 'react-router-dom'; 
+
 import styles from '../Login/login.module.css';
 
 const Login = () => {
@@ -29,6 +30,7 @@ const Login = () => {
       switch (userType) {  
         case 'admin':  
           navigate('/CategoriaAdmin');  
+         
           break;  
         case 'docente':  
           navigate('/CategoriaDocente');  

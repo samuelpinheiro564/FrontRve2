@@ -100,7 +100,7 @@ const Rve = () => {
         dificuldades,
         presenca,
       };
-      rveData.addRve(rve);
+      rveData.addRve([rve]);
       await CriarRve(rve);
       console.log("RVE created:", rve);
       docentesenvolvidos.push(nomeAutor);
