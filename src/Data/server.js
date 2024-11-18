@@ -369,6 +369,7 @@ const DeletarSaidaProfessor = async (id) => {
 
 
 export {
+    
     LoginUser,
     CriarUser,
     AtualizaUser,

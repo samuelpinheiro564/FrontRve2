@@ -48,7 +48,7 @@ const RenderSuasRve = () => {
 
     useEffect(() => {
         const fetchAllMsg = async () => {
-            const idrve = rveDados[0][0].id;
+            const idrve = rveDados[0].id;
             const allMessages = await AllCamposTextoRve(Number(idrve));
             setMsgs(allMessages);
         };
@@ -104,7 +104,7 @@ const RenderSuasRve = () => {
                 <div key={msg.id}>
                     <h3>{msg.campotexto}</h3>
                     <p>{msg.hora}</p>
-                    <p>{msg.nifusuario === currentUser.nif ? 'Você' : msg.username}</p>
+                    <p>{msg.nomeusuario}</p>
                 </div>
             ))}
             <div className={styles.formGroup}>
