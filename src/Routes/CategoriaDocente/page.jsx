@@ -29,6 +29,12 @@ function App() {
           <i className={styles.icon}>👥</i>
             <p>Usuários</p>  
           </div>  
+          </NavLink> 
+          <NavLink to="/RenderSuasRve" activeClassName={styles.active}>
+          <div className={styles.card2}>  
+          <i className={styles.icon}>📃</i>
+            <p>Render Rves</p>  
+          </div>  
           </NavLink>
           <NavLink to="/NotificacaoSec" activeClassName={styles.active}>
           <div className={styles.card2}>  
@@ -36,6 +42,7 @@ function App() {
             <p>Notificação Secretaria</p>  
           </div>  
           </NavLink>
+         
         </div>  
       </div>  
     </div>

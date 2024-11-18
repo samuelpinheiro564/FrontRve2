@@ -18,7 +18,6 @@ const CadastroUsuarios = () => {
     const [editingUser, setEditingUser] = useState(null);
     const [showUserList, setShowUserList] = useState(false);
 
-    
     useEffect(() => {
         fetchAllUsers();
     }, []);
@@ -84,19 +83,21 @@ const CadastroUsuarios = () => {
         setShowUserList(false);
     };
 
-    const handleDeleteUser = async (nif) => {
-        try {
-            await DeleteUser(nif);
-            setSuccessMessage('Usuário deletado com sucesso');
-            fetchAllUsers();
-            setTimeout(() => setSuccessMessage(''), 3000);
-        } catch (error) {
-            console.error('Erro ao deletar usuário:', error);
-            setError('Erro ao deletar usuário.');
-            setTimeout(() => setError(''), 3000);
-        }
+    const handleDeleteUser = async (nif) => {  
+        const confirmDelete = window.confirm('Você tem certeza que deseja deletar este usuário?');  
+        if (!confirmDelete) return;  
+    
+        try {  
+            await DeleteUser(nif);  
+            setSuccessMessage('Usuário deletado com sucesso');  
+            fetchAllUsers();  
+            setTimeout(() => setSuccessMessage(''), 3000);  
+        } catch (error) {  
+            console.error('Erro ao deletar usuário:', error);  
+            setError('Erro ao deletar usuário. Tente novamente.');  
+            setTimeout(() => setError(''), 3000);  
+        }  
     };
-
     const toggleShowPassword = () => {
         setShowPassword(prevShowPassword => !prevShowPassword);
     };
@@ -112,7 +113,7 @@ const CadastroUsuarios = () => {
                 <form className={styles.form} onSubmit={handleCadastro}>
                     <div className={styles.formGroup}>
                         <label htmlFor="nif" className={styles.label}>NIF:</label>
-                        <input type="number" id="nif" name="nif" value={form.nif} onChange={handleInputChange} className={styles.input} />
+                        <input type="number" id="nif" name="nif" value={form.nif} onChange={handleInputChange} className={styles.input} disabled={!!editingUser} />
                     </div>
                     <div className={styles.formGroup}>
                         <label htmlFor="nome" className={styles.label}>Nome:</label>
