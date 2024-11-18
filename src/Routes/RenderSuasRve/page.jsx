@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './RenderSuasRve.module.css'; // Certifique-se de importar os estilos corretamente
+import styles from './styles'; // Certifique-se de importar os estilos corretamente
 import { CriarCampoTexto, AllCamposTextoRve } from '../../Data/server';
 import userData from '../../Data/dadosUser';
 import rveData from '../../Data/DadosRve';
@@ -7,7 +7,7 @@ import rveData from '../../Data/DadosRve';
 const RenderSuasRve = () => {
     const [campotexto, setCampoTexto] = useState("");
     const [msgs, setMsgs] = useState([]);
-    const [chatAtivo, setChatAtivo] = useState(true); // Adicionei um estado para chatAtivo
+    const [chatAtivo] = useState(true); // Adicionei um estado para chatAtivo
 
     const handleCampoTexto = async (e) => {
         e.preventDefault();
@@ -51,11 +51,11 @@ const RenderSuasRve = () => {
     const rveDados = rveData.getRve();
 
     return (
-        <div>
+        <>
             <h1>Chat</h1>
             <div>
                 {rveDados.map((item) => (
-                    <div key={item.id}></div>
+                    <div key={item.id}>
                         <h2>{item.estudante}</h2>
                         <div className={styles.form}>
                             <div className={styles.formGroup}></div>
@@ -89,7 +89,6 @@ const RenderSuasRve = () => {
                                 <p className={styles.input}>{item.presenca}</p>
                             </div>
                         </div>
-                    </div>
                 ))}
             </div>
             {msgs.map((msg) => (
@@ -109,10 +108,10 @@ const RenderSuasRve = () => {
                     className={styles.input}
                 />
             </div>
-            <button type="submit" className={styles.button} onClick={handleCampoTexto}></button>
+            <button type="submit" className={styles.button} onClick={handleCampoTexto}>
                 Enviar mensagem
             </button>
-        </div>
+        </>
     );
 };
 

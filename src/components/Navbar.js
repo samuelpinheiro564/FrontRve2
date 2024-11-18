@@ -54,6 +54,9 @@ const NavBar = () => {
               <NavLink to="/CategoriaDocente" activeClassName="active" onClick={handleLinkClick}>Categoria Docente</NavLink>  
             </li>  
             <li>  
+              <NavLink to="/RenderSuasRve" activeClassName="active" onClick={handleLinkClick}>Render Rve</NavLink>  
+            </li> 
+            <li>  
               <NavLink to="/CategoriaAdmin" activeClassName="active" onClick={handleLinkClick}>Categoria Admin</NavLink>  
             </li> 
             <li>  

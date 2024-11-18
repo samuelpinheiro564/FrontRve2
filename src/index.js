@@ -8,6 +8,7 @@ import Login from '../src/Routes/Login/Login';
 import CadastroUsuarios from '../src/Routes/CadastroUsuarios/CadastroUsuarios';
 import CategoriaAdmin from './Routes/CategoriaAdmin/page';  
 import CategoriaDocente from "../src/Routes/CategoriaDocente/page";  
+import RenderSuasRve from "../src/Routes/RenderSuasRve/page";
 import NotificacaoSec from "../src/Routes/NotificacaoSec/page"; 
 import HistoricoSaida from "./Routes/HistoricoSaida/HistoricoSaida"; 
 import ErrorPage from './Routes/ErrorPage';  
@@ -73,7 +74,10 @@ const router = createBrowserRouter([
         path: "NotificacaoSec",  
         element: <NotificacaoSec />,  
       },
-       
+      {  
+        path: "RenderSuasRve",  
+        element: <RenderSuasRve />,  
+      },
      
     ],  
   },  
