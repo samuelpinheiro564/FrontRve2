@@ -8,7 +8,6 @@ const RenderSuasRve = () => {
     const [campotexto, setCampoTexto] = useState("");
     const [msgs, setMsgs] = useState([]);
     const rveDados = rveData.getRve();
-    console.log('RVE Data:', rveDados); // Log RVE data for debugging
     const currentUser = userData.getUsers()[0][0];
 
     const handleCampoTexto = async (e) => {
@@ -27,7 +26,6 @@ const RenderSuasRve = () => {
                 nifusuario,
                 campotexto
             };
-            console.log(conteudoCampo);
             await CriarCampoTexto(conteudoCampo);
             setCampoTexto("");
         } catch (error) {
@@ -44,7 +42,6 @@ const RenderSuasRve = () => {
         };
         fetchAllMsg();
     });
-    
 
     return (
         <>
@@ -54,7 +51,7 @@ const RenderSuasRve = () => {
                     <div key={item.id}>
                         <h2>{item.estudante}</h2>
                         <div className={styles.form}>
-                            <div className={styles.formGroup}></div>
+                            <div className={styles.formGroup}>
                                 <p className={styles.input}>{item.nifautor}</p>
                             </div>
                             <div className={styles.formGroup}>
@@ -85,6 +82,7 @@ const RenderSuasRve = () => {
                                 <p className={styles.input}>{item.presenca}</p>
                             </div>
                         </div>
+                    </div>
                 ))}
             </div>
             {msgs.map((msg) => (
