@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './styles.modules.css'; // Certifique-se de importar os estilos corretamente
+import styles from "../RenderSuasRve/styles.module.css";
 import { CriarCampoTexto, AllCamposTextoRve } from '../../Data/server';
 import userData from '../../Data/dadosUser';
 import rveData from '../../Data/DadosRve';
@@ -47,11 +47,11 @@ const RenderSuasRve = () => {
 
     return (
         <>
-            <h1>Chat</h1>
+            <h1 className={styles.testeh1}>Chat</h1>
             <div>
                 {rveDados.map((item) => (
                     <div key={item.id}>
-                        <h2>{item.estudante}</h2>
+                        <h2 className={styles.h2}>{item.estudante}</h2>
                         <div className={styles.form}>
                             <div className={styles.formGroup}>
                                 <p className={styles.input}>{item.nifautor}</p>
@@ -89,9 +89,9 @@ const RenderSuasRve = () => {
             </div>
             {msgs.map((msg) => (
                 <div key={msg.id}>
-                    <h3>{msg.campotexto}</h3>
-                    <p>{msg.hora}</p>
-                    <p>{msg.nomeusuario}</p>
+                    <h3 className={styles.h3}>{msg.campotexto}</h3>
+                    <p className={styles.input}>{msg.hora}</p>
+                    <p className={styles.input}>{msg.nomeusuario}</p>
                 </div>
             ))}
             <div className={styles.formGroup}>
