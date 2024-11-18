@@ -11,7 +11,8 @@ const RenderSuasRve = () => {
 
    
    const rveDados = rveData.getRve();
-   console.log("RVE Data:", rveDados);
+   
+
 
     const handleCampoTexto = async (e) => {
         e.preventDefault();
@@ -23,15 +24,17 @@ const RenderSuasRve = () => {
             console.log("Data:", data);
             const hora = new Date().toLocaleTimeString();
             console.log("Hora:", hora);
-            const idrve = rveData.getRve()[0].id; // Define the id variable
+            console.log("rve", rveDados);
+                        const idrve =rveDados[0][0].id; // Define the id variable
             console.log("ID:", idrve);
             const conteudoCampo = {
                 idrve,
                 data,
                 hora,
                 nifusuario,
-                campotexto,
+                campotexto
             };
+            console.log('Conteúdo do campo:', conteudoCampo);
             await CriarCampoTexto(conteudoCampo);
             console.log("CampoTextoRve created:", conteudoCampo);
             setCampoTexto("");
@@ -44,7 +47,6 @@ const RenderSuasRve = () => {
     useEffect(() => {
         const fetchAllMsg = async () => {
             const idrve = rveData.getRve()[0][0].id;
-            console.log("ID:", idrve);
             const allMessages = await AllCamposTextoRve(Number(idrve));
         setMsgs(allMessages);
        };
@@ -95,7 +97,7 @@ const RenderSuasRve = () => {
             </div>
             {msgs.map((msg) => (
                 <div key={msg.id}>
-                    <h3>{msg.campoTexto}</h3>
+                    <h3>{msg.campotexto}</h3>
                     <p>{msg.hora}</p>
                     <p>{msg.nifusuario}</p>
                 </div>
