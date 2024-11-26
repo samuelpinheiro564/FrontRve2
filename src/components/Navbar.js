@@ -66,19 +66,14 @@ const NavBar = ({ userType }) => {
             <NavLink to="/Rve" activeClassName="active" onClick={handleLinkClick}>Criar Rve</NavLink>  
           </li> 
           <li>  
-            <NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Criar Rve</NavLink>  
+            <NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Visualizar  Rve</NavLink>  
           </li> 
           <li>  
-            <NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Criar Rve</NavLink>  
+            <NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Saida</NavLink>  
           </li> 
         </>
       );
-    } else {
-      return (
-        <>
-        </>
-      );
-    }
+    } 
   };
 
   return (  
