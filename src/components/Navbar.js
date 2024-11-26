@@ -52,7 +52,7 @@ const NavBar = ({ userType }) => {
             <NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Saida</NavLink>  
           </li>   
           <li>  
-            <NavLink to="/HistoricoSaida" activeClassName="active" onClick={handleLinkClick}>Visualizar Rves </NavLink>  
+            <NavLink to="/HistoricoSaida" activeClassName="active" onClick={handleLinkClick}>Historico de Saidas</NavLink>  
           </li>   
           <li>  
             <NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Visualizar Rves </NavLink>  
