@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'http://10.88.199.230:4040';
+const URL = 'http://192.168.0.88:4040';
 const LoginUser = async (nif) => {
     try {
         const requestURL = `${URL}/usuarios/${nif}`;
