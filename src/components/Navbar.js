@@ -42,6 +42,21 @@ const NavBar = ({ userType }) => {
           <li>  
             <NavLink to="/CadastroUsuarios" activeClassName="active" onClick={handleLinkClick}>Cadastro Usuarios</NavLink>  
           </li>   
+          <li>  
+            <NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Visualizar Rves </NavLink>  
+          </li>  
+          <li>  
+            <NavLink to="/Rve" activeClassName="active" onClick={handleLinkClick}>Criar Rve</NavLink>  
+          </li>   
+          <li>  
+            <NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Visualizar Rves </NavLink>  
+          </li>   
+          <li>  
+            <NavLink to="/HistoricoSaida" activeClassName="active" onClick={handleLinkClick}>Visualizar Rves </NavLink>  
+          </li>   
+          <li>  
+            <NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Visualizar Rves </NavLink>  
+          </li>    
         </>
       );
     } else if (userType === 'docente') {
@@ -51,25 +66,19 @@ const NavBar = ({ userType }) => {
             <NavLink to="/CategoriaDocente" activeClassName="active" onClick={handleLinkClick}>Categoria Docente</NavLink>  
           </li>  
           <li>  
-            <NavLink to="/RenderSuasRve" activeClassName="active" onClick={handleLinkClick}>Render Rve</NavLink>  
+            <NavLink to="/Rve" activeClassName="active" onClick={handleLinkClick}>Criar Rve</NavLink>  
+          </li> 
+          <li>  
+            <NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Criar Rve</NavLink>  
+          </li> 
+          <li>  
+            <NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Criar Rve</NavLink>  
           </li> 
         </>
       );
     } else {
       return (
         <>
-          <li>  
-            <NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Suas RVE</NavLink>  
-          </li>   
-          <li>  
-            <NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Saída</NavLink>  
-          </li>  
-          <li>  
-            <NavLink to="/Rve" activeClassName="active" onClick={handleLinkClick}>RVE</NavLink>  
-          </li>  
-          <li>  
-            <NavLink to="/NotificacaoSec" activeClassName="active" onClick={handleLinkClick}>Notificação Secretaria</NavLink>  
-          </li>  
         </>
       );
     }
