@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LoginUser } from '../../Data/server';  
 import userData from '../../Data/dadosUser';  
 import { useNavigate } from 'react-router-dom'; 
+import NavBar from '../../components/Navbar';
 
 import styles from '../Login/login.module.css';
 
@@ -96,6 +97,7 @@ const Login = () => {
               <option value="docente">Docente</option>
               <option value="admin">Administrador</option>
             </select>
+            <NavBar userType={userType} />
             <button type="submit" className={styles.button}>
               Entrar
             </button>
@@ -141,6 +143,7 @@ const Login = () => {
                 {showPassword ? "🙈" : "👁️"}
               </span>
             </div>
+            <NavBar userType={userType} />
             <button type="submit" className={styles.button} disabled={isLoading}>
               {isLoading ? "Entrando..." : "Entrar"}
             </button>
