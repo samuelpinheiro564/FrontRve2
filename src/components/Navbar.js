@@ -53,10 +53,7 @@ const NavBar = ({ userType }) => {
           </li>   
           <li>  
             <NavLink to="/HistoricoSaida" activeClassName="active" onClick={handleLinkClick}>Historico de Saidas</NavLink>  
-          </li>   
-          <li>  
-            <NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Visualizar Rves </NavLink>  
-          </li>    
+          </li>      
         </>
       );
     } else if (userType === 'docente') {
