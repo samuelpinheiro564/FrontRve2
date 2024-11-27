@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';  
 import userData from '../../Data/dadosUser';  
 import { getAllUsersrve_usuarios, RveById } from '../../Data/server';  
-import './styles.modules.css'; // Importando o CSS  
+import styles from "../SuasRve/styles.module.css"; // Importando o CSS  
 import { useNavigate } from 'react-router-dom';
 import rveData from '../../Data/DadosRve';
 
@@ -14,7 +14,7 @@ const SuasRve = () => {
     useEffect(() => {  
         const handleRves = async () => {  
             const userNif = userData.getUsers();  
-            console.log('User NIF:', userNif); // Log user NIF for debugging
+            console.log('User NIF:', userNif[0][0].nif); // Log user NIF for debugging
             const rves = await getAllUsersrve_usuarios(userNif[0][0].nif);  
             console.log('Fetched RVE data:', rves); // Log fetched data  
             setListRve(Array.isArray(rves) ? rves : []); // Ensure rves is an array  
@@ -35,36 +35,36 @@ const SuasRve = () => {
 
     const handleRve  = async (id) => {
         localStorage.setItem('selectedRveId', id);
-        console.log('Selected RVE ID:', id); // Log selected RVE ID for debugging
+        console.log('Selected RVE ID:',id); // Log selected RVE ID for debugging
         const rveSelected = await RveById(id);
         console.log('Selected RVE:', rveSelected); // Log selected RVE for debugging
-        rveData.addRve(rveSelected);
-        navigate("/RenderSuasRve" ); // o chatAtivo é um parâmetro que indica que o chat está ativo 
+        rveData.addRve(rveSelected); // Wrap the result in an array
+       navigate("/RenderSuasRve" ); // o chatAtivo é um parâmetro que indica que o chat está ativo 
     }
 
     return (  
-        <div className="container"> 
+        <div className={styles.container}> 
             {listRve.length > 0 ? (  
                 <div>  
                     {Array.isArray(currentItems) && currentItems.length > 0 ? (  
                         currentItems.map((rveItem) => (  
-                            <button key={rveItem.id} onClick={() => handleRve(rveItem.id_rve)}>
-                                <div className="card">  
-                                    <p>ID: {rveItem.id_rve}</p>  
-                                    <p>Estudante: {rveItem.estudante}</p>  
+                            <button key={rveItem.id} onClick={() => handleRve(rveItem.id_rve)} className={styles.cardButton}>
+                                <div className={styles.card}>  
+                                    <p className={styles.cardText}>ID: {rveItem.id_rve}</p>  
+                                    <p className={styles.cardText}>Estudante: {rveItem.estudante}</p>  
                                 </div>  
                             </button>
                         ))  
                     ) : (  
-                        <p>No items to display.</p>  
+                        <p className={styles.noItems}>No items to display.</p>  
                     )}  
-                    <div className="pagination">  
-                        <button className="button" onClick={handlePrev} disabled={currentIndex === 0}>Previous</button>  
-                        <button className="button" onClick={handleNext} disabled={currentIndex + ITEMS_PER_PAGE >= listRve.length}>Next</button>  
+                    <div className={styles.pagination}>  
+                        <button className={styles.button} onClick={handlePrev} disabled={currentIndex === 0}>Previous</button>  
+                        <button className={styles.button} onClick={handleNext} disabled={currentIndex + ITEMS_PER_PAGE >= listRve.length}>Next</button>  
                     </div>  
                 </div>  
             ) : (  
-                <p className="no-data">No RVE data available.</p>  
+                <p className={styles.noData}>No RVE data available.</p>  
             )}  
         </div>  
     );  

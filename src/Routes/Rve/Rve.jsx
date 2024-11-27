@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './rve.module.css'; // Assuming you have a CSS module for styles
+import styles from '../Rve/rve.module.css'; // Assuming you have a CSS module for styles
 import { AllUsers, CriarRve, UserName, createrve_usuarios} from '../../Data/server'; // Adjust the import paths as necessary
 import rveData from '../../Data/DadosRve'; // Adjust the import path as necessary
 import userData from '../../Data/dadosUser'; // Adjust the import path as necessary
@@ -100,7 +100,7 @@ const Rve = () => {
         dificuldades,
         presenca,
       };
-      rveData.addRve(rve);
+      rveData.addRve([rve]);
       await CriarRve(rve);
       console.log("RVE created:", rve);
       docentesenvolvidos.push(nomeAutor);
@@ -109,15 +109,15 @@ const Rve = () => {
         console.log("Docentes", docentesenvolvidos);
         const dadosUser = await UserName(docentesenvolvidos[i]);
         console.log("Dados do Docente:", dadosUser);
-        const rveId = rveData.getRve()[0].id;
-        console.log("RVE ID:", rveId);
+        const id_rve = rveData.getRve()[0][0].id;
+        console.log("RVE ID:", id_rve);
         const usuario_nif = dadosUser[0].nif;
         console.log("NIF do Docente:", usuario_nif);
-        const datarve_usuario = { id_rve: rveId, usuario_nif };
+        const datarve_usuario = { id_rve, usuario_nif };
         await createrve_usuarios(datarve_usuario);
         console.log('Telefone', dadosUser[0].telefone);
         console.log('Nome do Convidado', docentesenvolvidos[i]);
-        console.log('ID do RVE', rveId);
+        console.log('ID do RVE', id_rve);
         console.log(` 55${dadosUser[0].telefone}`);
         <Notificacaozap phone={`55${dadosUser[0].telefone}`}/>
         navigate('/RenderSuasRve');
@@ -241,7 +241,7 @@ const Rve = () => {
             </div>
             {docentesenvolvidos.length > 0 && (
               <div className={styles.formGroup}>
-                <h3>Docentes Envolvidos:</h3>
+                <h3 className={styles.h3}>Docentes Envolvidos:</h3>
                 <ul className={styles.list}>
                   {docentesenvolvidos.map((docente, index) => (
                     <li key={index} className={styles.listItem}>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';  
 import './Navbar.css';  
 
-const NavBar = () => {  
+const NavBar = ({ userType }) => {  
   const [menuVisible, setMenuVisible] = useState(false);
   const menuRef = useRef(null);
 
@@ -32,6 +32,39 @@ const NavBar = () => {
     };
   }, [menuVisible]);
 
+  const renderLinks = () => {
+    switch (userType) {
+      case 'admin':
+        return (
+          <>
+            <li><NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Suas RVE</NavLink></li>
+            <li><NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Saída</NavLink></li>
+            <li><NavLink to="/Rve" activeClassName="active" onClick={handleLinkClick}>RVE</NavLink></li>
+            <li><NavLink to="/CategoriaAdmin" activeClassName="active" onClick={handleLinkClick}>Categoria Admin</NavLink></li>
+            <li><NavLink to="/CadastroUsuarios" activeClassName="active" onClick={handleLinkClick}>Cadastro Usuarios</NavLink></li>
+            <li><NavLink to="/NotificacaoSec" activeClassName="active" onClick={handleLinkClick}>Notificação Secretaria</NavLink></li>
+            <li><NavLink to="/HistoricoSaida" activeClassName="active" onClick={handleLinkClick}>Historico de Saída</NavLink></li>
+          </>
+        );
+      case 'docente':
+        return (
+          <>
+            <li><NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Suas RVE</NavLink></li>
+            <li><NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Saída</NavLink></li>
+            <li><NavLink to="/Rve" activeClassName="active" onClick={handleLinkClick}>RVE</NavLink></li>
+            <li><NavLink to="/CategoriaDocente" activeClassName="active" onClick={handleLinkClick}>Categorias</NavLink></li>
+          </>
+        );
+      case 'secretaria':
+        return (
+          <>      
+              </>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (  
     <div ref={menuRef}>
       <button onClick={toggleMenu} className="menu-icon">
@@ -40,31 +73,7 @@ const NavBar = () => {
       {menuVisible && (
         <nav>  
           <ul>  
-            <li>  
-              <NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Suas RVE</NavLink>  
-            </li>   
-            
-            <li>  
-              <NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Saída</NavLink>  
-            </li>  
-            <li>  
-              <NavLink to="/Rve" activeClassName="active" onClick={handleLinkClick}>RVE</NavLink>  
-            </li>  
-            <li>  
-              <NavLink to="/CategoriaDocente" activeClassName="active" onClick={handleLinkClick}>Categoria Docente</NavLink>  
-            </li>  
-            <li>  
-              <NavLink to="/RenderSuasRve" activeClassName="active" onClick={handleLinkClick}>Render Rve</NavLink>  
-            </li> 
-            <li>  
-              <NavLink to="/CategoriaAdmin" activeClassName="active" onClick={handleLinkClick}>Categoria Admin</NavLink>  
-            </li> 
-            <li>  
-              <NavLink to="/CadastroUsuarios" activeClassName="active" onClick={handleLinkClick}>Cadastro Usuarios</NavLink>  
-            </li>   
-            <li>  
-              <NavLink to="/NotificacaoSec" activeClassName="active" onClick={handleLinkClick}>Notificação Secretaria</NavLink>  
-            </li>  
+            {renderLinks()}
           </ul>  
         </nav>
       )}
