@@ -11,7 +11,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);  
   const [userType, setUserType] = useState("");  
   const [Nif, setNif] = useState("");  
-  const [password, setPassword] = useState("");
+  const [senha, setPassword] = useState("");
   const [userNotPassword, setUserNotPassword] = useState(false);  
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);  
@@ -20,7 +20,7 @@ const Login = () => {
   const handleLogin = async () => {  
     setIsLoading(true);  
     try {  
-      const data = await LoginUser(Nif);  
+      const data = await LoginUser(Nif,senha);  
       console.log('Dados do usuário:', data);  
       userData.addUser(data);  
       setDados(data);  
@@ -31,7 +31,6 @@ const Login = () => {
       switch (userType) {  
         case 'admin':  
           navigate('/CategoriaAdmin');  
-         
           break;  
         case 'docente':  
           navigate('/CategoriaDocente');  
@@ -133,7 +132,7 @@ const Login = () => {
                 required
                 className={styles.input}
                 maxLength={50}
-                value={password}
+                value={senha}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <span

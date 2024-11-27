@@ -32,38 +32,6 @@ const NavBar = ({ userType }) => {
     };
   }, [menuVisible]);
 
-  const renderLinks = () => {
-    switch (userType) {
-      case 'admin':
-        return (
-          <>
-            <li><NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Suas RVE</NavLink></li>
-            <li><NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Saída</NavLink></li>
-            <li><NavLink to="/Rve" activeClassName="active" onClick={handleLinkClick}>RVE</NavLink></li>
-            <li><NavLink to="/CategoriaAdmin" activeClassName="active" onClick={handleLinkClick}>Categoria Admin</NavLink></li>
-            <li><NavLink to="/CadastroUsuarios" activeClassName="active" onClick={handleLinkClick}>Cadastro Usuarios</NavLink></li>
-            <li><NavLink to="/NotificacaoSec" activeClassName="active" onClick={handleLinkClick}>Notificação Secretaria</NavLink></li>
-            <li><NavLink to="/HistoricoSaida" activeClassName="active" onClick={handleLinkClick}>Historico de Saída</NavLink></li>
-          </>
-        );
-      case 'docente':
-        return (
-          <>
-            <li><NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Suas RVE</NavLink></li>
-            <li><NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Saída</NavLink></li>
-            <li><NavLink to="/Rve" activeClassName="active" onClick={handleLinkClick}>RVE</NavLink></li>
-            <li><NavLink to="/CategoriaDocente" activeClassName="active" onClick={handleLinkClick}>Categorias</NavLink></li>
-          </>
-        );
-      case 'secretaria':
-        return (
-          <>      
-              </>
-        );
-      default:
-        return null;
-    }
-  };
 
   return (  
     <div ref={menuRef}>
@@ -73,7 +41,26 @@ const NavBar = ({ userType }) => {
       {menuVisible && (
         <nav>  
           <ul>  
-            {renderLinks()}
+            {userType === 'admin' && (
+              <>
+                <li><NavLink to="/CategoriaAdmin" activeClassName="active" onClick={handleLinkClick}>Categoria Admin</NavLink></li>
+                <li><NavLink to="/CadastroUsuarios" activeClassName="active" onClick={handleLinkClick}>Cadastro Usuarios</NavLink></li>
+                <li><NavLink to="/NotificacaoSec" activeClassName="active" onClick={handleLinkClick}>Notificação Secretaria</NavLink></li>
+                <li><NavLink to="/HistoricoSaida" activeClassName="active" onClick={handleLinkClick}>Historico de Saída</NavLink></li>
+              </>
+            )}
+            {userType === 'docente' && (
+              <>
+                <li><NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Suas RVE</NavLink></li>
+                <li><NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Saída</NavLink></li>
+                <li><NavLink to="/Rve" activeClassName="active" onClick={handleLinkClick}>RVE</NavLink></li>
+              </>
+            )}
+            {userType === 'secretaria' && (
+              <>
+                <li><NavLink to="/CategoriaDocente" activeClassName="active" onClick={handleLinkClick}>Categorias</NavLink></li>
+              </>
+            )}
           </ul>  
         </nav>
       )}

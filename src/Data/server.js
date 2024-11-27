@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 const URL = 'http://10.88.200.162:4040';
-const LoginUser = async (nif) => {
+const LoginUser = async (nif,senha) => {
     try {
-        const requestURL = `${URL}/usuarios/${nif}`;
+        const requestURL = `${URL}/usuarios/${nif}/${senha}`;
         console.log(`Fazendo requisição para: ${requestURL}`);
         const response = await axios.get(requestURL);
         console.log('Resposta:', response.data);
