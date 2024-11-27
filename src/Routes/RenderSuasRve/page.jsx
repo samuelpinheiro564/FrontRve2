@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from "../RenderSuasRve/styles.module.css";
-import { CriarCampoTexto, AllCamposTextoRve } from '../../Data/server';
+import { CriarCampoTexto, AllCamposTextoRve, LoginUser } from '../../Data/server';
 import userData from '../../Data/dadosUser';
 import rveData from '../../Data/DadosRve';
 
@@ -8,7 +8,6 @@ const RenderSuasRve = () => {
     const [campotexto, setCampoTexto] = useState("");
     const [msgs, setMsgs] = useState([]);
     const rveDados = rveData.getRve();
-    console.log("RVE Dados:", rveDados);
     const currentUser = userData.getUsers()[0][0];
 
     const handleCampoTexto = async (e) => {
@@ -42,7 +41,7 @@ const RenderSuasRve = () => {
             setMsgs(allMessages);
         };
         fetchAllMsg();
-    });
+    }, );
 
     useEffect(() => {
         const fetchUserNames = async () => {
@@ -58,7 +57,7 @@ const RenderSuasRve = () => {
                 console.error("Erro ao buscar nomes dos usuários:", error);
             }
         };
- fetchUserNames();
+        fetchUserNames();
     }, [msgs]);
 
     return (
@@ -107,7 +106,7 @@ const RenderSuasRve = () => {
                 <div key={msg.id}>
                     <h3 className={styles.h3}>{msg.campotexto}</h3>
                     <p className={styles.input}>{msg.hora}</p>
-                    <p className={styles.input}>{msg.nomeusuario}</p>
+                    <p className={styles.input}>{msg.username}</p>
                 </div>
             ))}
             <div className={styles.formGroup}>
@@ -126,4 +125,5 @@ const RenderSuasRve = () => {
         </>
     );
 };
+
 export default RenderSuasRve;
