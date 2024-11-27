@@ -54,7 +54,7 @@ const HistoricoSaida = () => {
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.subtitle}>Histórico de Saídas e Atestados</h2>
+            <h2 className={styles.subtitle}>Histórico de Saídas</h2>
             {message.text && (
                 <div className={message.type === 'error' ? styles.error : styles.success}>
                     {message.text}
