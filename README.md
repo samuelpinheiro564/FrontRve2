@@ -1,70 +1,93 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# FrontRve2
 
-In the project directory, you can run:
+FrontRve2 é um projeto desenvolvido com [Create React App](https://github.com/facebook/create-react-app), utilizando JavaScript, CSS e HTML.
+
+## Índice
+
+- [Instalação](#instalação)
+- [Scripts Disponíveis](#scripts-disponíveis)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Funcionalidades](#funcionalidades)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
+
+## Instalação
+
+Para instalar as dependências do projeto, execute:
+
+```bash
+npm install
+```
+
+## Scripts Disponíveis
+
+No diretório do projeto, você pode executar:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Executa o aplicativo no modo de desenvolvimento.
+Abra [http://localhost:3000](http://localhost:3000) para visualizá-lo no navegador.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Inicia o executor de testes no modo interativo de observação.
+Veja a seção sobre [executar testes](https://facebook.github.io/create-react-app/docs/running-tests) para mais informações.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Compila o aplicativo para produção na pasta `build`.
+Agrupa corretamente o React no modo de produção e otimiza a compilação para o melhor desempenho.
 
 ### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Nota: esta é uma operação sem retorno. Uma vez que você `eject`, não pode mais voltar!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Se você não estiver satisfeito com a ferramenta de compilação e as escolhas de configuração, você pode `eject` a qualquer momento. Este comando removerá a dependência única de compilação do seu projeto.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Estrutura do Projeto
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+A estrutura básica do projeto é a seguinte:
 
-## Learn More
+```
+FrontRve2/
+├── public/
+│   ├── index.html
+│   └── ...
+├── src/
+│   ├── components/
+│   ├── App.js
+│   ├── index.js
+│   └── ...
+├── package.json
+├── README.md
+└── ...
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Funcionalidades
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Autenticação de Usuário:** Implementada usando `react-router-dom`.
+- **Consumo de APIs:** Utiliza a biblioteca `axios` para comunicação com APIs.
+- **Componentização:** Componentes React reutilizáveis e devidamente estruturados.
+- **Estilização:** Estilos aplicados utilizando CSS.
 
-### Code Splitting
+## Contribuição
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
 
-### Analyzing the Bundle Size
+Para contribuir:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/fooBar`)
+3. Commit suas mudanças (`git commit -am 'Add some fooBar'`)
+4. Push para a branch (`git push origin feature/fooBar`)
+5. Abra um Pull Request
 
-### Making a Progressive Web App
+## Licença
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Para mais detalhes, consulte a [documentação do Create React App](https://facebook.github.io/create-react-app/docs/getting-started) e a [documentação do React](https://reactjs.org/).
