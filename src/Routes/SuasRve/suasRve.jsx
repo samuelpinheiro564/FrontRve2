@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';  
 import userData from '../../Data/dadosUser';  
-import { getAllUsersrve_usuarios,RveById } from '../../Data/server';  
+import { getAllUsersrve_usuarios, RveById } from '../../Data/server';  
 import './styles.modules.css'; // Importando o CSS  
 import { useNavigate } from 'react-router-dom';
 import rveData from '../../Data/DadosRve';
-
 
 const SuasRve = () => {  
     const [listRve, setListRve] = useState([]);  
@@ -21,7 +20,7 @@ const SuasRve = () => {
             setListRve(Array.isArray(rves) ? rves : []); // Ensure rves is an array  
         };  
         handleRves();  
-    }, []);  
+    }, []);  // Empty dependency array ensures this runs only once
 
     const handlePrev = () => {  
         setCurrentIndex((prevIndex) => Math.max(prevIndex - ITEMS_PER_PAGE, 0));  

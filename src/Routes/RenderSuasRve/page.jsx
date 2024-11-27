@@ -32,20 +32,6 @@ const RenderSuasRve = () => {
         }
     };
 
-    const fetchUserNames = async () => {
-        try {
-            const updatedMsgs = await Promise.all(
-                msgs.map(async (msg) => {
-                    const user = await LoginUser(msg.nifusuario);
-                    return { ...msg, username: user[0].nome };
-                })
-            );
-            setMsgs(updatedMsgs);
-        } catch (error) {
-            console.error("Erro ao buscar nomes dos usuários:", error);
-        }
-    };
-
     useEffect(() => {
         const fetchAllMsg = async () => {
             const idrve = rveDados[0][0].id;
@@ -53,10 +39,23 @@ const RenderSuasRve = () => {
             setMsgs(allMessages);
         };
         fetchAllMsg();
-    }, []);
+    });
 
     useEffect(() => {
-        if (msgs.length > 0) fetchUserNames();
+        const fetchUserNames = async () => {
+            try {
+                const updatedMsgs = await Promise.all(
+                    msgs.map(async (msg) => {
+                        const user = await LoginUser(msg.nifusuario);
+                        return { ...msg, username: user[0].nome };
+                    })
+                );
+                setMsgs(updatedMsgs);
+            } catch (error) {
+                console.error("Erro ao buscar nomes dos usuários:", error);
+            }
+        };
+ fetchUserNames();
     }, [msgs]);
 
     return (
