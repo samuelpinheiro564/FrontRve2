@@ -2,9 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';  
 import './Navbar.css';  
 
-const NavBar = ({ userType }) => {  
+const NavBar = () => {  
   const [menuVisible, setMenuVisible] = useState(false);
+  const [userType, setUserType] = useState(null);
   const menuRef = useRef(null);
+
+  useEffect(() => {
+    // Recupera o tipo de usuário do localStorage
+    const storedUserType = localStorage.getItem('userType');
+    setUserType(storedUserType);
+  }, []);
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
@@ -31,7 +38,6 @@ const NavBar = ({ userType }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [menuVisible]);
-
 
   return (  
     <div ref={menuRef}>

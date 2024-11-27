@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from "../RenderSuasRve/styles.module.css";
-import { CriarCampoTexto, AllCamposTextoRve, LoginUser } from '../../Data/server';
+import { CriarCampoTexto, AllCamposTextoRve ,LoginUser} from '../../Data/server';
 import userData from '../../Data/dadosUser';
 import rveData from '../../Data/DadosRve';
 
@@ -16,13 +16,11 @@ const RenderSuasRve = () => {
             const nifusuario = currentUser.nif;
             const data = new Date().toLocaleDateString();
             const hora = new Date().toLocaleTimeString();
-            const nomeusuario = currentUser.nome;
             const idrve = rveDados[0][0].id;
             const conteudoCampo = {
                 idrve,
                 data,
                 hora,
-                nomeusuario,
                 nifusuario,
                 campotexto
             };
@@ -41,7 +39,7 @@ const RenderSuasRve = () => {
             setMsgs(allMessages);
         };
         fetchAllMsg();
-    }, );
+    }, [rveDados]);
 
     useEffect(() => {
         const fetchUserNames = async () => {
