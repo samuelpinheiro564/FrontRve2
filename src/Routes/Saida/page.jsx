@@ -30,7 +30,7 @@ const Saida = () => {
                 curso: item.curso,  
                 turma: item.turma,  
                 alunora: item.alunora,  
-                data: item.datasaida,  
+                data: item.datasaida.split('T')[0],  
                 horasaida: item.horasaida,  
                 maioridade: item.maioridade ? 'true' : 'false',  
                 justificativa: item.justificativa,  
