@@ -1,151 +1,191 @@
-/* Estilos base */  
+/* historicoSaida.module.css */
 
-
-.container {  
-    padding: 30px;  
-    max-width: 1200px;  
-    margin: 0 auto;  
-    background-color: #ffffff;  
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  
-    border-radius: 8px;  
-}  
-
-.subtitle {  
-    font-size: 50px;  
-    margin-bottom: 20px;  
-    text-align: center;  
-    color: #ff0000;  
-    font-weight: bold;  
-}  
-
-/* Estilos da tabela */  
-.table {  
-    width: 100%;  
-    border-collapse: collapse;  
-    margin-bottom: 20px;  
-   
-}  
-.table td {
-    padding: 12px;  
-    text-align: left;  
-    font-size: 16px;  
-    border-bottom: 1px solid #ddd;  
-    color: #000;
+/* Container styling with a subtle gradient background */
+.container {
+  max-width: 1200px;
+  padding: 2rem;
+  background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0 auto;
+  border-radius: 3%;
 }
 
-.table th {  
-    padding: 12px;  
-    text-align: left;  
-    font-size: 16px;  
-    border-bottom: 2px solid #ddd;
-}  
+/* Stylish subtitle with red accent */
+.subtitle {
+  color: #000;
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-.table th {  
-    background-color: #ff0000;  
-    color: #ffffff;  
-    font-weight: bold;  
-}  
+/* Modern table styling */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(220, 38, 38, 0.1);
+}
 
-.table tr:nth-child(even) {  
-    background-color: #f2f2f2;  
-}  
+/* Table header styling */
+.table thead th {
+  background-color: #dc2626;
+  color: white;
+  padding: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
 
-.table tr:hover {  
-    background-color: #e6f7ff;  
-}  
+/* Table body styling */
+.table tbody td {
+  padding: 1rem;
+  border-bottom: 1px solid #fee2e2;
+  color: #4b5563;
+  transition: background-color 0.3s ease;
+}
 
-/* Botões */  
-.buttonDeletar, .buttonEditar, .buttonVoltar {  
-    background-color: #ff0000;  
-    color: white;  
-    border: none;  
-    padding: 10px 20px;  
-    cursor: pointer;  
-    border-radius: 5px;  
-    transition: background-color 0.3s, transform 0.2s;  
-    margin-right: 10px;  
-    font-size: 14px;  
-}  
+/* Row hover effect */
+.table tbody tr:hover {
+  background-color: #fef2f2;
+}
 
-.buttonDeletar:hover, .buttonEditar:hover, .buttonVoltar:hover {  
-    background-color: #d32f2f;  
-    transform: translateY(-2px);  
-}  
+/* Button styles */
+.buttonEditar, .buttonDeletar, .buttonVoltar {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0.25rem;
+}
+
+/* Edit button styling */
+.buttonEditar {
+  background-color: #dc2626;
+  color: white;
+}
+
+.buttonEditar:hover {
+  background-color: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
+}
+
+/* Delete button styling */
+.buttonDeletar {
+  background-color: white;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+}
+
+.buttonDeletar:hover {
+  background-color: #fee2e2;
+  transform: translateY(-1px);
+}
+
+/* Back button styling */
+.buttonVoltar {
+  background-color: #dc2626;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  margin-top: 2rem;
+  display: block;
+  width: fit-content;
+}
+
+.buttonVoltar:hover {
+  background-color: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
+}
+
+/* Message styling */
+.success, .error {
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  animation: slideIn 0.3s ease-out;
+}
+
+
+
+.error {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* Animation keyframes */
+@keyframes slideIn {
+  from {
+      transform: translateY(-20px);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
 
 .success {
-  margin-top: 1rem;
-  padding: 1rem;
-  border-radius: 12px;
-  text-align: center;
-  animation: slideUpFade 0.5s ease-out;
-  backdrop-filter: blur(5px);
+  background: rgba(37, 211, 102, 0.1);
+  border: 1px solid var(--neon-green);
+  color: var(--neon-green);
+  box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);
+  color: green;
+}
+
+@keyframes floatContainer {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulseText {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Animações suaves */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+  animation: fadeIn 0.6s ease-out;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .table {
+      font-size: 0.9rem;
   }
   
-  .error{
-    color: red;
-    margin-top: 1rem;
-    padding: 1rem;
-    border-radius: 12px;
-    text-align: center;
-    animation: slideUpFade 0.5s ease-out;
-    backdrop-filter: blur(5px);
+  .subtitle {
+      font-size: 1.8rem;
   }
   
-  .success {
-    background: rgba(37, 211, 102, 0.1);
-    border: 1px solid var(--neon-green);
-    color: var(--neon-green);
-    box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);
-    color: green;
+  .buttonEditar, .buttonDeletar {
+      padding: 0.4rem 0.8rem;
   }
-  
-  @keyframes floatContainer {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-  
-  @keyframes pulseText {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
-  }
-  
-  @keyframes slideUpFade {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  
-  /* Animações suaves */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  .container {
-    animation: fadeIn 0.6s ease-out;
-  }
-  
-  
-  
-  
-  /* Responsividade */
-  @media (max-width: 768px) {
-    .form {
-      grid-template-columns: 1fr;
-    }
-    
-    .table {
-      display: block;
-      overflow-x: auto;
-    }
-    
-    .title {
-      font-size: 2rem;
-    }
-  }
+}
