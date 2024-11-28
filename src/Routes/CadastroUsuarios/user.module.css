@@ -29,6 +29,50 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
+.userColumnsContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.userColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.userCard {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.editButton,
+.deleteButton {
+  margin-top: 10px;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.editButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.deleteButton {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
 
 .h21 {
   font-size: 2.5rem; /* Aumentado */
