@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';  
 import { useNavigate, useLocation } from 'react-router-dom';  
 import { CriarSaida, EditarSaida } from '../../Data/server';  
+import userData from '../../Data/dadosUser'; // Import userData
 import styles from '../Saida/saida.module.css';  
+import Notificacaozap from '../../components/NotificacaoZap/Notificazaozap'; // Import Notificacaozap
 
 const Saida = () => {  
     const [formData, setFormData] = useState({  
@@ -9,11 +11,11 @@ const Saida = () => {
         curso: '',  
         turma: '',  
         alunora: '',  
-        data: '',  
+        datasaida: '',  
         horasaida: '',  
-        maioridade: '',  
+        maioridade: false,  // Inicializa como false
         justificativa: '',  
-        assinaturaProf: '',  
+        assinaturaProf: [],  // Inicializa como array vazio
         assinaturaAnaq: '',  
     });  
     const [editId, setEditId] = useState(null);  
@@ -24,17 +26,18 @@ const Saida = () => {
     useEffect(() => {  
         if (location.state?.item) {  
             const item = location.state.item;  
+            console.log(item.datasaida.split('T')[0]);
             setEditId(item.id); // Set the ID for editing  
             setFormData({  
                 nomealuno: item.nomealuno,  
                 curso: item.curso,  
                 turma: item.turma,  
                 alunora: item.alunora,  
-                data: item.datasaida.split('T')[0],  
+                datasaida: item.datasaida.split('T')[0],  
                 horasaida: item.horasaida,  
-                maioridade: item.maioridade ? 'true' : 'false',  
+                maioridade: item.maioridade,  // Usando valor booleano diretamente
                 justificativa: item.justificativa,  
-                assinaturaProf: item.assinaturaprof,  
+                assinaturaProf: item.assinaturaprof || [],  // Garantir que seja um array
                 assinaturaAnaq: item.assinaturaanaq,  
             });  
         }  
@@ -51,23 +54,26 @@ const Saida = () => {
     }, [message]);  
 
     const handleChange = ({ target: { name, value } }) => {  
-        setFormData({ ...formData, [name]: value });  
+        setFormData({ ...formData, [name]: name === 'maioridade' ? value === 'true' : value });
+        const dadosUser = userData.getUsers();
+        <Notificacaozap phone={`55${dadosUser[0].telefone}`} message ={"NOVA Saida Solicitada Por favor Visualizar"}/>  
     };  
 
     const handleSubmit = async (e) => {  
         e.preventDefault();  
 
-        if (!formData.data) {  
+        if (!formData.datasaida) {  
             alert("A data de saída deve ser preenchida.");  
             return;  
         }  
 
         const submissionData = {  
-            ...formData,  
-            datasaida: formData.data,  
+            nomealuno: formData.nomealuno,
+            curso: formData.curso,
+            turma: formData.turma,
+            alunora: formData.alunora,  
+            datasaida: formData.datasaida,  
             horasaida: formData.horasaida,  
-            assinaturaanaq: formData.assinaturaAnaq,  
-            assinaturaprof: formData.assinaturaProf,  
         };  
 
         try {  
@@ -75,23 +81,76 @@ const Saida = () => {
                 await EditarSaida(editId, submissionData);  
                 setMessage({ type: 'success', text: 'Saída editada com sucesso.' });  
             } else {  
-                await CriarSaida(submissionData);  
-                setMessage({ type: 'success', text: 'Saída criada com sucesso.' });  
-            }  
-            // Limpa os dados do formulário  
-            setFormData({  
-                nomealuno: '',  
-                curso: '',  
-                turma: '',  
-                alunora: '',  
-                data: '',  
-                horasaida: '',  
-                maioridade: '',  
-                justificativa: '',  
-                assinaturaProf: '',  
-                assinaturaAnaq: '',  
-            });  
-            setEditId(null); // Limpa o ID de edição para nova entrada, se necessário  
+                const userDados = userData.getUsers()[0];
+
+                if (formData.maioridade === true) {
+                    const submissionDataCreate = {  
+                        nomealuno: formData.nomealuno,
+                        curso: formData.curso,
+                        turma: formData.turma,
+                        alunora: formData.alunora,  
+                        datasaida: formData.datasaida,  
+                        horasaida: formData.horasaida, 
+                        maioridade: formData.maioridade,
+                        justificativa: formData.justificativa,
+                        assinaturaanaq: formData.assinaturaAnaq,  // Assinatura como string
+                        assinaturaprof: Array(userDados.nome),  // Assinatura como array de string
+                    };  
+                    console.log(submissionDataCreate);
+                    console.log("Maior idade");
+                    await CriarSaida(submissionDataCreate);  
+                    setMessage({ type: 'success', text: 'Saída criada com sucesso.' });  
+                } else {
+
+                    if (userDados.tipo === 'docente') {
+                        const submissionDataCreate = {  
+                                nomealuno: formData.nomealuno,
+                                curso: formData.curso,
+                                turma: formData.turma,
+                                alunora: formData.alunora,  
+                                datasaida: formData.datasaida,  
+                                horasaida: formData.horasaida, 
+                                maioridade: formData.maioridade,
+                                justificativa: formData.justificativa,
+                                assinaturaanaq: formData.assinaturaAnaq,  // Assinatura como string
+                                assinaturaprof: Array(userDados.nome),  // Assinatura como array de string
+                            }; 
+                        console.log("Criado Prof");
+                        await CriarSaida(submissionDataCreate);  
+                        setMessage({ type: 'success', text: 'Saída criada com sucesso.' });  
+                    } else {
+                        const submissionDataCreate = {  
+                            nomealuno: formData.nomealuno,
+                            curso: formData.curso,
+                            turma: formData.turma,
+                            alunora: formData.alunora,  
+                            datasaida: formData.datasaida,  
+                            horasaida: formData.horasaida, 
+                            maioridade: formData.maioridade,
+                            justificativa: formData.justificativa,
+                            assinaturaanaq: userDados.nome,  // Assinatura como string
+                            assinaturaprof: Array(formData.assinaturaProf),  // Assinatura como array de string
+                        }; 
+                        console.log("Criado ANaq");
+                        await CriarSaida(submissionDataCreate);  
+                        setMessage({ type: 'success', text: 'Saída criada com sucesso.' });  
+                    }
+                }  
+                // Limpa os dados do formulário  
+                setFormData({  
+                    nomealuno: '',  
+                    curso: '',  
+                    turma: '',  
+                    alunora: '',  
+                    datasaida: '',  
+                    horasaida: '',  
+                    maioridade: false,  // Resetando o valor booleano
+                    justificativa: '',  
+                    assinaturaProf: [],  // Resetando o array
+                    assinaturaAnaq: '',  
+                });  
+                setEditId(null); // Limpa o ID de edição para nova entrada, se necessário  
+            } 
         } catch (error) {  
             console.error("Error submitting form:", error);  
             setMessage({ type: 'error', text: 'Erro ao enviar formulário.' });  
@@ -110,20 +169,17 @@ const Saida = () => {
                 <div className={styles.radioGroup}>  
                     <label>Maior de Idade:</label>  
                     <label>  
-                        <input type="radio" name="maioridade" value="true" onChange={handleChange} checked={formData.maioridade === 'true'} required /> Sim  
+                        <input type="radio" name="maioridade" value="true" onChange={handleChange} checked={formData.maioridade === true} required /> Sim  
                     </label>  
                     <label>  
-                        <input type="radio" name="maioridade" value="false" onChange={handleChange} checked={formData.maioridade === 'false'} required /> Não  
+                        <input type="radio" name="maioridade" value="false" onChange={handleChange} checked={formData.maioridade === false} required /> Não  
                     </label>  
                 </div>  
 
-                <input type="date" name="data" value={formData.data} onChange={handleChange} required className={styles.input} />  
+                <input type="date" name="datasaida" value={formData.datasaida} onChange={handleChange} required className={styles.input} />  
                 <input type="time" name="horasaida" value={formData.horasaida} onChange={handleChange} required className={styles.input} />  
 
                 <textarea name="justificativa" placeholder="Justificativa" value={formData.justificativa} onChange={handleChange} required className={styles.textarea}></textarea>  
-
-                <input type="text" name="assinaturaProf" placeholder="Assinatura do professor" value={formData.assinaturaProf} onChange={handleChange} required className={styles.input} />  
-                <input type="text" name="assinaturaAnaq" placeholder="Assinatura do analista de qualidade" value={formData.assinaturaAnaq} onChange={handleChange} required className={styles.input} />  
                 <button type="submit" className={styles.button}>{editId ? 'Editar Saída' : 'Enviar Saída'}</button>  
             </form>  
             {message.text && (  
