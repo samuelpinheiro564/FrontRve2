@@ -115,11 +115,21 @@ const DeleteUser = async (nif) => {
     }
 };
 
+const AllUsersNif = async (nif) => {
+    try {
+        const response = await axios.get(`${URL}/usuarios/${nif}`);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao buscar todos os usuários:', error);
+        throw error;
+    }
+};
 const AllUsers = async () => {
     try {
         const response = await axios.get(`${URL}/usuarios`);
         return response.data;
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Erro ao buscar todos os usuários:', error);
         throw error;
     }
@@ -302,6 +312,36 @@ const AllSaida = async () => {
     }
 };
 
+const MenorIdade = async () => {  
+    try {  
+        const response = await axios.get(`${URL}/saida/menor/idade`);  
+        return response.data;  
+    } catch (error) {  
+        console.error(`Erro ao buscar registro:`, error);  
+        throw error;  
+    }  
+}
+
+const postAssinaturaAnaq = async (id, assinaturaAnaq) => {
+    try {
+        const response = await axios.put(`${URL}/saida/assinaturaAnaq/${id}`, assinaturaAnaq);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao editar registro de saída com ID ${id}:`, error);
+        throw error;
+    }
+};
+
+const postAssinaturaProf = async (id, assinaturaProf) => {
+    try {
+        const response = await axios.put(`${URL}/saida/assinaturaProf/${id}`, assinaturaProf);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao editar registro de saída com ID ${id}:`, error);
+        throw error;
+    }
+}
+
 const UltimaSaida = async (id) => {
     try {
         const response = await axios.get(`${URL}/saida/ultimasaida`);
@@ -341,6 +381,7 @@ export {
     AtualizaUser,
     DeleteUser,
     AllUsers,
+    AllUsersNif,
     CriarRve,
     AllRve,
     RveById,
@@ -356,6 +397,9 @@ export {
     EditarForum,
     DeleteForum,
     CriarSaida,
+    MenorIdade,
+    postAssinaturaAnaq,
+    postAssinaturaProf,
     AllSaida,
     UltimaSaida,
     EditarSaida,
@@ -365,5 +409,4 @@ export {
     getAllUsersrve_usuarios,
     getAllRVErve_usuarios,
     UserName
-
 };
