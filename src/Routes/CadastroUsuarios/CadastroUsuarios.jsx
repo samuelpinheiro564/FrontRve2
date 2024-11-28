@@ -115,7 +115,49 @@ const CadastroUsuarios = () => {
             setTimeout(() => setMessage(""), 3000);
         }
     };
+    const usersPerPage = 5; // Quantidade de usuários por página
 
+    useEffect(() => {
+        fetchAllUsers();
+    }, []);
+
+    const fetchAllUsers = async () => {
+        try {
+            const users = await AllUsers();
+            setUsers(users);
+        } catch (error) {
+            console.error("Erro ao buscar usuários:", error);
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setForm((prevForm) => ({ ...prevForm, [name]: value }));
+    };
+
+    const toggleShowPassword = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
+
+    const handleViewUsers = () => {
+        setShowUserList(true);
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage((prevPage) => prevPage + 1);
+    };
+
+    const handlePreviousPage = () => {
+        setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
+    };
+
+    const handleGoBackToForm = () => {
+        setShowUserList(false);
+        setCurrentPage(1);
+    };
+
+    const startIndex = (currentPage - 1) * usersPerPage;
+    const paginatedUsers = users.slice(startIndex, startIndex + usersPerPage);
     const limparCampos = () => {
         setForm({
             nif: "",
@@ -286,64 +328,64 @@ const CadastroUsuarios = () => {
                     </button>
                 </form>
             )}
-
-            {!showUserList && (
-                <button onClick={handleViewUsers} className={styles.viewUsersButton}>
-                    Ver Usuários
-                </button>
+ {!showUserList ? (
+                <>
+                    <form className={styles.form}>
+                        {/* Campos do formulário */}
+                        <button type="submit" className={styles.button}>
+                            {editingUser ? "Salvar Alterações" : "Cadastrar"}
+                        </button>
+                    </form>
+                    <button onClick={handleViewUsers} className={styles.viewUsersButton}>
+                        Ver Usuários
+                    </button>
+                </>
+            ) : (
+                <div className={styles.userList}>
+                    <h2 className={styles.h21}>Lista de Usuários</h2>
+                    {paginatedUsers.map((user) => (
+                        <div key={user.nif} className={styles.userCard}>
+                            <p>
+                                <strong>NIF:</strong> {user.nif}
+                            </p>
+                            <p>
+                                <strong>Nome:</strong> {user.nome}
+                            </p>
+                            <p>
+                                <strong>Email:</strong> {user.email}
+                            </p>
+                            <p>
+                                <strong>Telefone:</strong> {user.telefone}
+                            </p>
+                            <p>
+                                <strong>Tipo:</strong> {user.tipo}
+                            </p>
+                        </div>
+                    ))}
+                    <div className={styles.pagination}>
+                        <button
+                            onClick={handlePreviousPage}
+                            className={styles.pageButton}
+                            disabled={currentPage === 1}
+                        >
+                            Página Anterior
+                        </button>
+                        <button
+                            onClick={handleNextPage}
+                            className={styles.pageButton}
+                            disabled={startIndex + usersPerPage >= users.length}
+                        >
+                            Próxima Página
+                        </button>
+                    </div>
+                    <button
+                        onClick={handleGoBackToForm}
+                        className={styles.backButton}
+                    >
+                        Voltar ao Cadastro
+                    </button>
+                </div>
             )}
-
-{showUserList && (
-  <div className={styles.userList}>
-    <h2 className={styles.h21}>Lista de Usuários</h2>
-    <div className={styles.userColumnsContainer}>
-      {/* Dividir os usuários em grupos de 5 */}
-      {[...Array(Math.ceil(users.length / 5))].map((_, columnIndex) => (
-        <div className={styles.userColumn} key={columnIndex}>
-          {users
-            .slice(columnIndex * 5, columnIndex * 5 + 5)
-            .map((user) => (
-              <div key={user.nif} className={styles.userCard}>
-                <p>
-                  <strong>NIF:</strong> {user.nif}
-                </p>
-                <p>
-                  <strong>Nome:</strong> {user.nome}
-                </p>
-                <p>
-                  <strong>Email:</strong> {user.email}
-                </p>
-                <p>
-                  <strong>Telefone:</strong> {user.telefone}
-                </p>
-                <p>
-                  <strong>Tipo:</strong> {user.tipo}
-                </p>
-                <button
-                  onClick={() => handleEditUser(user)}
-                  className={styles.editButton}
-                >
-                  Editar
-                </button>
-                <button
-                  onClick={() => handleDeleteUser(user.nif)}
-                  className={styles.deleteButton}
-                >
-                  Deletar
-                </button>
-              </div>
-            ))}
-        </div>
-      ))}
-    </div>
-    <button
-      onClick={() => setShowUserList(false)}
-      className={styles.backButton}
-    >
-      Voltar
-    </button>
-  </div>
-)}
         </div>
     );
 };
