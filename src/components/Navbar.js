@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';  
-import { NavLink } from 'react-router-dom';  
-import './Navbar.css';  
+import React, { useState, useEffect, useRef } from 'react';
+import { NavLink } from 'react-router-dom';
+import './Navbar.css';
 
-const NavBar = () => {  
+const NavBar = () => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [userType, setUserType] = useState(null);
   const menuRef = useRef(null);
@@ -39,39 +39,61 @@ const NavBar = () => {
     };
   }, [menuVisible]);
 
-  return (  
+  // Menus dinâmicos para cada tipo de usuário
+  const getMenuItems = () => {
+    switch (userType) {
+      case 'admin':
+        return [
+          {label:'Saida', to:'/Saida'},
+          {label:'Rve', to:'/Rve'},
+          {label:'Suas RVE', to:'/SuasRve'},
+          {label:'Cadastro Usuarios', to:'/CadastroUsuarios'},
+          { label: 'Notificação Secretaria', to: '/NotificacaoSec' },
+          { label: 'Histórico de Saída', to: '/HistoricoSaida' },
+        ];
+      case 'docente':
+        return [
+          { label: 'Suas RVE', to: '/SuasRve' },
+          { label: 'Saída', to: '/Saida' },
+          { label: 'RVE', to: '/Rve' },
+          {label:'Histórico de Saída', to:'/HistoricoSaida'} 
+        ];
+      case 'secretaria':
+        return [
+          { label: 'Notificação Secretaria', to: '/NotificacaoSec' },
+          { label: 'Histórico de Saída', to: '/HistoricoSaida' },
+        ];
+      default:
+        return []; // Caso nenhum `userType` seja encontrado
+    }
+  };
+
+  const menuItems = getMenuItems();
+
+  return (
     <div ref={menuRef}>
       <button onClick={toggleMenu} className="menu-icon">
         &#9776; 
       </button>
       {menuVisible && (
-        <nav>  
-          <ul>  
-            {userType === 'admin' && (
-              <>
-                <li><NavLink to="/CategoriaAdmin" activeClassName="active" onClick={handleLinkClick}>Categoria Admin</NavLink></li>
-                <li><NavLink to="/CadastroUsuarios" activeClassName="active" onClick={handleLinkClick}>Cadastro Usuarios</NavLink></li>
-                <li><NavLink to="/NotificacaoSec" activeClassName="active" onClick={handleLinkClick}>Notificação Secretaria</NavLink></li>
-                <li><NavLink to="/HistoricoSaida" activeClassName="active" onClick={handleLinkClick}>Historico de Saída</NavLink></li>
-              </>
-            )}
-            {userType === 'docente' && (
-              <>
-                <li><NavLink to="/SuasRve" activeClassName="active" onClick={handleLinkClick}>Suas RVE</NavLink></li>
-                <li><NavLink to="/Saida" activeClassName="active" onClick={handleLinkClick}>Saída</NavLink></li>
-                <li><NavLink to="/Rve" activeClassName="active" onClick={handleLinkClick}>RVE</NavLink></li>
-              </>
-            )}
-            {userType === 'secretaria' && (
-              <>
-                <li><NavLink to="/CategoriaDocente" activeClassName="active" onClick={handleLinkClick}>Categorias</NavLink></li>
-              </>
-            )}
-          </ul>  
+        <nav>
+          <ul>
+            {menuItems.map((item, index) => (
+              <li key={index}>
+                <NavLink
+                  to={item.to}
+                  activeClassName="active"
+                  onClick={handleLinkClick}
+                >
+                  {item.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
         </nav>
       )}
     </div>
-  );  
-};  
+  );
+};
 
 export default NavBar;
