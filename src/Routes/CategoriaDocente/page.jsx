@@ -2,14 +2,11 @@ import React from 'react';
 import styles from "../CategoriaDocente/docente.module.css";  
 import { NavLink } from 'react-router-dom';
 import userData from '../../Data/dadosUser';
-import NavBar from '../../components/Navbar';
+
 
 
 function App() {  
   const user = userData.getUsers();
-
-
-
 
   return (  
     <div className={styles.container}>  
