@@ -96,7 +96,7 @@ const Login = () => {
               <option value="docente">Docente</option>
               <option value="admin">Administrador</option>
             </select>
-            <NavBar userType={userType} />
+        
             <button type="submit" className={styles.button}>
               Entrar
             </button>
