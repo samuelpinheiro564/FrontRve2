@@ -14,8 +14,8 @@ const SuasRve = () => {
     useEffect(() => {  
         const handleRves = async () => {  
             const userNif = userData.getUsers();  
-            console.log('User NIF:', userNif[0][0].nif); // Log user NIF for debugging
-            const rves = await getAllUsersrve_usuarios(userNif[0][0].nif);  
+            console.log('User NIF:', userNif[0].nif); // Log user NIF for debugging
+            const rves = await getAllUsersrve_usuarios(userNif[0].nif);  
             console.log('Fetched RVE data:', rves); // Log fetched data  
             setListRve(Array.isArray(rves) ? rves : []); // Ensure rves is an array  
         };  
