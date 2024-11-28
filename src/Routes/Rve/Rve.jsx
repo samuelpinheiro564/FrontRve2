@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../Rve/rve.module.css'; // Assuming you have a CSS module for styles
-import { AllUsers, CriarRve, UserName, createrve_usuarios} from '../../Data/server'; // Adjust the import paths as necessary
+import { AllUsersNif, CriarRve, UserName, createrve_usuarios} from '../../Data/server'; // Adjust the import paths as necessary
 import rveData from '../../Data/DadosRve'; // Adjust the import path as necessary
 import userData from '../../Data/dadosUser'; // Adjust the import path as necessary
 import Notificacaozap from '../../components/NotificacaoZap/Notificazaozap'; // Adjust the import path as necessary
@@ -25,11 +25,16 @@ const Rve = () => {
 
   const navigate = useNavigate();
 
+
+
   useEffect(() => {
     const fetchDocentes = async () => {
       try {
-        const docents = await AllUsers();
-        console.log("Docentes:", docents);
+        const userDados = userData.getUsers()[0].nif;
+    console.log("Nome do Autor:", userDados);
+        const docents = await AllUsersNif(userDados);
+        console.log("Docentes:", docents);    
+         
         if (Array.isArray(docents)) {
           setListaDocentes(docents);
         } else {
@@ -40,7 +45,7 @@ const Rve = () => {
       }
     };
     fetchDocentes();
-  }, []);
+  });
 
   const categories = [
     "Aprendizagem",
@@ -55,11 +60,13 @@ const Rve = () => {
   ];
 
   const addDocente = () => {
+ 
     if (docenteAtual) {
       if (docentesenvolvidos.includes(docenteAtual)) {
         alert("Este docente já está na lista de envolvidos.");
         return;
       }
+      
       setDocentesenvolvidos([...docentesenvolvidos, docenteAtual]);
       setDocenteAtual("");
       console.log("Docentes Selecionados:", docentesenvolvidos);
@@ -68,9 +75,10 @@ const Rve = () => {
     }
   };
 
-  const deleteDocente = (index) => {
-    const updatedDocentes = docentesenvolvidos.filter((_, i) => i !== index);
-    setDocentesenvolvidos(updatedDocentes);
+ const deleteDocente = (index) => {
+    const docentes = [...docentesenvolvidos];
+    docentes.splice(index, 1);
+    setDocentesenvolvidos(docentes);
   };
 
 
@@ -100,6 +108,7 @@ const Rve = () => {
         dificuldades,
         presenca,
       };
+     
       rveData.addRve([rve]);
       await CriarRve(rve);
       console.log("RVE created:", rve);
@@ -119,7 +128,7 @@ const Rve = () => {
         console.log('Nome do Convidado', docentesenvolvidos[i]);
         console.log('ID do RVE', id_rve);
         console.log(` 55${dadosUser[0].telefone}`);
-        <Notificacaozap phone={`55${dadosUser[0].telefone}`}/>
+        <Notificacaozap phone={`55${dadosUser[0].telefone}`} message={"O senhor(a) foi convidado para comentar em uma NOVA rve"}/>
         navigate('/RenderSuasRve');
       }
     } catch (error) {
