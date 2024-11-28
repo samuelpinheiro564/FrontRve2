@@ -293,50 +293,57 @@ const CadastroUsuarios = () => {
                 </button>
             )}
 
-            {showUserList && (
-                <div className={styles.userList}>
-                    <h2 className={styles.h21}>Lista de Usuários</h2>
-                    <ul>
-                        {users.map((user) => (
-                            <li key={user.nif} className={styles.userItem}>
-                                <p>
-                                    <strong>NIF:</strong> {user.nif}
-                                </p>
-                                <p>
-                                    <strong>Nome:</strong> {user.nome}
-                                </p>
-                                <p>
-                                    <strong>Email:</strong> {user.email}
-                                </p>
-                                <p>
-                                    <strong>Telefone:</strong> {user.telefone}
-                                </p>
-                                <p>
-                                    <strong>Tipo:</strong> {user.tipo}
-                                </p>
-                                <button
-                                    onClick={() => handleEditUser(user)}
-                                    className={styles.editButton}
-                                >
-                                    Editar
-                                </button>
-                                <button
-                                    onClick={() => handleDeleteUser(user.nif)}
-                                    className={styles.deleteButton}
-                                >
-                                    Deletar
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                    <button
-                        onClick={() => setShowUserList(false)}
-                        className={styles.backButton}
-                    >
-                        Voltar
-                    </button>
-                </div>
-            )}
+{showUserList && (
+  <div className={styles.userList}>
+    <h2 className={styles.h21}>Lista de Usuários</h2>
+    <div className={styles.userColumnsContainer}>
+      {/* Dividir os usuários em grupos de 5 */}
+      {[...Array(Math.ceil(users.length / 5))].map((_, columnIndex) => (
+        <div className={styles.userColumn} key={columnIndex}>
+          {users
+            .slice(columnIndex * 5, columnIndex * 5 + 5)
+            .map((user) => (
+              <div key={user.nif} className={styles.userCard}>
+                <p>
+                  <strong>NIF:</strong> {user.nif}
+                </p>
+                <p>
+                  <strong>Nome:</strong> {user.nome}
+                </p>
+                <p>
+                  <strong>Email:</strong> {user.email}
+                </p>
+                <p>
+                  <strong>Telefone:</strong> {user.telefone}
+                </p>
+                <p>
+                  <strong>Tipo:</strong> {user.tipo}
+                </p>
+                <button
+                  onClick={() => handleEditUser(user)}
+                  className={styles.editButton}
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={() => handleDeleteUser(user.nif)}
+                  className={styles.deleteButton}
+                >
+                  Deletar
+                </button>
+              </div>
+            ))}
+        </div>
+      ))}
+    </div>
+    <button
+      onClick={() => setShowUserList(false)}
+      className={styles.backButton}
+    >
+      Voltar
+    </button>
+  </div>
+)}
         </div>
     );
 };
