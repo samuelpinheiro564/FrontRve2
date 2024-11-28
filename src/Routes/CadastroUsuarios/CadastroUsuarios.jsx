@@ -16,6 +16,7 @@ const CadastroUsuarios = () => {
         telefone: "",
         tipo: "",
     });
+
     const [error, setError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -57,7 +58,7 @@ const CadastroUsuarios = () => {
         }
         try {
             if (editingUser) {
-                await AtualizaUser({ ...form, nif: editingUser.nif });
+                await AtualizaUser(Number(form.nif), form);
                 setSuccessMessage("Usuário editado com sucesso");
             } else {
                 await CriarUser(form);
