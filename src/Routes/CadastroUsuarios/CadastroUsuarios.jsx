@@ -17,9 +17,18 @@ const CadastroUsuarios = () => {
         tipo: "",
     });
 
-    const [error, setError] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
+    const [formErrors, setFormErrors] = useState({
+        nif: "",
+        nome: "",
+        email: "",
+        senha: "",
+        telefone: "",
+        tipo: "",
+    });
+
+    const [ setSuccessMessage] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [message, setMessage] = useState("");
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
     const [showUserList, setShowUserList] = useState(false);
@@ -46,16 +55,49 @@ const CadastroUsuarios = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     };
 
-    const handleCadastro = async (e) => {
-        e.preventDefault();
+    const validateForm = () => {
+        let errors = {};
+
+        // Validação do email
+        const regexEmail = /@docente\.senai$|@gmail\.com$/;
+        if (!regexEmail.test(form.email)) {
+            errors.email = "O email deve terminar com @docente.senai ou @gmail.com";
+        }
+
+        // Validação da senha
+        const regexSenha = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!regexSenha.test(form.senha)) {
+            errors.senha = "A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma minúscula, um número e um símbolo.";
+        }
+
+        // Validação do NIF (único)
         if (!editingUser) {
             const res = users.find((user) => user.nif === form.nif);
-            if (res) {
-                setError("O campo NIF já existe");
-                setTimeout(() => setError(""), 3000);
-                return;
+            if (res) { // Se encontrar um usuário com o mesmo NIF
+                errors.nif = "NIF já cadastrado."; // Atribui a mensagem de erro para o campo NIF
             }
         }
+
+        // Verificação de campos obrigatórios
+        Object.keys(form).forEach((field) => {
+            if (!form[field] && field !== "telefone") {
+                errors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} é obrigatório.`;
+            }
+        });
+
+        setFormErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
+
+    const handleCadastro = async (e) => {
+        e.preventDefault();
+
+        if (!validateForm()) {
+            setMessage("Por favor, preencha todos os campos corretamente.");
+            setTimeout(() => setMessage(""), 3000);
+            return;
+        }
+
         try {
             if (editingUser) {
                 await AtualizaUser(Number(form.nif), form);
@@ -66,12 +108,11 @@ const CadastroUsuarios = () => {
             }
             fetchAllUsers();
             limparCampos();
-            setError("");
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (error) {
             console.error("Erro ao salvar usuário:", error);
-            setError("Erro ao cadastrar/editar usuário.");
-            setTimeout(() => setError(""), 3000);
+            setMessage("Erro nif já cadastrado.");
+            setTimeout(() => setMessage(""), 3000);
         }
     };
 
@@ -85,6 +126,7 @@ const CadastroUsuarios = () => {
             tipo: "",
         });
         setEditingUser(null);
+        setFormErrors({});
     };
 
     const handleViewUsers = () => {
@@ -92,8 +134,16 @@ const CadastroUsuarios = () => {
     };
 
     const handleEditUser = (user) => {
-        setForm(user);
+        // Formata o telefone do usuário selecionado
+        const telefoneFormatado = formatarTelefone(user.telefone);
+    
+        // Atualiza o estado do formulário com os dados do usuário selecionado
+        setForm({ ...user, telefone: telefoneFormatado });
+    
+        // Define o usuário em edição
         setEditingUser(user);
+    
+        // Fecha a lista de usuários
         setShowUserList(false);
     };
 
@@ -105,9 +155,23 @@ const CadastroUsuarios = () => {
             setTimeout(() => setSuccessMessage(""), 3000);
         } catch (error) {
             console.error("Erro ao deletar usuário:", error);
-            setError("Erro ao deletar usuário.");
-            setTimeout(() => setError(""), 3000);
+            setMessage("Erro ao deletar usuário.");
+            setTimeout(() => setMessage(""), 3000);
         }
+    };
+
+    // Função para formatar o telefone
+    const formatarTelefone = (telefone) => {
+        return telefone
+            .replace(/\D/g, "") // Remove tudo que não é número
+            .replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3") // Aplica o formato (XX) XXXXX-XXXX
+            .slice(0, 15); // Limita o tamanho máximo de caracteres
+    };
+
+    const handleTelefoneChange = (e) => {
+        const { value } = e.target;
+        const telefoneFormatado = formatarTelefone(value);
+        setForm((prevForm) => ({ ...prevForm, telefone: telefoneFormatado }));
     };
 
     return (
@@ -120,14 +184,18 @@ const CadastroUsuarios = () => {
                             NIF:
                         </label>
                         <input
-                            type="number"
+                            type="text"
                             id="nif"
                             name="nif"
                             value={form.nif}
-                            onChange={handleInputChange}
+                            onChange={(e) => {
+                                const value = e.target.value.replace(/\D/g, "").slice(0, 9);
+                                handleInputChange({ target: { name: "nif", value } });
+                            }}
                             className={styles.input}
                             disabled={!!editingUser}
                         />
+                        {formErrors.nif && <div className={styles.error}>{formErrors.nif}</div>}
                     </div>
                     <div className={styles.formGroup}>
                         <label htmlFor="nome" className={styles.label}>
@@ -141,6 +209,7 @@ const CadastroUsuarios = () => {
                             onChange={handleInputChange}
                             className={styles.input}
                         />
+                        {formErrors.nome && <div className={styles.error}>{formErrors.nome}</div>}
                     </div>
                     <div className={styles.formGroup}>
                         <label htmlFor="email" className={styles.label}>
@@ -154,6 +223,7 @@ const CadastroUsuarios = () => {
                             onChange={handleInputChange}
                             className={styles.input}
                         />
+                        {formErrors.email && <div className={styles.error}>{formErrors.email}</div>}
                     </div>
                     <div className={styles.formGroup}>
                         <label htmlFor="senha" className={styles.label}>
@@ -167,6 +237,7 @@ const CadastroUsuarios = () => {
                             onChange={handleInputChange}
                             className={styles.input}
                         />
+                        {formErrors.senha && <div className={styles.error}>{formErrors.senha}</div>}
                         <span
                             onClick={toggleShowPassword}
                             className={styles.togglePassword}
@@ -183,7 +254,7 @@ const CadastroUsuarios = () => {
                             id="telefone"
                             name="telefone"
                             value={form.telefone}
-                            onChange={handleInputChange}
+                            onChange={handleTelefoneChange} // Atualiza com a função de formatação
                             className={styles.input}
                         />
                     </div>
@@ -206,10 +277,10 @@ const CadastroUsuarios = () => {
                             <option value="docente">Docente</option>
                             <option value="admin">Administrador</option>
                         </select>
+                        {formErrors.tipo && <div className={styles.error}>{formErrors.tipo}</div>}
                     </div>
 
-                    {error && <div className={styles.error}>{error}</div>}
-                    {successMessage && <div className={styles.success}>{successMessage}</div>}
+                    {message && <div className={styles.message}>{message}</div>}
                     <button type="submit" className={styles.button}>
                         {editingUser ? "Salvar Alterações" : "Cadastrar"}
                     </button>
