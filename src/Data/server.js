@@ -312,7 +312,7 @@ const AllSaida = async () => {
     }
 };
 
-const MenorIdade = async () => {  
+const getMenorIdade = async () => {  
     try {  
         const response = await axios.get(`${URL}/saida/menor/idade`);  
         return response.data;  
@@ -397,7 +397,7 @@ export {
     EditarForum,
     DeleteForum,
     CriarSaida,
-    MenorIdade,
+    getMenorIdade,
     postAssinaturaAnaq,
     postAssinaturaProf,
     AllSaida,
