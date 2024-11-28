@@ -79,9 +79,9 @@ const CriarUser = async (userData) => {
     }
 };
 
-const AtualizaUser = async (userData) => {
+const AtualizaUser = async (nif,userData) => {
     try {
-        const response = await axios.put(`${URL}/usuarios/${userData.nif}`, userData);
+        const response = await axios.put(`${URL}/usuarios/${nif}`, userData);
         return response.data;
     } catch (error) {
         console.error('Erro na atualização do usuário:', error);
@@ -288,7 +288,7 @@ const AllSaida = async () => {
 
 const UltimaSaida = async (id) => {
     try {
-        const response = await axios.get(`${URL}/saida/ultima`);
+        const response = await axios.get(`${URL}/saida/ultimasaida`);
         return response.data;
     } catch (error) {
         console.error(`Erro ao buscar registro de saída com ID ${id}:`, error);
