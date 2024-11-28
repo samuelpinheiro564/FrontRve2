@@ -82,9 +82,9 @@ const Rve = () => {
       const id = generateCampoTextoId();
       const user = userData.getUsers();
       console.log("User Data:", user);
-      const nifautor = user[0][0].nif;
+      const nifautor = user[0].nif;
       console.log(nifautor);
-      const nomeAutor = user[0][0].nome;
+      const nomeAutor = user[0].nome;
       console.log(nomeAutor);
       const rve = {
         id,
