@@ -49,6 +49,43 @@
   background-color: #f9f9f9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.userColumnsContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.userColumn {
+  width: 48%;  /* Duas colunas com 48% de largura cada */
+}
+
+.userCard {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pageButton {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pageButton:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
 
 .editButton,
 .deleteButton {
