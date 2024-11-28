@@ -25,8 +25,7 @@ const Login = () => {
       userData.addUser(data);  
       setDados(data);  
       console.log('Dados do usuário:', dados);  
-      alert('Logado com sucesso');  
-      
+      <NavBar userType={userType} />
       // Navegação para a categoria apropriada após o login  
       switch (userType) {  
         case 'admin':  
@@ -66,7 +65,6 @@ const Login = () => {
     if (userNotPassword === false) {  
       handleLogin(); // Chama a função de login  
     } else {  
-      alert(`Logado com sucesso sem senha`);  
       handleLogin(); // Adiciona esta chamada para lidar com a situação sem senha  
     }  
   };  
@@ -96,7 +94,7 @@ const Login = () => {
               <option value="docente">Docente</option>
               <option value="admin">Administrador</option>
             </select>
-            <NavBar userType={userType} />
+            
             <button type="submit" className={styles.button}>
               Entrar
             </button>
