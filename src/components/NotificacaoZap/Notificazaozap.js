@@ -5,7 +5,7 @@ import axios from 'axios';
 const url = 'http://localhost:4000/api/sendText';  
 
 
-const Notificacaozap = (phone) => {  
+const Notificacaozap = (phone,message) => {  
     const [success, setSuccess] = useState(null); 
     const [umaVez] = useState(true); 
 
@@ -26,7 +26,7 @@ const Notificacaozap = (phone) => {
                 const phonePronto ={phone}.replace(/[^0-9]/g, '');
                 const data = {  
                     chatId: `${phonePronto}@c.us`,  
-                    text: `O senhor(a) foi convidado para comentar em uma rve6.`,   
+                    text:{message},   
                     session: 'default'  
                 };  
 
