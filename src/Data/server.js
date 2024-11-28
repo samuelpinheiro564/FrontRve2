@@ -1,17 +1,33 @@
 import axios from 'axios';
 
 const URL = 'http://192.168.0.88:4040';
-const LoginUser = async (nif,senha) => {
+const LoginUser = async (nif, senha) => {
     try {
+        // Construindo a URL com os parâmetros `nif` e `senha`
         const requestURL = `${URL}/usuarios/${nif}/${senha}`;
         console.log(`Fazendo requisição para: ${requestURL}`);
+
+        // Fazendo a requisição GET
         const response = await axios.get(requestURL);
+
+        // Log para depuração
         console.log('Resposta:', response.data);
+        console.log('Status:', response.status);
+        if(response.status === 200) {
+            console.log('Usuário logado com sucesso');
+            return response;
+        }
+        // Retorna os dados caso a resposta seja bem-sucedida
         return response.data;
     } catch (error) {
-            console.error('Erro interno do servidor:', error);
-            throw error;
-        
+        if (error.response) {
+            // Caso o erro seja retornado pelo servidor
+            return error.response;
+        } else {
+            // Caso ocorra um erro de conexão ou algo inesperado
+            console.error('Erro de conexão ou desconhecido:', error);
+            throw new Error("Erro de conexão. Tente novamente mais tarde.");
+        }
     }
 };
 const UserName = async (nome) => {
@@ -72,7 +88,7 @@ const getAllRVErve_usuarios  = async (rve_id) => {
 const CriarUser = async (userData) => {
     try {
         const response = await axios.post(`${URL}/usuarios`, userData);
-        return response.data;
+        return response;
     } catch (error) {
         console.error('Erro na criação do usuário:', error);
         throw error;
