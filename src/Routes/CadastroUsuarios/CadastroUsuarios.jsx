@@ -291,56 +291,62 @@ const CadastroUsuarios = () => {
                 </>
             ) : (
                 <div className={styles.userList}>
-                    <h2 className={styles.h21}>Lista de Usuários</h2>
-                    <button
-                        onClick={handleGoBackToForm}
-                        className={styles.backButton}
-                    >
-                        Voltar ao Cadastro
-                    </button>
-                    {paginatedUsers.map((user) => (
-                        <div key={user.nif} className={styles.userCard}>
-                            <p>
-                                <strong>NIF:</strong> {user.nif}
-                            </p>
-                            <p>
-                                <strong>Nome:</strong> {user.nome}
-                            </p>
-                            <p>
-                                <strong>Email:</strong> {user.email}
-                            </p>
-                            <p>
-                                <strong>Telefone:</strong> {user.telefone}
-                            </p>
-                            <p>
-                                <strong>Tipo:</strong> {user.tipo}
-                            </p>
-                            <button onClick={() => handleEditUser(user)} className={styles.editButton}>
-                                Editar
-                            </button>
-                            <button onClick={() => handleDeleteUser(user.nif)} className={styles.deleteButton}>
-                                Deletar
-                            </button>
+                <h2 className={styles.h21}>Lista de Usuários</h2>
+                <button onClick={handleGoBackToForm} className={styles.backButton}>
+                    Voltar ao Cadastro
+                </button>
+                <div className={styles.userColumnsContainer}>
+                    {/* Dividindo a lista de usuários em 2 colunas */}
+                    {[...Array(Math.ceil(paginatedUsers.length / 5))].map((_, columnIndex) => (
+                        <div className={styles.userColumn} key={columnIndex}>
+                            {paginatedUsers
+                                .slice(columnIndex * 5, columnIndex * 5 + 5)  // Exibe 5 usuários por coluna
+                                .map((user) => (
+                                    <div key={user.nif} className={styles.userCard}>
+                                        <p>
+                                            <strong>NIF:</strong> {user.nif}
+                                        </p>
+                                        <p>
+                                            <strong>Nome:</strong> {user.nome}
+                                        </p>
+                                        <p>
+                                            <strong>Email:</strong> {user.email}
+                                        </p>
+                                        <p>
+                                            <strong>Telefone:</strong> {user.telefone}
+                                        </p>
+                                        <p>
+                                            <strong>Tipo:</strong> {user.tipo}
+                                        </p>
+                                        <button onClick={() => handleEditUser(user)} className={styles.editButton}>
+                                            Editar
+                                        </button>
+                                        <button onClick={() => handleDeleteUser(user.nif)} className={styles.deleteButton}>
+                                            Deletar
+                                        </button>
+                                    </div>
+                                ))}
                         </div>
                     ))}
-                    <div className={styles.pagination}>
-                        <button
-                            onClick={handlePreviousPage}
-                            className={styles.pageButton}
-                            disabled={currentPage === 1}
-                        >
-                            Página Anterior
-                        </button>
-                        <button
-                            onClick={handleNextPage}
-                            className={styles.pageButton}
-                            disabled={startIndex + usersPerPage >= users.length}
-                        >
-                            Próxima Página
-                        </button>
-                    </div>
-                 
                 </div>
+            
+                <div className={styles.pagination}>
+                    <button
+                        onClick={handlePreviousPage}
+                        className={styles.pageButton}
+                        disabled={currentPage === 1}
+                    >
+                        Página Anterior
+                    </button>
+                    <button
+                        onClick={handleNextPage}
+                        className={styles.pageButton}
+                        disabled={startIndex + usersPerPage >= users.length}
+                    >
+                        Próxima Página
+                    </button>
+                </div>
+            </div>
             )}
         </div>
     );
