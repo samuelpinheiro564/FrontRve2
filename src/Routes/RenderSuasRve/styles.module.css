@@ -27,6 +27,20 @@
     position: relative;
     overflow: hidden;
   }
+
+  .messagesContainer {
+    display: flex;
+    flex-direction: column;
+    height: 500px; /* Altura fixa para o contêiner */
+    overflow-y: auto; /* Rolagem vertical */
+    padding: 10px;
+  }
+  
+  .msg {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
   
   .input {
     width: 100%;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { MenorIdade } from "../../Data/server";
+import { getMenorIdade, postAssinaturaAnaq } from "../../Data/server";
 import styles from "./styles.module.css";
+import userData from "../../Data/dadosUser";
 
 const SaidasNaoAssinadas = () => {
     const [menorIdade, setMenorIdade] = useState([]);
@@ -8,42 +9,45 @@ const SaidasNaoAssinadas = () => {
     useEffect(() => {
         const fetchMenorIdade = async () => {
             try {
-                const response = await MenorIdade();
-                setMenorIdade(response);
+                const response = await getMenorIdade();
                 console.log('Menor Idade:', response);
+                setMenorIdade(response);
             } catch (error) {
                 console.error('Erro ao buscar saídas não assinadas:', error);
             }
         };
         fetchMenorIdade();
-    }, []);
+    }, []); // Adicionei um array vazio para garantir que o useEffect seja executado apenas uma vez
+
+    const handleAssinaturaAnaq = async (id) => {
+        try {
+            const assinaturaanaq = userData.getUsers()[0].nome;
+            console.log(assinaturaanaq);
+            await postAssinaturaAnaq(id, { assinaturaanaq }); // Passe um objeto com a assinatura
+            console.log('id:', id);
+            window.location.reload(); // Force the page to reload
+        } catch (error) {
+            console.error('Erro ao enviar assinatura Anaq:', error);
+        }
+    };
 
     return (
         <div className={styles.container}>
             <h1>Saídas Não Assinadas</h1>
-            <div container spacing={3}>
+            <div className={styles.container}>
                 {menorIdade.map((saida) => (
-                    <div item xs={12} sm={6} md={4} key={saida.id}>
+                    <div key={saida.id}>
                         <div className={styles.card}>
                             <div>
-                                <div variant="h5" component="div">
-                                    {saida.nomealuno}
-                                </div>
-                                <div variant="body2" color="text.secondary">
-                                    Curso: {saida.curso}
-                                </div>
-                                <div variant="body2" color="text.secondary">
-                                    Turma: {saida.turma}
-                                </div>
-                                <div variant="body2" color="text.secondary">
-                                    RA: {saida.alunora}
-                                </div>
-                                <div variant="body2" color="text.secondary">
-                                    Data/Hora da Saída: {saida.datasaida} {saida.horasaida}
-                                </div>
-                                <div variant="body2" color="text.secondary">
-                                    Justificativa: {saida.justificativa}
-                                </div>
+                                <div>{saida.nomealuno}</div>
+                                <div>Curso: {saida.curso}</div>
+                                <div>Turma: {saida.turma}</div>
+                                <div>RA: {saida.alunora}</div>
+                                <div>Data/Hora da Saída: {saida.datasaida}</div>
+                                <div>Justificativa: {saida.justificativa}</div>
+                                <button type="button" onClick={() => handleAssinaturaAnaq(saida.id)}>
+                                    Assinar
+                                </button>
                             </div>
                         </div>
                     </div>

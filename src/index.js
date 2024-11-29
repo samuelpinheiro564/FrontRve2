@@ -12,6 +12,8 @@ import RenderSuasRve from "../src/Routes/RenderSuasRve/page";
 import NotificacaoSec from "../src/Routes/NotificacaoSec/page"; 
 import HistoricoSaida from "./Routes/HistoricoSaida/HistoricoSaida"; 
 import SaidasNaoAssinadas from './Routes/SaidasNaoAssinadas/page';
+import HistoricoRve from './Routes/HistoricoRve/page';
+import Perfil from './Routes/Perfil/page';
 import ErrorPage from './Routes/ErrorPage';  
 import { useLocation } from 'react-router-dom';  
 import NavBar from '../src/components/Navbar'; // Importe o NavBar  
@@ -44,8 +46,16 @@ const router = createBrowserRouter([
         {
           path: "HistoricoSaida",
           element: <HistoricoSaida />,
-
         },
+        {
+          path: "Perfil",
+          element: <Perfil />,
+        },
+        {
+          path: "HistoricoRve ",
+          element: <HistoricoRve />,
+        },
+    
         {
           path: "SaidasNaoAssinadas",
           element: <SaidasNaoAssinadas />,

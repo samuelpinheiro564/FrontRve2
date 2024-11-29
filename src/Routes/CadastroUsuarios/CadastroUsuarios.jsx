@@ -18,7 +18,7 @@ const CadastroUsuarios = () => {
     });
 
     const [formErrors, setFormErrors] = useState({});
-    const [successMessage, setSuccessMessage] = useState("");
+    const [ setSuccessMessage] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState("");
     const [users, setUsers] = useState([]);

@@ -18,12 +18,23 @@ const Saida = () => {
         assinaturaProf: [],  // Inicializa como array vazio
         assinaturaAnaq: '',  
     });  
-    const [editId, setEditId] = useState(null);  
+    const [editId, setEditId] = useState(null);
+    const[yes,setYes] = useState(true);  
     const [message, setMessage] = useState({ type: '', text: '' });  
+ // Estado para armazenar o tipo de usuário
     const navigate = useNavigate();  
     const location = useLocation();  
 
+   
+
     useEffect(() => {  
+        const userDados = userData.getUsers();
+        if(userDados.tipo === 'docente'){
+setYes(true);
+        }else{
+            setYes(false);
+        }
+            
         if (location.state?.item) {  
             const item = location.state.item;  
             console.log(item.datasaida.split('T')[0]);
@@ -61,12 +72,27 @@ const Saida = () => {
 
     const handleSubmit = async (e) => {  
         e.preventDefault();  
-
+    
+        const currentDate = new Date();
+        const selectedDate = new Date(`${formData.datasaida}T${formData.horasaida}`);
+        const oneYearAgo = new Date();
+        oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+    
         if (!formData.datasaida) {  
             alert("A data de saída deve ser preenchida.");  
             return;  
-        }  
-
+        }
+    
+        if (selectedDate > currentDate) {
+            alert("A data e hora de saída não podem ser maiores que a data e hora atuais.");
+            return;
+        }
+    
+        if (selectedDate < oneYearAgo) {
+            alert("A data e hora de saída não podem ser menores que um ano.");
+            return;
+        }
+    
         const submissionData = {  
             nomealuno: formData.nomealuno,
             curso: formData.curso,
@@ -75,14 +101,15 @@ const Saida = () => {
             datasaida: formData.datasaida,  
             horasaida: formData.horasaida,  
         };  
-
+    
         try {  
             if (editId) {  
                 await EditarSaida(editId, submissionData);  
                 setMessage({ type: 'success', text: 'Saída editada com sucesso.' });  
+                navigate('/HistoricoSaida')
             } else {  
                 const userDados = userData.getUsers()[0];
-
+    
                 if (formData.maioridade === true) {
                     const submissionDataCreate = {  
                         nomealuno: formData.nomealuno,
@@ -93,31 +120,33 @@ const Saida = () => {
                         horasaida: formData.horasaida, 
                         maioridade: formData.maioridade,
                         justificativa: formData.justificativa,
-                        assinaturaanaq: formData.assinaturaAnaq,  // Assinatura como string
+                        assinaturaanaq: null,  // Assinatura como string
                         assinaturaprof: Array(userDados.nome),  // Assinatura como array de string
                     };  
                     console.log(submissionDataCreate);
                     console.log("Maior idade");
                     await CriarSaida(submissionDataCreate);  
                     setMessage({ type: 'success', text: 'Saída criada com sucesso.' });  
+                    navigate('/HistoricoSaida')
                 } else {
-
+    
                     if (userDados.tipo === 'docente') {
                         const submissionDataCreate = {  
                                 nomealuno: formData.nomealuno,
                                 curso: formData.curso,
                                 turma: formData.turma,
-                                alunora: formData.alunora,  
-                                datasaida: formData.datasaida,  
-                                horasaida: formData.horasaida, 
-                                maioridade: formData.maioridade,
-                                justificativa: formData.justificativa,
-                                assinaturaanaq: formData.assinaturaAnaq,  // Assinatura como string
-                                assinaturaprof: Array(userDados.nome),  // Assinatura como array de string
+                            alunora: formData.alunora,  
+                            datasaida: formData.datasaida,  
+                            horasaida: formData.horasaida, 
+                            maioridade: formData.maioridade,
+                            justificativa: formData.justificativa,
+                            assinaturaanaq: null,  // Assinatura como string
+                            assinaturaprof: Array(userDados.nome),  // Assinatura como array de string
                             }; 
                         console.log("Criado Prof");
                         await CriarSaida(submissionDataCreate);  
                         setMessage({ type: 'success', text: 'Saída criada com sucesso.' });  
+                        navigate('/HistoricoSaida')
                     } else {
                         const submissionDataCreate = {  
                             nomealuno: formData.nomealuno,
@@ -129,11 +158,12 @@ const Saida = () => {
                             maioridade: formData.maioridade,
                             justificativa: formData.justificativa,
                             assinaturaanaq: userDados.nome,  // Assinatura como string
-                            assinaturaprof: Array(formData.assinaturaProf),  // Assinatura como array de string
+                            assinaturaprof: null,  // Assinatura como array de string
                         }; 
                         console.log("Criado ANaq");
                         await CriarSaida(submissionDataCreate);  
                         setMessage({ type: 'success', text: 'Saída criada com sucesso.' });  
+                        navigate('/HistoricoSaida')
                     }
                 }  
                 // Limpa os dados do formulário  
@@ -156,10 +186,12 @@ const Saida = () => {
             setMessage({ type: 'error', text: 'Erro ao enviar formulário.' });  
         }  
     };  
-
+    
     return (  
+
         <div className={styles.container}>  
-            <h1 className={styles.title}>JUSTIFICATIVA SAÍDA</h1>  
+        {!yes ? <> 
+        <h1 className={styles.title}>JUSTIFICATIVA SAÍDA</h1>  
             <form onSubmit={handleSubmit} className={styles.form}>  
                 <input type="text" name="nomealuno" placeholder="Aluno" value={formData.nomealuno} onChange={handleChange} required className={styles.input} />  
                 <input type="text" name="curso" placeholder="Curso" value={formData.curso} onChange={handleChange} required className={styles.input} />  
@@ -187,7 +219,39 @@ const Saida = () => {
                     {message.text}  
                 </div>  
             )}  
-            <button onClick={() => navigate('/HistoricoSaida')} className={styles.button}>Ver Histórico de Saídas</button>  
+            <button onClick={() => navigate('/HistoricoSaida')} className={styles.button}>Ver Histórico de Saídas</button>
+             </>
+              :
+              <>
+               <h1 className={styles.title}>JUSTIFICATIVA SAÍDA</h1>  
+            <form onSubmit={handleSubmit} className={styles.form}>  
+                <input type="text" name="nomealuno" placeholder="Aluno" value={formData.nomealuno} onChange={handleChange} required className={styles.input} />  
+                <input type="text" name="curso" placeholder="Curso" value={formData.curso} onChange={handleChange} required className={styles.input} />  
+                <input type="text" name="turma" placeholder="Turma" value={formData.turma} onChange={handleChange} required className={styles.input} />  
+                <input className={`${styles.input} ${styles.ra}`} type="number" name="alunora" placeholder="RA" value={formData.alunora} onChange={handleChange} required />  
+
+                <div className={styles.radioGroup}>  
+                    <label>Maior de Idade:</label>   
+                    <label>  
+                        <input type="radio" name="maioridade" value="false" onChange={handleChange} checked={formData.maioridade === false} required /> Não  
+                    </label>  
+                </div>  
+
+                <input type="date" name="datasaida" value={formData.datasaida} onChange={handleChange} required className={styles.input} />  
+                <input type="time" name="horasaida" value={formData.horasaida} onChange={handleChange} required className={styles.input} />  
+
+                <textarea name="justificativa" placeholder="Justificativa" value={formData.justificativa} onChange={handleChange} required className={styles.textarea}></textarea>  
+                <button type="submit" className={styles.button}>{editId ? 'Editar Saída' : 'Enviar Saída'}</button>  
+            </form>  
+            {message.text && (  
+                <div className={message.type === 'error' ? styles.error : styles.success}>  
+                    {message.text}  
+                </div>  
+            )}  
+            <button onClick={() => navigate('/HistoricoSaida')} className={styles.button}>Ver Histórico de Saídas</button> 
+              </>
+              }
+            
         </div>  
     );  
 };  

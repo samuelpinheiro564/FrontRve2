@@ -25,16 +25,11 @@ const Rve = () => {
 
   const navigate = useNavigate();
 
-
-
   useEffect(() => {
     const fetchDocentes = async () => {
       try {
-        const userDados = userData.getUsers()[0].nif;
-    console.log("Nome do Autor:", userDados);
-        const docents = await AllUsersNif(userDados);
-        console.log("Docentes:", docents);    
-         
+        const userDados = userData.getUsers()[0];   
+        const docents = await AllUsersNif(userDados.nif);    
         if (Array.isArray(docents)) {
           setListaDocentes(docents);
         } else {
@@ -86,6 +81,22 @@ const Rve = () => {
 
   const handleCriarRVE = async (e) => {
     e.preventDefault();
+    
+    const currentDate = new Date();
+    const selectedDate = new Date(`${data}T${hora}`);
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+  
+    if (selectedDate > currentDate ) {
+      alert("A data e hora não podem ser maiores que a data e hora atuais.");
+      return;
+    }
+  
+    if (selectedDate < oneYearAgo) {
+      alert("A data e hora não podem ser menores que um ano atrás.");
+      return;
+    }
+  
     try {
       const id = generateCampoTextoId();
       const user = userData.getUsers();
@@ -107,8 +118,11 @@ const Rve = () => {
         descricaoocorrido,
         dificuldades,
         presenca,
+        elogios,
+        assinaturas: Array(nomeAutor),
+        numberusers: docentesenvolvidos.length
       };
-     
+      console.log("RVE:", rve);
       rveData.addRve([rve]);
       await CriarRve(rve);
       console.log("RVE created:", rve);
@@ -136,6 +150,7 @@ const Rve = () => {
       alert("Ocorreu um erro ao criar o RVE.");
     }
   };
+  
 
   return (
     <div className={styles.container}>

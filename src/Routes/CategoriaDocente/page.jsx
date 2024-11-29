@@ -3,7 +3,6 @@ import styles from "../CategoriaDocente/docente.module.css";
 import { NavLink } from 'react-router-dom';
 
 
-
 function App() {  
   return (  
     <div className={styles.container}>  
@@ -11,7 +10,6 @@ function App() {
       <div className={styles.banner}>  
         <h1>SENAI</h1>  
       </div>  
-      <h2>Categorias</h2>  
       <div className={styles.cardsBackground}>  
         <div className={styles.grid}>  
           <div className={`${styles.card} ${styles.active}`}>
@@ -26,22 +24,16 @@ function App() {
             <p>Saída</p>  
           </div>  
           </NavLink>
-          <NavLink to="/CadastroUsuarios" activeClassName={styles.active}>
+          <NavLink to="/HistoricoSaida" activeClassName={styles.active}>
           <div className={styles.card1}>  
-          <i className={styles.icon}>👥</i>
-            <p>Usuários</p>  
+          <i className={styles.icon}>📃</i>
+            <p>Historico de Saidas</p>  
           </div>  
           </NavLink> 
-          <NavLink to="/RenderSuasRve" activeClassName={styles.active}>
+          <NavLink to="/SuasRve" activeClassName={styles.active}>
           <div className={styles.card2}>  
-          <i className={styles.icon}>📃</i>
-            <p>Render Rves</p>  
-          </div>  
-          </NavLink>
-          <NavLink to="/NotificacaoSec" activeClassName={styles.active}>
-          <div className={styles.card2}>  
-          <i className={styles.icon}>📨</i>
-            <p>Notificação Secretaria</p>  
+          <i className={styles.icon}>📂</i>
+            <p>Suas Rves</p>  
           </div>  
           </NavLink>
          
