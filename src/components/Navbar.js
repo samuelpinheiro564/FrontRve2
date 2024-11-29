@@ -48,7 +48,6 @@ const NavBar = () => {
           {label:'Rve', to:'/Rve'},
           {label:'Suas RVE', to:'/SuasRve'},
           {label:'Cadastro Usuarios', to:'/CadastroUsuarios'},
-          {label:'Historico Rve', to:'/HistoricoRve'},
           { label: 'Histórico de Saída', to: '/HistoricoSaida' },
           { label: 'Perfil', to: '/Perfil' },
         ];
@@ -59,7 +58,7 @@ const NavBar = () => {
           { label: 'RVE', to: '/Rve' },
           {label:'Histórico de Saída', to:'/HistoricoSaida'},
           {label:'Perfil', to:'/Perfil'},
-{label:'Historico Rve', to:'/HistoricoRve'},
+
         ];
       case 'secretaria':
         return [
@@ -75,7 +74,7 @@ const NavBar = () => {
             { label: 'Notificação Secretaria', to: '/NotificacaoSec' },
             { label: 'Histórico de Saída', to: '/HistoricoSaida' },
             { label: 'Saídas Não Assinadas', to: '/SaidasNaoAssinadas' },
-            {label:'Historico Rve', to:'/HistoricoRve'},
+        
             {label:'Perfil', to:'/Perfil'},
           ];
       default:

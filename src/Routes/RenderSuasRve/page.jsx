@@ -72,6 +72,7 @@ const RenderSuasRve = () => {
     setCurrentPage(nextPage);
   };
 
+
   return (
     <>
       <h1 className={styles.testeh1}>Chat</h1>
@@ -98,7 +99,7 @@ const RenderSuasRve = () => {
           <div key={msg.id} className={styles.msg}>
             <h3 className={styles.h3}>{msg.campotexto}</h3>
             <p className={styles.input}>{msg.hora}</p>
-            <p className={styles.input}>{userDados.nome}</p>
+            <p className={styles.input}>{msg.nomeusuario}</p>
           </div>
         ))}
       </div>

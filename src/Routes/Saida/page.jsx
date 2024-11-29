@@ -91,22 +91,92 @@ setYes(true);
         if (selectedDate < oneYearAgo) {
             alert("A data e hora de saída não podem ser menores que um ano.");
             return;
-        }
-    
-        const submissionData = {  
-            nomealuno: formData.nomealuno,
-            curso: formData.curso,
-            turma: formData.turma,
-            alunora: formData.alunora,  
-            datasaida: formData.datasaida,  
-            horasaida: formData.horasaida,  
-        };  
+        }  
     
         try {  
             if (editId) {  
-                await EditarSaida(editId, submissionData);  
+                console.log("Editando saída:", editId);
+                if (formData.maioridade === true) {
+                    const submissionDataEdit = {  
+                        nomealuno: formData.nomealuno,
+                        curso: formData.curso,
+                        turma: formData.turma,
+                        alunora: formData.alunora,  
+                        datasaida: formData.datasaida,  
+                        horasaida: formData.horasaida, 
+                        maioridade: formData.maioridade,
+                        justificativa: formData.justificativa,
+                        assinaturaanaq: null,  // Assinatura como string
+                        assinaturaprof: Array(userData.getUsers()[0].nome),  // Assinatura como array de string
+                    };  
+                    console.log("submissionDataEdit",submissionDataEdit);
+                    console.log("Maior idade");
+                   const edit =  await EditarSaida(editId, submissionDataEdit);  
+                    console.log("edit",edit);
+                    setMessage({ type: 'success', text: 'Saída editada com sucesso.' });  
+                  //  navigate('/HistoricoSaida')
+                }else{
+                console.log("Fernanda Lima:", userData.getUsers()[0].tipo === "admin");
+                    if(userData.getUsers()[0].tipo === 'docente'){
+                    const submissionDataEdit = {  
+                        nomealuno: formData.nomealuno,
+                        curso: formData.curso,
+                        turma: formData.turma,
+                        alunora: formData.alunora,  
+                        datasaida: formData.datasaida,  
+                        horasaida: formData.horasaida, 
+                        maioridade: formData.maioridade,
+                        justificativa: formData.justificativa,
+                        assinaturaanaq: null,  // Assinatura como string
+                        assinaturaprof: Array(userData.getUsers()[0].nome),  // Assinatura como array de string
+                    };  
+                    console.log(submissionDataEdit);
+                    console.log("Professor");
+                   const edit =  await EditarSaida(editId, submissionDataEdit);  
+                    console.log("edit",edit);
                 setMessage({ type: 'success', text: 'Saída editada com sucesso.' });  
-                navigate('/HistoricoSaida')
+             //   navigate('/HistoricoSaida')
+                }else if( userData.getUsers()[0].tipo === 'admin'){
+                    const submissionDataEdit = {  
+                        nomealuno: formData.nomealuno,
+                        curso: formData.curso,
+                        turma: formData.turma,
+                        alunora: formData.alunora,  
+                        datasaida: formData.datasaida,  
+                        horasaida: formData.horasaida, 
+                        maioridade: formData.maioridade,
+                        justificativa: formData.justificativa,
+                        assinaturaanaq: null,  // Assinatura como string
+                        assinaturaprof: Array(userData.getUsers()[0].nome),  // Assinatura como array de string
+                    };
+                    console.log(submissionDataEdit);
+                    console.log("ANaq");
+                  const edit =  await EditarSaida(editId, submissionDataEdit); 
+                  console.log("edit",edit); 
+                    setMessage({ type: 'success', text: 'Saída editada com sucesso.' });  
+                  //  navigate('/HistoricoSaida')
+
+                }else{
+                    const submissionDataEdit = {  
+                        nomealuno: formData.nomealuno,
+                        curso: formData.curso,
+                        turma: formData.turma,
+                        alunora: formData.alunora,  
+                        datasaida: formData.datasaida,  
+                        horasaida: formData.horasaida, 
+                        maioridade: formData.maioridade,
+                        justificativa: formData.justificativa,
+                        assinaturaanaq: userData.getUsers()[0].nome,  // Assinatura como string
+                        assinaturaprof: null,  // Assinatura como array de string
+                    };  
+                    console.log(submissionDataEdit);
+                    console.log("ANaq");
+                  const edit =  await EditarSaida(editId, submissionDataEdit); 
+                  console.log("edit",edit); 
+                    setMessage({ type: 'success', text: 'Saída editada com sucesso.' });  
+                  //  navigate('/HistoricoSaida')
+                } }
+                
             } else {  
                 const userDados = userData.getUsers()[0];
     
@@ -147,6 +217,23 @@ setYes(true);
                         await CriarSaida(submissionDataCreate);  
                         setMessage({ type: 'success', text: 'Saída criada com sucesso.' });  
                         navigate('/HistoricoSaida')
+                    } else if(userDados.tipo === "admin"){
+                        const submissionDataCreate = {  
+                            nomealuno: formData.nomealuno,
+                            curso: formData.curso,
+                            turma: formData.turma,
+                        alunora: formData.alunora,  
+                        datasaida: formData.datasaida,  
+                        horasaida: formData.horasaida, 
+                        maioridade: formData.maioridade,
+                        justificativa: formData.justificativa,
+                        assinaturaanaq: null,  // Assinatura como string
+                        assinaturaprof: Array(userDados.nome),  // Assinatura como array de string
+                        }; 
+                    console.log("Criado Prof");
+                    await CriarSaida(submissionDataCreate);  
+                    setMessage({ type: 'success', text: 'Saída criada com sucesso.' });  
+                    navigate('/HistoricoSaida')
                     } else {
                         const submissionDataCreate = {  
                             nomealuno: formData.nomealuno,
@@ -176,8 +263,8 @@ setYes(true);
                     horasaida: '',  
                     maioridade: false,  // Resetando o valor booleano
                     justificativa: '',  
-                    assinaturaProf: [],  // Resetando o array
-                    assinaturaAnaq: '',  
+                    assinaturaprof: [],  // Resetando o array
+                    assinaturaanaq: '',  
                 });  
                 setEditId(null); // Limpa o ID de edição para nova entrada, se necessário  
             } 

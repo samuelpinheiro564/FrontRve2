@@ -18,7 +18,7 @@ const CadastroUsuarios = () => {
     });
 
     const [formErrors, setFormErrors] = useState({});
-    const [ setSuccessMessage] = useState("");
+   
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState("");
     const [users, setUsers] = useState([]);
@@ -92,14 +92,14 @@ const CadastroUsuarios = () => {
         try {
             if (editingUser) {
                 await AtualizaUser(Number(form.nif), form);
-                setSuccessMessage("Usuário editado com sucesso");
+              
             } else {
                 await CriarUser(form);
-                setSuccessMessage("Usuário cadastrado com sucesso");
+            
             }
             fetchAllUsers();
             limparCampos();
-            setTimeout(() => setSuccessMessage(""), 3000);
+            setTimeout(() =>  3000);
         } catch (error) {
             console.error("Erro ao salvar usuário:", error);
             setMessage("Erro nif já cadastrado.");
@@ -150,9 +150,8 @@ const CadastroUsuarios = () => {
     const handleDeleteUser = async (nif) => {
         try {
             await DeleteUser(nif);
-            setSuccessMessage("Usuário deletado com sucesso");
             fetchAllUsers();
-            setTimeout(() => setSuccessMessage(""), 3000);
+            setTimeout(() =>  3000);
         } catch (error) {
             console.error("Erro ao deletar usuário:", error);
             setMessage("Erro ao deletar usuário.");
