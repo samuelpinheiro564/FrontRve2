@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { UserName, UserType ,AllUsers } from '../../Data/server';
-import styles from './styles.modules.css';
+import { UserName, UserType, AllUsers } from '../../Data/server';
+import styles from '../ListaUsers/styles.module.css';
 
 const ListaUsers = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -14,7 +14,7 @@ const ListaUsers = () => {
             try {
                 let result;
                 if (filtro === '') {
-                    result = await AllUsers(); // Busca todos os usuários
+                    result = await AllUsers();
                 } else if (tipoFiltro === 'nome') {
                     result = await UserName(filtro);
                 } else {
@@ -34,6 +34,17 @@ const ListaUsers = () => {
 
     const handleNextPage = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(usuarios.length / ITEMS_PER_PAGE)));
+    };
+
+    const handleEdit = (nif) => {
+        // Lógica de edição
+        console.log(`Editar usuário com NIF: ${nif}`);
+    };
+
+    const handleDelete = (nif) => {
+        // Lógica de exclusão
+        console.log(`Excluir usuário com NIF: ${nif}`);
+        // Aqui você poderia fazer uma chamada para um API para deletar o usuário
     };
 
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -67,6 +78,7 @@ const ListaUsers = () => {
                         <th>Email</th>
                         <th>Telefone</th>
                         <th>Tipo</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,6 +89,10 @@ const ListaUsers = () => {
                             <td>{usuario.email}</td>
                             <td>{usuario.telefone}</td>
                             <td>{usuario.tipo}</td>
+                            <td>
+                                <button onClick={() => handleEdit(usuario.nif)} className={styles.editar}>Editar</button>
+                                <button onClick={() => handleDelete(usuario.nif) } className={styles.excluir}>Excluir</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

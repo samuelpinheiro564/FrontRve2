@@ -1,0 +1,192 @@
+/* styles.module.css */
+
+/* Container styling with a subtle gradient background */
+.container {
+    padding: 2rem;
+    background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+    min-height: 60vh;
+    animation: fadeIn 0.5s ease-in;
+    border-radius: 5%;
+}
+
+/* Title styling with text shadow effect */
+.title {
+    color: #ff0000;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.2);
+    animation: floatText 3s ease-in-out infinite;
+}
+
+/* Filter section styling */
+.filter {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+/* Input and select styling with hover effects */
+.input {
+    padding: 0.8rem 1.2rem;
+    border: 2px solid rgba(255, 0, 0, 0.2);
+    border-radius: 8px;
+    background: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(255, 0, 0, 0.1);
+}
+
+.input:hover, .input:focus {
+    border-color: #ff0000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255, 0, 0, 0.15);
+    outline: none;
+}
+
+/* Table styling with modern design */
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(255, 0, 0, 0.1);
+}
+
+/* Table header styling */
+.table thead th {
+    background: #ff0000;
+    color: white;
+    padding: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Table row styling with hover effect */
+.table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:nth-child(even) {
+    background: rgba(255, 0, 0, 0.05);
+}
+
+.table tbody tr:hover {
+    background: rgba(255, 0, 0, 0.1);
+    transform: scale(1.01);
+}
+
+.table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 0, 0, 0.1);
+}
+
+/* Pagination buttons styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.pagination button {
+    padding: 0.8rem 1.5rem;
+    background: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(255, 0, 0, 0.2);
+}
+
+.pagination button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255, 0, 0, 0.3);
+    background: #ff1a1a;
+}
+
+.pagination button:disabled {
+    background: #ffcccc;
+    cursor: not-allowed;
+}
+
+.pagination button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Edit button styling */
+.editar {
+    padding: 0.5rem 1rem;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 128, 0, 0.2);
+}
+
+.editar:hover {
+    background: #388e3c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 128, 0, 0.3);
+}
+
+/* Delete button styling */
+
+.excluir {
+    padding: 0.5rem 1rem;
+    background: #f44336;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(255, 0, 0, 0.2);
+}
+
+.excluir:hover {
+    background: #e53935;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255, 0, 0, 0.3);
+}
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatText {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .filter {
+        flex-direction: column;
+    }
+    
+    .table {
+        font-size: 0.9rem;
+    }
+    
+    .title {
+        font-size: 2rem;
+    }
+}
