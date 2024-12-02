@@ -12,6 +12,7 @@ import RenderSuasRve from "../src/Routes/RenderSuasRve/page";
 import NotificacaoSec from "../src/Routes/NotificacaoSec/page"; 
 import HistoricoSaida from "./Routes/HistoricoSaida/HistoricoSaida"; 
 import SaidasNaoAssinadas from './Routes/SaidasNaoAssinadas/page';
+import ListaUsers from './Routes/ListaUsers/ListaUsers';
 
 import Perfil from './Routes/Perfil/page';
 import ErrorPage from './Routes/ErrorPage';  
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
         {
           path: "HistoricoSaida",
           element: <HistoricoSaida />,
+        },
+        {
+          path: "ListaUsers",
+          element: <ListaUsers />,
         },
         {
           path: "Perfil",
