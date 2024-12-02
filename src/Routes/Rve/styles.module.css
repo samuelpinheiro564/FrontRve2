@@ -18,14 +18,15 @@
   margin: 0 auto;
   padding: 2rem;
   background: var(--background-color);
-  min-height: 100vh;
+  box-shadow: var(--shadow-md);
+  border-radius: 4%;
 }
 
 @media (min-width: 1000px) {
   .container {
     max-width: 200%; /* Aumente o valor conforme necessário */
     width:140%;
-    margin-left: -20%;
+    margin-left: -25%;
   }
 }
 
@@ -83,6 +84,7 @@
   font-size: 1rem;
   transition: var(--transition);
   background: white;
+  margin-left: -2%;
 }
 
 .input:focus, .textarea:focus, .select:focus {
