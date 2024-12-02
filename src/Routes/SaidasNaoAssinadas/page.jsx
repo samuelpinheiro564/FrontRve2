@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getMenorIdade, postAssinaturaAnaq } from "../../Data/server";
-import styles from "./styles.module.css";
+import styles from "../SaidasNaoAssinadas/styles.module.css";
 import userData from "../../Data/dadosUser";
 
 const SaidasNaoAssinadas = () => {
@@ -45,7 +45,7 @@ const SaidasNaoAssinadas = () => {
                                 <div>RA: {saida.alunora}</div>
                                 <div>Data/Hora da Saída: {saida.datasaida}</div>
                                 <div>Justificativa: {saida.justificativa}</div>
-                                <button type="button" onClick={() => handleAssinaturaAnaq(saida.id)}>
+                                <button type="button" onClick={() => handleAssinaturaAnaq(saida.id)} className={styles.button}>
                                     Assinar
                                 </button>
                             </div>
