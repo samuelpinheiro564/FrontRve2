@@ -1,0 +1,134 @@
+/* Base container styles */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* Title styling */
+  .title {
+    color: #2d3748;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  
+  .title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: #4299e1;
+    border-radius: 2px;
+  }
+  
+  /* Profile card styling */
+  .profileCard {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .profileCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .profileCard p {
+    margin: 1rem 0;
+    font-size: 1.1rem;
+    color: #4a5568;
+    line-height: 1.6;
+  }
+  
+  .profileCard strong {
+    color: #2d3748;
+    font-weight: 600;
+  }
+  
+  /* Section styling for admin/anaq and docente */
+  .adminAnaqSection,
+  .docenteSection {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e2e8f0;
+  }
+  
+  .adminAnaqSection h2,
+  .docenteSection h2 {
+    color: #2d3748;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+  
+  /* Button styling */
+  .button {
+    background: #4299e1;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0.5rem 1rem 0.5rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .button:hover {
+    background: #3182ce;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+  }
+  
+  .button:active {
+    transform: translateY(0);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 1rem;
+    }
+  
+    .title {
+      font-size: 2rem;
+    }
+  
+    .profileCard {
+      padding: 1.5rem;
+    }
+  
+    .button {
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+  }
+  
+  /* Loading state */
+  .container p:first-child {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #718096;
+    margin-top: 2rem;
+  }
+  
+  /* Animation for loading state */
+  @keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+  }
+  
+  .container p:first-child {
+    animation: pulse 1.5s infinite ease-in-out;
+  }

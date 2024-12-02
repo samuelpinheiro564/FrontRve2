@@ -37,7 +37,7 @@ const Login = () => {
           return;
         } else {
           localStorage.setItem('userType', userType);
-          alert('Logado com sucesso');
+          setMessage('Logado com sucesso');
           // Redireciona com base no tipo de usuário
           switch (userType) {
             case 'admin':

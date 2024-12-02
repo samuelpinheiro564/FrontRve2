@@ -1,4 +1,3 @@
-
 .container {
   margin: 2rem auto;
   min-width: 120vh;
@@ -7,8 +6,16 @@
   border-radius: 15px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
   position: relative;
-  display:grid;
+  display: grid;
   z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .container {
+    min-width: 100%;
+    margin: 1rem;
+    padding: 1rem;
+  }
 }
 
 .banner {
@@ -124,7 +131,7 @@ h2 {
   }
 }
 
-@media (max-width: 50%) {
+@media (max-width: 600px) {
   .banner h1 {
     font-size: 2.5rem;
   }

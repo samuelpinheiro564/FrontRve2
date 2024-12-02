@@ -20,6 +20,9 @@ const CadastroUsuarios = () => {
             console.error('Erro ao cadastrar usuário:', error);
             setMessage('Erro ao cadastrar usuário.');
         }
+        setTimeout(() => {
+            setMessage('');
+        }, 3000); // Limpa a mensagem após 3 segundos
     };
 
     return (

@@ -7,17 +7,61 @@
 }
 
 /* Container principal com gradiente animado */
+/* Container principal com gradiente animado */
 .container {
-  min-height: 100vh;
+  min-height: 100%;
   padding: 2rem;
   background: linear-gradient(135deg, var(--white) 0%, #fff5f5 100%);
   animation: gradientShift 15s ease infinite;
+  max-width: 200%; /* Adicione esta linha para definir a largura máxima */
+  margin: 0 auto; /* Centraliza o container horizontalmente */
+  width: 60%; /* Ajusta a largura do container para 50% */
 }
+
 
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.cardButton {
+    width: 48%; /* Adjust the width to fit two cards per row with some margin */
+    margin-bottom: 10px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.filter, .pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.input, .button {
+    margin: 0 10px;
+}
+
+.noData {
+    text-align: center;
 }
 
 /* Estilização dos cards */
@@ -134,6 +178,24 @@
 }
 
 /* Responsividade */
+@media (max-width: 1024px) {
+  .container {
+    padding: 1.5rem;
+  }
+  
+  .card {
+    padding: 1.2rem;
+  }
+  
+  .cardText {
+    font-size: 1rem;
+  }
+  
+  .button {
+    padding: 0.7rem 1.3rem;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
@@ -144,10 +206,28 @@
   }
   
   .cardText {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
   
   .button {
     padding: 0.6rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+  }
+  
+  .card {
+    padding: 0.8rem;
+  }
+  
+  .cardText {
+    font-size: 0.8rem;
+  }
+  
+  .button {
+    padding: 0.5rem 1rem;
   }
 }

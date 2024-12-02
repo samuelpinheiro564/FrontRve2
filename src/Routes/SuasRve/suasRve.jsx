@@ -79,7 +79,7 @@ const SuasRve = () => {
 
   const handleOrdenarPorDataeHoraMaisRecente = () => {
     const sorted = [...filteredRve].sort(
-      (a, b) => new Date(b[0].data ) - new Date(a[0].data)
+      (a, b) => new Date(b[0].data) - new Date(a[0].data)
     );
     setFilteredRve(sorted);
     console.log("Sorted RVE data:", sorted); // Log sorted RVE data for debugging
@@ -144,32 +144,18 @@ const SuasRve = () => {
               className={styles.cardButton}
             >
               <div className={styles.card}>
-                <p className={styles.cardText}>ID: {rveItem.id_rve}</p>
                 <p className={styles.cardText}>
                   Estudante: {rveItem[0].estudante}
                 </p>
-                <p className={styles.cardText}>Curso: {rveItem.curso}</p>
+                <p className={styles.cardText}>Curso: {rveItem[0].curso}</p>
                 <p className={styles.cardText}>
                   Data: {new Date(rveItem[0].data).toLocaleDateString()}
                 </p>
                 <p className={styles.cardText}>Hora: {rveItem[0].hora}</p>
                 <p className={styles.cardText}>
-                  Descrição: {rveItem.descricaoocorrido}
+                  Descrição: {rveItem[0].descricaoocorrido}
                 </p>
-                <p className={styles.cardText}>
-                  Dificuldades: {rveItem.dificuldades}
-                </p>
-                <p className={styles.cardText}>Elogios: {rveItem.elogios}</p>
-                <p className={styles.cardText}>Motivo: {rveItem.motivo}</p>
-                <p className={styles.cardText}>
-                  Orientações: {rveItem.orientacoesestudante}
-                </p>
-                <p className={styles.cardText}>Presença: {rveItem.presenca}</p>
-                <p className={styles.cardText}>Turma: {rveItem.turma}</p>
-                <p className={styles.cardText}>
-                  Assinaturas:{" "}
-                  {rveItem.assinaturas ? rveItem.assinaturas.join(", ") : "N/A"}
-                </p>
+                <p className={styles.cardText}>Motivo: {rveItem[0].motivo}</p>
               </div>
             </button>
           ))}
