@@ -10,6 +10,7 @@ const CadastroUsuarios = () => {
     const [telefone, setTelefone] = useState('');
     const [tipo, setTipo] = useState('');
     const [message, setMessage] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleCadastro = async (e) => {
         e.preventDefault();
@@ -23,6 +24,10 @@ const CadastroUsuarios = () => {
         setTimeout(() => {
             setMessage('');
         }, 3000); // Limpa a mensagem após 3 segundos
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -53,14 +58,22 @@ const CadastroUsuarios = () => {
                     required
                     className={styles.input}
                 />
-                <input
-                    type="password"
-                    placeholder="Senha"
-                    value={senha}
-                    onChange={(e) => setSenha(e.target.value)}
-                    required
-                    className={styles.input}
-                />
+                <div className={styles.passwordContainer}>
+                    <input
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Senha"
+                        value={senha}
+                        onChange={(e) => setSenha(e.target.value)}
+                        required
+                        className={styles.input}
+                    />
+                    <span
+                        onClick={togglePasswordVisibility}
+                        className={styles.passwordToggle}
+                    >
+                        {showPassword ? '🙈' : '👁️'}
+                    </span>
+                </div>
                 <input
                     type="text"
                     placeholder="Telefone"
