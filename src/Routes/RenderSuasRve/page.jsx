@@ -96,7 +96,7 @@ const RenderSuasRve = () => {
             <p className={styles.input}>Data : {formatDate(rveDados.data)}</p>
             <p className={styles.input}>Hora : {rveDados.hora}</p>
             <p className={styles.input}>Motivo : {rveDados.motivo}</p>
-            <p className={styles.input}>Descrição : {rveDados.descricao}</p>
+            <p className={styles.input}>Descrição : {rveDados.descricaoocorrido}</p>
             <p className={styles.input}>Dificuldados do Estudante : {rveDados.dificuldades}</p>
             <p className={styles.input}>Elogios : {rveDados.elogios}</p>
             <p className={styles.input}>Orientações para o estudante : {rveDados.orientacoesestudante}</p>
