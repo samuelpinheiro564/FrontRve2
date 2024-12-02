@@ -1,0 +1,17 @@
+.button {
+    background-color: #ff0000; /* Red background */
+    border: 1px solid #ffffff; /* White border */
+    border-radius: 5px;
+    color: #ffffff; /* White text */
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #cc0000; /* Darker red background on hover */
+}

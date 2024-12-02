@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';  
 import { UltimaSaida } from '../../Data/server';
 import { useNavigate } from 'react-router-dom';
-
+import styles from '../NotificacaoSec/styles.module.css';
 const NotificacaoSec = () => {
   const [saidaUnica, setSaidaUnica] = useState(null);
 
@@ -33,7 +33,7 @@ const NotificacaoSec = () => {
   return (
     <section>
 
-          <button type='button' onClick={handleHistoricoSaida}>
+          <button type='button' onClick={handleHistoricoSaida} className={styles.button}>
             Ultima Saída
           </button>
 
