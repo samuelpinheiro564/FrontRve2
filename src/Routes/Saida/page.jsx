@@ -79,17 +79,17 @@ setYes(true);
         oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
     
         if (!formData.datasaida) {  
-            alert("A data de saída deve ser preenchida.");  
+            setMessage({ type: 'error'  ,text : 'A data de saída deve ser preenchida.'});  
             return;  
         }
     
         if (selectedDate > currentDate) {
-            alert("A data e hora de saída não podem ser maiores que a data e hora atuais.");
+            setMessage({ type: 'error'  ,text :'A data e hora de saída não podem ser maiores que a data e hora atuais.'});
             return;
         }
     
         if (selectedDate < oneYearAgo) {
-            alert("A data e hora de saída não podem ser menores que um ano.");
+             setMessage({ type: 'error'  ,text :'A data e hora de saída não podem ser menores que um ano.'});
             return;
         }  
     
