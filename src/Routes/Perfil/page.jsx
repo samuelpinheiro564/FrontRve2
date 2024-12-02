@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import userData from '../../Data/dadosUser';
-import styles from './styles.modules.css';
+import styles from '../Perfil/styles.module.css';
 
 const Perfil = () => {
     const [user, setUser] = useState(null);
@@ -21,9 +21,9 @@ const Perfil = () => {
         <div className={styles.container}>
             <h1 className={styles.title}>Perfil do Usuário</h1>
             <div className={styles.profileCard}>
-                <p><strong>Nome:</strong> {user.name}</p>
-                <p><strong>NIF:</strong> {user.nif}</p>
-                <p><strong>Tipo de Usuário:</strong> {user.tipo}</p>
+                <p className={styles.p}><strong>Nome:</strong> {user.name}</p>
+                <p className={styles.p}><strong>NIF:</strong> {user.nif}</p>
+                <p className={styles.p}><strong>Tipo de Usuário:</strong> {user.tipo}</p>
                 {user.tipo === 'admin' || user.tipo === 'anaq' ? (
                     <AdminAnaqAccess user={user} />
                 ) : (
@@ -41,9 +41,7 @@ const AdminAnaqAccess = ({ user }) => (
         <p><strong>Telefone:</strong> {user.telefone}</p>
         <p><strong>Data de Criação:</strong> {new Date(user.dataCriacao).toLocaleDateString()}</p>
         <p><strong>Último Login:</strong> {new Date(user.ultimoLogin).toLocaleDateString()}</p>
-        <button className={styles.button}>Gerenciar Usuários</button>
-        <button className={styles.button}>Visualizar Relatórios</button>
-        <button className={styles.button}>Configurações do Sistema</button>
+     
     </div>
 );
 
