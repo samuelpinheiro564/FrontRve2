@@ -9,13 +9,17 @@ const RenderSuasRve = () => {
   const [msgs, setMsgs] = useState([]); // Todas as mensagens
   const [visibleMsgs, setVisibleMsgs] = useState([]); // Mensagens visíveis
   const [currentPage, setCurrentPage] = useState(1); // Página atual
-  const MESSAGES_PER_PAGE = 7; // Limite de mensagens visíveis por vez
+  const MESSAGES_PER_PAGE = 70; // Limite de mensagens visíveis por vez
   const rveDados = rveData.getRve()[0][0];
   console.log(rveDados);
   const userDados = userData.getUsers()[0];
 
   const handleCampoTexto = async (e) => {
     e.preventDefault();
+    if (!campotexto.trim()) {
+      // Se o campo de texto estiver vazio, não faça nada
+      return;
+    }
     try {
       const nifusuario = userDados.nif;
       const data = new Date().toLocaleDateString();
@@ -73,6 +77,13 @@ const RenderSuasRve = () => {
     setCurrentPage(nextPage);
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+ 
+
   return (
     <>
       <h1 className={styles.testeh1}>Chat</h1>
@@ -82,7 +93,7 @@ const RenderSuasRve = () => {
           <div className={styles.formGroup}>
             <p className={styles.input}> Curso : {rveDados.curso}</p>
             <p className={styles.input}>{rveDados.nifautor}</p>
-            <p className={styles.input}>Data : {rveDados.data}</p>
+            <p className={styles.input}>Data : {formatDate(rveDados.data)}</p>
             <p className={styles.input}>Hora : {rveDados.hora}</p>
             <p className={styles.input}>Motivo : {rveDados.motivo}</p>
             <p className={styles.input}>Descrição : {rveDados.descricao}</p>
@@ -97,16 +108,18 @@ const RenderSuasRve = () => {
       <div
         className={styles.messagesContainer}
         style={{
-          height: "500px", // Altura fixa para o contêiner (ajuste conforme necessário)
+          height: "500px", 
           overflowY: "auto",
         }}
         onScroll={handleScroll}
       >
         {visibleMsgs.map((msg) => (
           <div key={msg.id} className={styles.msg}>
-            <h3 className={styles.h3}>{msg.campotexto}</h3>
-            <p className={styles.input}>{msg.hora}</p>
-            <p className={styles.input}>{msg.nomeusuario}</p>
+            <div className={styles.div2}>
+           <p className={styles.p2}>{msg.nomeusuario}</p> 
+           <p className={styles.p}>{msg.hora}</p>  
+            </div>
+            <text className={styles.text}>{msg.campotexto}</text>
           </div>
         ))}
       </div>
