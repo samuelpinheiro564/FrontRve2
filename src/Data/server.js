@@ -44,6 +44,20 @@ const UserName = async (nome) => {
     }
 };
 
+const UserType = async (tipo) => {
+    try {
+        const requestURL = `${URL}/usuarios/tipo/user/${tipo}`;
+        console.log(`Fazendo requisição para: ${requestURL}`);
+        const response = await axios.get(requestURL);
+        console.log('Resposta:', response.data);
+        return response.data;
+    } catch (error) {
+            console.error('Erro interno do servidor:', error);
+            throw error;
+        
+    }
+};
+
 
 const createrve_usuarios  = async (datarve_usuario) => {
     try {
@@ -324,7 +338,7 @@ const getMenorIdade = async () => {
 
 const postAssinaturaAnaq = async (id, assinaturaAnaq) => {
     try {
-        const response = await axios.put(`${URL}/saida/assinaturaAnaq/${id}`, assinaturaAnaq);
+        const response = await axios.put(`${URL}/saida/assinatura/anaq/${id}`, assinaturaAnaq);
         return response.data;
     } catch (error) {
         console.error(`Erro ao editar registro de saída com ID ${id}:`, error);
@@ -372,11 +386,53 @@ const DeletarSaida = async (id) => {
     }
 };
 
+const rveUltimaCriada = async () => {
+    try {
+        const response = await axios.get(`${URL}/rve/ultima/criada`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao excluir registro de saída com ID `, error);
+        throw error;
+    }
+};
 
+const rveTurma = async (turma) => {
+    try {
+        const response = await axios.get(`${URL}/rve/t/u/r/ma/${turma}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao excluir registro de saída com ID `, error);
+        throw error;
+    }
+};
+
+const rveCurso = async (curso) => {
+    try {
+        const response = await axios.get(`${URL}/rve/c/u/r/s/o/${curso}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao excluir registro de saída com ID `, error);
+        throw error;
+    }
+};
+
+const rveEstudante = async (estudante) => {
+    try {
+        const response = await axios.get(`${URL}/rve/es/tu/dan/te/${estudante}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao excluir registro de saída com ID `, error);
+        throw error;
+    }
+};
 
 export {
-    
+    rveEstudante,
+    rveCurso,
+    rveTurma,
+    rveUltimaCriada,
     LoginUser,
+    UserType,
     CriarUser,
     AtualizaUser,
     DeleteUser,

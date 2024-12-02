@@ -1,352 +1,90 @@
-import React, { useState, useEffect } from "react";
-import {
-    CriarUser,
-    AllUsers,
-    AtualizaUser,
-    DeleteUser,
-} from "../../Data/server";
-import styles from "../CadastroUsuarios/user.module.css";
+import React, { useState } from 'react';
+import { CriarUser } from '../../Data/server';
+import styles from './user.module.css';
 
 const CadastroUsuarios = () => {
-    const [form, setForm] = useState({
-        nif: "",
-        nome: "",
-        email: "",
-        senha: "",
-        telefone: "",
-        tipo: "",
-    });
-
-    const [formErrors, setFormErrors] = useState({});
-   
-    const [showPassword, setShowPassword] = useState(false);
-    const [message, setMessage] = useState("");
-    const [users, setUsers] = useState([]);
-    const [editingUser, setEditingUser] = useState(null);
-    const [showUserList, setShowUserList] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const usersPerPage = 5;
-
-    useEffect(() => {
-        fetchAllUsers();
-    }, []);
-
-    const fetchAllUsers = async () => {
-        try {
-            const users = await AllUsers();
-            setUsers(users);
-        } catch (error) {
-            console.error("Erro ao buscar usuários:", error);
-        }
-    };
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setForm((prevForm) => ({ ...prevForm, [name]: value }));
-    };
-
-    const toggleShowPassword = () => {
-        setShowPassword((prevShowPassword) => !prevShowPassword);
-    };
-
-    const validateForm = () => {
-        let errors = {};
-
-        const regexEmail = /@docente\.senai$|@gmail\.com$/;
-        if (!regexEmail.test(form.email)) {
-            errors.email = "O email deve terminar com @docente.senai ou @gmail.com";
-        }
-
-        const regexSenha = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if (!regexSenha.test(form.senha)) {
-            errors.senha = "A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma minúscula, um número e um símbolo.";
-        }
-
-        if (!editingUser) {
-            const res = users.find((user) => user.nif === form.nif);
-            if (res) {
-                errors.nif = "NIF já cadastrado.";
-            }
-        }
-
-        Object.keys(form).forEach((field) => {
-            if (!form[field] && field !== "telefone") {
-                errors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} é obrigatório.`;
-            }
-        });
-
-        setFormErrors(errors);
-        return Object.keys(errors).length === 0;
-    };
+    const [nif, setNif] = useState('');
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [telefone, setTelefone] = useState('');
+    const [tipo, setTipo] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleCadastro = async (e) => {
         e.preventDefault();
-
-        if (!validateForm()) {
-            setMessage("Por favor, preencha todos os campos corretamente.");
-            setTimeout(() => setMessage(""), 3000);
-            return;
-        }
-
         try {
-            if (editingUser) {
-                await AtualizaUser(Number(form.nif), form);
-              
-            } else {
-                await CriarUser(form);
-            
-            }
-            fetchAllUsers();
-            limparCampos();
-            setTimeout(() =>  3000);
+            await CriarUser({ nif, nome, email, senha, telefone, tipo });
+            setMessage('Usuário cadastrado com sucesso!');
         } catch (error) {
-            console.error("Erro ao salvar usuário:", error);
-            setMessage("Erro nif já cadastrado.");
-            setTimeout(() => setMessage(""), 3000);
+            console.error('Erro ao cadastrar usuário:', error);
+            setMessage('Erro ao cadastrar usuário.');
         }
-    };
-
-    const handleViewUsers = () => {
-        setShowUserList(true);
-    };
-
-    const handleNextPage = () => {
-        setCurrentPage((prevPage) => prevPage + 1);
-    };
-
-    const handlePreviousPage = () => {
-        setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
-    };
-
-    const handleGoBackToForm = () => {
-        setShowUserList(false);
-        setCurrentPage(1);
-    };
-
-    const startIndex = (currentPage - 1) * usersPerPage;
-    const paginatedUsers = users.slice(startIndex, startIndex + usersPerPage);
-
-    const limparCampos = () => {
-        setForm({
-            nif: "",
-            nome: "",
-            email: "",
-            senha: "",
-            telefone: "",
-            tipo: "",
-        });
-        setEditingUser(null);
-        setFormErrors({});
-    };
-
-    const handleEditUser = (user) => {
-        const telefoneFormatado = formatarTelefone(user.telefone);
-        setForm({ ...user, telefone: telefoneFormatado });
-        setEditingUser(user);
-        setShowUserList(false);
-    };
-
-    const handleDeleteUser = async (nif) => {
-        try {
-            await DeleteUser(nif);
-            fetchAllUsers();
-            setTimeout(() =>  3000);
-        } catch (error) {
-            console.error("Erro ao deletar usuário:", error);
-            setMessage("Erro ao deletar usuário.");
-            setTimeout(() => setMessage(""), 3000);
-        }
-    };
-
-    const formatarTelefone = (telefone) => {
-        return telefone
-            .replace(/\D/g, "")
-            .replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3")
-            .slice(0, 15);
-    };
-
-    const handleTelefoneChange = (e) => {
-        const { value } = e.target;
-        const telefoneFormatado = formatarTelefone(value);
-        setForm((prevForm) => ({ ...prevForm, telefone: telefoneFormatado }));
     };
 
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Cadastro de Usuários</h1>
-            {!showUserList ? (
-                <>
-                    <form className={styles.form} onSubmit={handleCadastro}>
-                        <div className={styles.formGroup}>
-                            <label htmlFor="nif" className={styles.label}>
-                                NIF:
-                            </label>
-                            <input
-                                type="text"
-                                id="nif"
-                                name="nif"
-                                value={form.nif}
-                                onChange={(e) => {
-                                    const value = e.target.value.replace(/\D/g, "").slice(0, 9);
-                                    handleInputChange({ target: { name: "nif", value } });
-                                }}
-                                className={styles.input}
-                                disabled={!!editingUser}
-                            />
-                            {formErrors.nif && <div className={styles.error}>{formErrors.nif}</div>}
-                        </div>
-                        <div className={styles.formGroup}>
-                            <label htmlFor="nome" className={styles.label}>
-                                Nome:
-                            </label>
-                            <input
-                                type="text"
-                                id="nome"
-                                name="nome"
-                                value={form.nome}
-                                onChange={handleInputChange}
-                                className={styles.input}
-                            />
-                            {formErrors.nome && <div className={styles.error}>{formErrors.nome}</div>}
-                        </div>
-                        <div className={styles.formGroup}>
-                            <label htmlFor="email" className={styles.label}>
-                                Email:
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                value={form.email}
-                                onChange={handleInputChange}
-                                className={styles.input}
-                            />
-                            {formErrors.email && <div className={styles.error}>{formErrors.email}</div>}
-                        </div>
-                        <div className={styles.formGroup}>
-                            <label htmlFor="senha" className={styles.label}>
-                                Senha:
-                            </label>
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                id="senha"
-                                name="senha"
-                                value={form.senha}
-                                onChange={handleInputChange}
-                                className={styles.input}
-                            />
-                            {formErrors.senha && <div className={styles.error}>{formErrors.senha}</div>}
-                            <span
-                                onClick={toggleShowPassword}
-                                className={styles.togglePassword}
-                            >
-                                {showPassword ? "🙈" : "👁️"}
-                            </span>
-                        </div>
-                        <div className={styles.formGroup}>
-                            <label htmlFor="telefone" className={styles.label}>
-                                Telefone:
-                            </label>
-                            <input
-                                type="tel"
-                                id="telefone"
-                                name="telefone"
-                                value={form.telefone}
-                                onChange={handleTelefoneChange}
-                                className={styles.input}
-                            />
-                        </div>
-                        <div className={styles.formGroup}>
-                            <label htmlFor="tipo" className={styles.label}>
-                                Tipo de Usuario:
-                            </label>
-                            <select
-                                id="tipo"
-                                name="tipo"
-                                value={form.tipo}
-                                onChange={handleInputChange}
-                                className={styles.input}
-                                required
-                            >
-                                <option value="" disabled>
-                                    Selecione o tipo de usuário
-                                </option>
-                                <option value="secretaria">Secretaria</option>
-                                <option value="docente">Docente</option>
-                                <option value="admin">Administrador</option>
-                            </select>
-                            {formErrors.tipo && <div className={styles.error}>{formErrors.tipo}</div>}
-                        </div>
-
-                        {message && <div className={styles.message}>{message}</div>}
-                        <button type="submit" className={styles.button}>
-                            {editingUser ? "Salvar Alterações" : "Cadastrar"}
-                        </button>
-                    </form>
-                    <button onClick={handleViewUsers} className={styles.viewUsersButton}>
-                        Ver Usuários
-                    </button>
-                </>
-            ) : (
-                <div className={styles.userList}>
-                <h2 className={styles.h21}>Lista de Usuários</h2>
-                <button onClick={handleGoBackToForm} className={styles.backButton}>
-                    Voltar ao Cadastro
+            <form className={styles.form} onSubmit={handleCadastro}>
+                <input
+                    type="text"
+                    placeholder="NIF"
+                    value={nif}
+                    onChange={(e) => setNif(e.target.value)}
+                    required
+                    className={styles.input}
+                />
+                <input
+                    type="text"
+                    placeholder="Nome"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                    required
+                    className={styles.input}
+                />
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className={styles.input}
+                />
+                <input
+                    type="password"
+                    placeholder="Senha"
+                    value={senha}
+                    onChange={(e) => setSenha(e.target.value)}
+                    required
+                    className={styles.input}
+                />
+                <input
+                    type="text"
+                    placeholder="Telefone"
+                    value={telefone}
+                    onChange={(e) => setTelefone(e.target.value)}
+                    required
+                    className={styles.input}
+                />
+                <select
+                    value={tipo}
+                    onChange={(e) => setTipo(e.target.value)}
+                    required
+                    className={styles.input}
+                >
+                    <option value="" disabled>
+                        Tipo de Usuário
+                    </option>
+                    <option value="admin">Administrador</option>
+                    <option value="docente">Docente</option>
+                    <option value="secretaria">Secretaria</option>
+                    <option value="anaq">Analista de Qualidade</option>
+                </select>
+                <button type="submit" className={styles.button}>
+                    Cadastrar
                 </button>
-                <div className={styles.userColumnsContainer}>
-                    {/* Dividindo a lista de usuários em 2 colunas */}
-                    {[...Array(Math.ceil(paginatedUsers.length / 5))].map((_, columnIndex) => (
-                        <div className={styles.userColumn} key={columnIndex}>
-                            {paginatedUsers
-                                .slice(columnIndex * 5, columnIndex * 5 + 5)  // Exibe 5 usuários por coluna
-                                .map((user) => (
-                                    <div key={user.nif} className={styles.userCard}>
-                                        <p>
-                                            <strong>NIF:</strong> {user.nif}
-                                        </p>
-                                        <p>
-                                            <strong>Nome:</strong> {user.nome}
-                                        </p>
-                                        <p>
-                                            <strong>Email:</strong> {user.email}
-                                        </p>
-                                        <p>
-                                            <strong>Telefone:</strong> {user.telefone}
-                                        </p>
-                                        <p>
-                                            <strong>Tipo:</strong> {user.tipo}
-                                        </p>
-                                        <button onClick={() => handleEditUser(user)} className={styles.editButton}>
-                                            Editar
-                                        </button>
-                                        <button onClick={() => handleDeleteUser(user.nif)} className={styles.deleteButton}>
-                                            Deletar
-                                        </button>
-                                    </div>
-                                ))}
-                        </div>
-                    ))}
-                </div>
-            
-                <div className={styles.pagination}>
-                    <button
-                        onClick={handlePreviousPage}
-                        className={styles.pageButton}
-                        disabled={currentPage === 1}
-                    >
-                        Página Anterior
-                    </button>
-                    <button
-                        onClick={handleNextPage}
-                        className={styles.pageButton}
-                        disabled={startIndex + usersPerPage >= users.length}
-                    >
-                        Próxima Página
-                    </button>
-                </div>
-            </div>
-            )}
+                {message && <p className={styles.message}>{message}</p>}
+            </form>
         </div>
     );
 };

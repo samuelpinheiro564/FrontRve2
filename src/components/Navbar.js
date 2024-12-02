@@ -44,39 +44,40 @@ const NavBar = () => {
     switch (userType) {
       case 'admin':
         return [
-          {label:'Saida', to:'/Saida'},
-          {label:'Rve', to:'/Rve'},
-          {label:'Suas RVE', to:'/SuasRve'},
-          {label:'Cadastro Usuarios', to:'/CadastroUsuarios'},
+          { label: 'Saida', to: '/Saida' },
+          { label: 'Rve', to: '/Rve' },
+          { label: 'Suas RVE', to: '/SuasRve' },
+          { label: 'Cadastro Usuarios', to: '/CadastroUsuarios' },
           { label: 'Histórico de Saída', to: '/HistoricoSaida' },
           { label: 'Perfil', to: '/Perfil' },
+          { label: 'Lista de Usuários',  to: '/ListaUsers' }
         ];
       case 'docente':
         return [
           { label: 'Suas RVE', to: '/SuasRve' },
           { label: 'Saída', to: '/Saida' },
           { label: 'RVE', to: '/Rve' },
-          {label:'Histórico de Saída', to:'/HistoricoSaida'},
-          {label:'Perfil', to:'/Perfil'},
-
+          { label: 'Histórico de Saída', to: '/HistoricoSaida' },
+          { label: 'Perfil', to: '/Perfil' },
+          
         ];
       case 'secretaria':
         return [
           { label: 'Notificação Secretaria', to: '/NotificacaoSec' },
           { label: 'Histórico de Saída', to: '/HistoricoSaida' },
         ];
-        case 'anaq':
-          return [
-            {label:'Saida', to:'/Saida'},
-            {label:'Rve', to:'/Rve'},
-            {label:'Suas RVE', to:'/SuasRve'},
-            {label:'Cadastro Usuarios', to:'/CadastroUsuarios'},
-            { label: 'Notificação Secretaria', to: '/NotificacaoSec' },
-            { label: 'Histórico de Saída', to: '/HistoricoSaida' },
-            { label: 'Saídas Não Assinadas', to: '/SaidasNaoAssinadas' },
-        
-            {label:'Perfil', to:'/Perfil'},
-          ];
+      case 'anaq':
+        return [
+          { label: 'Saida', to: '/Saida' },
+          { label: 'Rve', to: '/Rve' },
+          { label: 'Suas RVE', to: '/SuasRve' },
+          { label: 'Cadastro Usuarios', to: '/CadastroUsuarios' },
+          { label: 'Notificação Secretaria', to: '/NotificacaoSec' },
+          { label: 'Histórico de Saída', to: '/HistoricoSaida' },
+          { label: 'Saídas Não Assinadas', to: '/SaidasNaoAssinadas' },
+          { label: 'Perfil', to: '/Perfil' },
+          { label: 'Lista de Usuários',  to: '/ListaUsers' }
+        ];
       default:
         return []; // Caso nenhum `userType` seja encontrado
     }
@@ -87,7 +88,7 @@ const NavBar = () => {
   return (
     <div ref={menuRef}>
       <button onClick={toggleMenu} className="menu-icon">
-        &#9776; 
+        &#9776;
       </button>
       {menuVisible && (
         <nav>
