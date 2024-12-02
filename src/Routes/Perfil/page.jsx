@@ -21,7 +21,7 @@ const Perfil = () => {
         <div className={styles.container}>
             <h1 className={styles.title}>Perfil do Usuário</h1>
             <div className={styles.profileCard}>
-                <p className={styles.p}><strong>Nome:</strong> {user.name}</p>
+                <p className={styles.p}><strong>Nome:</strong> {user.nome}</p>
                 <p className={styles.p}><strong>NIF:</strong> {user.nif}</p>
                 <p className={styles.p}><strong>Tipo de Usuário:</strong> {user.tipo}</p>
                 {user.tipo === 'admin' || user.tipo === 'anaq' ? (
