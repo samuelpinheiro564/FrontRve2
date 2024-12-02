@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "../RenderSuasRve/styles.module.css";
-import {
-  CriarCampoTexto,
-  AllCamposTextoRve,
-} from "../../Data/server";
+import { CriarCampoTexto, AllCamposTextoRve } from "../../Data/server";
 import userData from "../../Data/dadosUser";
 import rveData from "../../Data/DadosRve";
 
@@ -14,6 +11,7 @@ const RenderSuasRve = () => {
   const [currentPage, setCurrentPage] = useState(1); // Página atual
   const MESSAGES_PER_PAGE = 7; // Limite de mensagens visíveis por vez
   const rveDados = rveData.getRve()[0][0];
+  console.log(rveDados);
   const userDados = userData.getUsers()[0];
 
   const handleCampoTexto = async (e) => {
@@ -56,7 +54,10 @@ const RenderSuasRve = () => {
   // Scroll Handler para carregar mais mensagens
   const handleScroll = (e) => {
     const container = e.target;
-    if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
+    if (
+      container.scrollTop + container.clientHeight >=
+      container.scrollHeight
+    ) {
       loadMoreMessages();
     }
   };
@@ -72,7 +73,6 @@ const RenderSuasRve = () => {
     setCurrentPage(nextPage);
   };
 
-
   return (
     <>
       <h1 className={styles.testeh1}>Chat</h1>
@@ -80,13 +80,20 @@ const RenderSuasRve = () => {
         <h2 className={styles.h2}>{rveDados.estudante}</h2>
         <div className={styles.form}>
           <div className={styles.formGroup}>
+            <p className={styles.input}> Curso : {rveDados.curso}</p>
             <p className={styles.input}>{rveDados.nifautor}</p>
+            <p className={styles.input}>Data : {rveDados.data}</p>
+            <p className={styles.input}>Hora : {rveDados.hora}</p>
+            <p className={styles.input}>Motivo : {rveDados.motivo}</p>
+            <p className={styles.input}>Descrição : {rveDados.descricao}</p>
+            <p className={styles.input}>Dificuldados do Estudante : {rveDados.dificuldades}</p>
+            <p className={styles.input}>Elogios : {rveDados.elogios}</p>
+            <p className={styles.input}>Orientações para o estudante : {rveDados.orientacoesestudante}</p>
+            <p className={styles.input}>Turma : {rveDados.turma}</p>
+            <p className={styles.input}>Presença : {rveDados.presenca}</p>
           </div>
-          {/* ...outros campos... */}
         </div>
       </div>
-
-      {/* Contêiner de mensagens */}
       <div
         className={styles.messagesContainer}
         style={{
