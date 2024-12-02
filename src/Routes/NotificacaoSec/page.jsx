@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';  
-import { UltimaSaida, AllSaida } from '../../Data/server';
+import { UltimaSaida } from '../../Data/server';
 
 const NotificacaoSec = () => {
   const [saidaUnica, setSaidaUnica] = useState(null);

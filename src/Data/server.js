@@ -356,12 +356,12 @@ const postAssinaturaProf = async (id, assinaturaProf) => {
     }
 }
 
-const UltimaSaida = async (id) => {
+const UltimaSaida = async () => {
     try {
         const response = await axios.get(`${URL}/saida/ultimasaida`);
         return response.data;
     } catch (error) {
-        console.error(`Erro ao buscar registro de saída com ID ${id}:`, error);
+        console.error(`Erro ao buscar registro de saída com ID:`, error);
         throw error;
     }
 };
