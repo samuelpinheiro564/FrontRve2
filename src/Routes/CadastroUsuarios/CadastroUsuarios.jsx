@@ -17,6 +17,13 @@ const CadastroUsuarios = () => {
         try {
             await CriarUser({ nif, nome, email, senha, telefone, tipo });
             setMessage('Usuário cadastrado com sucesso!');
+            // Limpar os inputs
+            setNif('');
+            setNome('');
+            setEmail('');
+            setSenha('');
+            setTelefone('');
+            setTipo('');
         } catch (error) {
             console.error('Erro ao cadastrar usuário:', error);
             setMessage('Erro ao cadastrar usuário.');
