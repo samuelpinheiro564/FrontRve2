@@ -39,8 +39,7 @@ const AdminAnaqAccess = ({ user }) => (
         <h2>Acesso de Administrador/Analista de Qualidade</h2>
         <p><strong>Email:</strong> {user.email}</p>
         <p><strong>Telefone:</strong> {user.telefone}</p>
-        <p><strong>Data de Criação:</strong> {new Date(user.dataCriacao).toLocaleDateString()}</p>
-        <p><strong>Último Login:</strong> {new Date(user.ultimoLogin).toLocaleDateString()}</p>
+        
      
     </div>
 );
@@ -50,9 +49,6 @@ const DocenteAccess = ({ user }) => (
         <h2>Acesso de Docente</h2>
         <p><strong>Email:</strong> {user.email}</p>
         <p><strong>Telefone:</strong> {user.telefone}</p>
-        <p><strong>Data de Criação:</strong> {new Date(user.dataCriacao).toLocaleDateString()}</p>
-        <p><strong>Último Login:</strong> {new Date(user.ultimoLogin).toLocaleDateString()}</p>
-        <button className={styles.button}>Visualizar Relatórios</button>
     </div>
 );
 
