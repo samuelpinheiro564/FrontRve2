@@ -2,7 +2,7 @@
 
 /* Container styling with a subtle gradient background */
 .container {
-  max-width: 90%;
+  max-width: 1000vh;
   padding: 2rem;
   background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -29,6 +29,8 @@
   border-radius: 30px auto;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(220, 38, 38, 0.1);
+  margin-bottom: 2rem;
+  border-radius: 4%;
 }
 
 /* Table header styling */
@@ -42,13 +44,32 @@
   letter-spacing: 0.5px;
 }
 
-/* Table body styling */
-.table tbody td {
-  padding: 1rem;
-  border-bottom: 1px solid #fee2e2;
-  color: #4b5563;
-  transition: background-color 0.3s ease;
+/* Estilo específico para a coluna de justificativa */  
+.table tbody td:nth-child(7) { /* 7 é a posição da coluna "Justificativa" */  
+  max-width: 300px; /* Define uma largura máxima para a coluna */  
+  overflow: hidden; /* Adiciona overflow para o caso de conteúdo muito grande */  
+  text-overflow: ellipsis; /* Adiciona reticências se necessário */  
+  white-space: normal; /* Permite quebras de linha */  
+  line-height: 1.5; /* Aumenta o espaçamento entre linhas */  
+}  
+
+/* Para garantir que as informações de data/hora também sejam exibidas corretamente */  
+.table tbody td:nth-child(6) { /* 6 é a posição da coluna "Data/Hora da Saída" */  
+  white-space: normal; /* Permite quebras de linha */  
+  line-height: 1.5; /* Aumenta o espaçamento entre linhas */  
+}  
+
+/* Define a altura mínima para as células com informação longa */  
+.table tbody td {  
+  padding: 1rem;  
+  border-bottom: 1px solid #fee2e2;  
+  color: #4b5563;  
+  transition: background-color 0.3s ease;  
+  word-wrap: break-word;  
+  height: auto; /* Permite que a altura se ajuste ao conteúdo */  
 }
+
+  
 
 /* Row hover effect */
 .table tbody tr:hover {
