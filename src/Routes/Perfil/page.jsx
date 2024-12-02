@@ -4,6 +4,7 @@ import styles from '../Perfil/styles.module.css';
 
 const Perfil = () => {
     const [user, setUser] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -12,6 +13,10 @@ const Perfil = () => {
         };
         fetchUserData();
     }, []);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     if (!user) {
         return <p>Carregando...</p>;
@@ -24,6 +29,12 @@ const Perfil = () => {
                 <p className={styles.p}><strong>Nome:</strong> {user.nome}</p>
                 <p className={styles.p}><strong>NIF:</strong> {user.nif}</p>
                 <p className={styles.p}><strong>Tipo de Usuário:</strong> {user.tipo}</p>
+                <p className={styles.p}>
+                    <strong>Senha:</strong> {showPassword ? user.senha : '********'}
+                    <span onClick={togglePasswordVisibility} style={{ cursor: 'pointer', marginLeft: '10px' }}>
+                        {showPassword ? '🙈' : '👁️'}
+                    </span>
+                </p>
                 {user.tipo === 'admin' || user.tipo === 'anaq' ? (
                     <AdminAnaqAccess user={user} />
                 ) : (
@@ -39,8 +50,6 @@ const AdminAnaqAccess = ({ user }) => (
         <h2>Acesso de Administrador/Analista de Qualidade</h2>
         <p><strong>Email:</strong> {user.email}</p>
         <p><strong>Telefone:</strong> {user.telefone}</p>
-        
-     
     </div>
 );
 
