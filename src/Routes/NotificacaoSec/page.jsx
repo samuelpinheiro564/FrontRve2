@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';  
 import { UltimaSaida } from '../../Data/server';
+import { useNavigate } from 'react-router-dom';
 
 const NotificacaoSec = () => {
   const [saidaUnica, setSaidaUnica] = useState(null);
-  const [saida, setSaida] = useState([]);
+
   const [historicoSaida, setHistoricoSaida] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleUltimaSaida = async () => {
@@ -12,35 +14,29 @@ const NotificacaoSec = () => {
         const response = await UltimaSaida();
         const ultimaSaida = response;
         setSaidaUnica(ultimaSaida);
-        console.log('Ultima saída:', ultimaSaida); 
+        console.log('Ultima saída:', saidaUnica); 
       } catch (error) {
         console.error('Erro ao buscar a última saída:', error);
       }
     };
-
-
-
+    if (!historicoSaida) {
+      handleUltimaSaida();
+    }
+  });
   const handleHistoricoSaida = () => {
     console.log('Histórico de saídas');
-    setHistoricoSaida(true);    
+    setHistoricoSaida(true);   
+    navigate('/HistoricoSaida'); 
   }
 
 
   return (
     <section>
-        <>
-          {saida.map((saida) => (
-            <div key={saida.id}>
-              <h2>Nome do Aluno: {saida.nomealuno}</h2>
-              <p>Curso: {saida.curso}</p>
-              <p>Horário: {saida.horasaida}</p>
-            </div>
-          ))}
-          <button type='button' onClick={handleUltimaSaida}>
+
+          <button type='button' onClick={handleHistoricoSaida}>
             Ultima Saída
           </button>
-        </>
-      
+
     </section>
   );
 };
