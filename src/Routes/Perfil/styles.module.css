@@ -1,0 +1,120 @@
+:root {
+  --cor-fundo: #f0f0f0;
+  --cor-branca: #ffffff;
+  --cor-vermelho: #e74c3c;
+  --cor-vermelho-escuro: #c0392b;
+  --cor-passo: rgba(231, 76, 60, 0.1);
+}
+
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: var(--cor-branca);
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: var(--cor-vermelho);
+  text-align: center;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.profileCard {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.profileCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--cor-passo), var(--cor-passo));
+  border-radius: 15px;
+  z-index: 0;
+  opacity: 0.5;
+  filter: blur(15px);
+}
+
+.profileCard p {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #333;
+  position: relative;
+  z-index: 1;
+}
+
+.adminAnaqSection, .docenteSection {
+  margin-top: 20px;
+  padding: 15px;
+  border: 2px solid var(--cor-vermelho);
+  border-radius: 10px;
+  background-color: rgba(231, 76, 60, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.adminAnaqSection h2, .docenteSection h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: var(--cor-vermelho-escuro);
+}
+
+.adminAnaqSection:hover, .docenteSection:hover {
+  background-color: rgba(231, 76, 60, 0.2);
+}
+
+.button {
+  padding: 12px 18px;
+  background-color: var(--cor-vermelho);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+  background-color: var(--cor-vermelho-escuro);
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .container {
+      padding: 15px;
+  }
+
+  .title {
+      font-size: 28px;
+  }
+
+  .profileCard p {
+      font-size: 16px;
+  }
+
+  .adminAnaqSection h2, .docenteSection h2 {
+      font-size: 20px;
+  }
+
+  .button {
+      width: 100%;
+      text-align: center;
+  }
+}
