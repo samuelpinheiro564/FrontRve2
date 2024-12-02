@@ -19,43 +19,47 @@ const Login = () => {
     setIsLoading(true);
     setMessage('');
     try {
+      if (userType === 'secretaria') {
+        localStorage.setItem('userType', userType);
+        navigate('/NotificacaoSec');
+      }
       const response = await LoginUser(Nif, senha);
       console.log('Resposta:', response);
 
       // Verifica se a resposta existe e se a requisição foi bem-sucedida
       if (response && response.status === 200) {
-        console.log('200')
+        console.log('200');
         const data = response.data[0];
         console.log('Data:', data);
         userData.addUser(data);
         if (data.tipo !== userType) {
           setMessage('Tipo de usuário errado.');
           return;
-        }else{
-        localStorage.setItem('userType', userType);
-        alert('Logado com sucesso');
-        // Redireciona com base no tipo de usuário
-        switch (userType) {
-          case 'admin':
-            navigate('/CategoriaAdmin');
-            break;
-          case 'docente':
-            navigate('/CategoriaDocente');
-            break;
-          case 'secretaria':
-            navigate('/NotificacaoSec');
-            break;
-          default:
-            console.error('Tipo de usuário desconhecido:', userType);
+        } else {
+          localStorage.setItem('userType', userType);
+          alert('Logado com sucesso');
+          // Redireciona com base no tipo de usuário
+          switch (userType) {
+            case 'admin':
+              navigate('/CategoriaAdmin');
+              break;
+            case 'docente':
+              navigate('/CategoriaDocente');
+              break;
+            case 'anaq':
+              navigate('/CategoriaAdmin');
+              break;
+            default:
+              console.error('Tipo de usuário desconhecido:', userType);
+          }
         }
-      }
       } else if (response && response.status === 400) {
-        console.log('400')
+        console.log('400');
         setMessage('Credenciais inválidas. Verifique o NIF e a senha.');
-      } 
+      }
     } catch (error) {
       console.error('Erro na autenticação:', error.response);
-        setMessage('Erro ao conectar com o servidor. Verifique sua conexão.');
+      setMessage('Erro ao conectar com o servidor. Verifique sua conexão.');
     } finally {
       setIsLoading(false);
     }
@@ -95,23 +99,24 @@ const Login = () => {
           <option value="admin">Administrador</option>
           <option value="docente">Docente</option>
           <option value="secretaria">Secretaria</option>
+          <option value="anaq">Analista de Qualidade</option>
         </select>
 
         {!userNotPassword && (
           <>
-       <input
-  type="text"
-  placeholder="Nif"
-  required
-  className={styles.input}
-  maxLength={9}
-  value={Nif}
-  onChange={(e) => {
-    // Filtra para garantir que apenas números sejam digitados
-    const value = e.target.value.replace(/\D/g, '').slice(0, 9); // Remove caracteres não numéricos e limita a 9
-    setNif(value);
-  }}
-/>
+            <input
+              type="text"
+              placeholder="Nif"
+              required
+              className={styles.input}
+              maxLength={9}
+              value={Nif}
+              onChange={(e) => {
+                // Filtra para garantir que apenas números sejam digitados
+                const value = e.target.value.replace(/\D/g, '').slice(0, 9); // Remove caracteres não numéricos e limita a 9
+                setNif(value);
+              }}
+            />
             <div className={styles.passwordContainer}>
               <input
                 type={showPassword ? 'text' : 'password'}
