@@ -1,10 +1,34 @@
 .container {
-  max-width: 1000vh;
+  max-width: 80%;
   padding: 2rem;
   background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0 auto;
   border-radius: 3%;
+  width: 80%;
+margin-left: 10%;
+  max-height: 80%;
+  height: 50vh;
+}
+@media (min-width: 1440px) {
+  .container {
+    width: 90%;
+    margin-left: 10%;
+ 
+  }
+}
+@media (max-width: 1440px) {
+  .container {
+    width: 80%;
+    margin-left: 10%;
+ 
+  }
+  .table{
+    width:50%;
+  }
+  .table thead th{
+    font-size: 0.8rem;
+  }
 }
 
 /* Stylish subtitle with red accent */
@@ -26,8 +50,8 @@
   border-radius: 30px auto;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(220, 38, 38, 0.1);
-  margin-bottom: 2rem;
   border-radius: 4%;
+  margin-left: 1.5%;
 }
 
 /* Table header styling */

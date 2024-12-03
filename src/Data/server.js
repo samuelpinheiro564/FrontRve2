@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'http://10.88.200.162:4040';
+const URL = 'http://192.168.0.88:4040';
 const LoginUser = async (nif, senha) => {
     try {
         // Construindo a URL com os parâmetros `nif` e `senha`
@@ -145,56 +145,6 @@ const AllUsers = async () => {
     }
     catch (error) {
         console.error('Erro ao buscar todos os usuários:', error);
-        throw error;
-    }
-};
-
-const CriarRve = async (rveData) => {
-    try {
-        const response = await axios.post(`${URL}/rve`, rveData);
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao criar registro RVE:', error);
-        throw error;
-    }
-};
-const RveById =  async (id) => {
-    try {
-        const response = await axios.get(`${URL}/rve/${id}`);
-        return response.data;
-    } catch (error) {
-if(error.response.status === 400) {
-        console.error('Erro ao buscar registro RVE:', error);
-        throw error;
-    }}
-};
-
-const AllRve = async () => {
-    try {
-        const response = await axios.get(`${URL}/rve`);
-        return response.data;
-    } catch (error) {
-        console.error('Erro ao buscar todos os registros RVE:', error);
-        throw error;
-    }
-};
-
-const EditarRve = async (id, rveData) => {
-    try {
-        const response = await axios.put(`${URL}/rve/${id}`, rveData);
-        return response.data;
-    } catch (error) {
-        console.error(`Erro ao editar registro RVE com ID ${id}:`, error);
-        throw error;
-    }
-};
-
-const DeleteRve = async (id) => {
-    try {
-        const response = await axios.delete(`${URL}/rve/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error(`Erro ao excluir registro RVE com ID ${id}:`, error);
         throw error;
     }
 };
@@ -385,52 +335,115 @@ const DeletarSaida = async (id) => {
         throw error;
     }
 };
-
-const rveUltimaCriada = async () => {
+const ObterRvesSemAssinatura = async (assinatura) => {
     try {
-        const response = await axios.get(`${URL}/rve/ultima/criada`);
+        const response = await axios.get(`${URL}/rve/sem/a/assinatura/${assinatura}`);
         return response.data;
     } catch (error) {
-        console.error(`Erro ao excluir registro de saída com ID `, error);
+        console.error(`Erro ao obter RVEs sem a assinatura ${assinatura}:`, error);
         throw error;
     }
 };
 
-const rveTurma = async (turma) => {
+
+const ObterRvesPorCurso = async (curso, nifautor) => {
     try {
-        const response = await axios.get(`${URL}/rve/t/u/r/ma/${turma}`);
+        const response = await axios.get(`${URL}/rve/curso/${curso}/${nifautor}`);
         return response.data;
     } catch (error) {
-        console.error(`Erro ao excluir registro de saída com ID `, error);
+        console.error(`Erro ao obter RVEs do curso ${curso}:`, error);
+        throw error;
+    }
+};
+const ObterRvesPorTurma = async (turma, nifautor) => {
+    try {
+        const response = await axios.get(`${URL}/rve/turma/${turma}/${nifautor}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao obter RVEs da turma ${turma}:`, error);
+        throw error;
+    }
+};
+const ObterUltimaRveCriada = async (nifautor) => {
+    try {
+        const response = await axios.get(`${URL}/rve/ultima/criada/${nifautor}`);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao obter a última RVE criada:', error);
         throw error;
     }
 };
 
-const rveCurso = async (curso) => {
+const ObterRvesCompletascomoautor = async (nifsusuarios) => {
     try {
-        const response = await axios.get(`${URL}/rve/c/u/r/s/o/${curso}`);
+        const response = await axios.get(`${URL}/rve/completa/${nifsusuarios}`);
         return response.data;
     } catch (error) {
-        console.error(`Erro ao excluir registro de saída com ID `, error);
+        console.error('Erro ao obter RVEs completas:', error);
+        throw error;
+    }
+};
+const DeletarRve = async (id) => {
+    try {
+        const response = await axios.delete(`${URL}/rve/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao deletar RVE com ID ${id}:`, error);
         throw error;
     }
 };
 
-const rveEstudante = async (estudante) => {
+const AtualizarRve = async (id, rveData) => {
     try {
-        const response = await axios.get(`${URL}/rve/es/tu/dan/te/${estudante}`);
+        const response = await axios.put(`${URL}/rve/${id}`, rveData);
         return response.data;
     } catch (error) {
-        console.error(`Erro ao excluir registro de saída com ID `, error);
+        console.error(`Erro ao atualizar RVE com ID ${id}:`, error);
         throw error;
     }
 };
+
+const ObterRvePorID = async (id) => {
+    try {
+        const response = await axios.get(`${URL}/rve/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao obter RVE com ID ${id}:`, error);
+        throw error;
+    }
+};
+const ObterTodasRves = async () => {
+    try {
+        const response = await axios.get(`${URL}/rve`);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao obter todas as RVEs:', error);
+        throw error;
+    }
+};
+const CriarRve = async (rveData) => {
+    try {
+        const response = await axios.post(`${URL}/rve`, rveData);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao criar registro RVE:', error);
+        throw error;
+    }
+};
+
+const assinarRve = async (assinatura,id) => {
+    try {
+        const response = await axios.put(`${URL}/rve/assinar/sucesso/rve/${assinatura}/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Erro ao criar registro RVE:', error);
+        throw error;
+    }
+};
+
 
 export {
-    rveEstudante,
-    rveCurso,
-    rveTurma,
-    rveUltimaCriada,
+    assinarRve,
     LoginUser,
     UserType,
     CriarUser,
@@ -438,11 +451,16 @@ export {
     DeleteUser,
     AllUsers,
     AllUsersNif,
+    ObterTodasRves,
     CriarRve,
-    AllRve,
-    RveById,
-    EditarRve,
-    DeleteRve,
+    ObterRvePorID,
+    AtualizarRve,
+    DeletarRve,
+    ObterRvesCompletascomoautor,
+    ObterUltimaRveCriada,
+    ObterRvesPorCurso,
+    ObterRvesPorTurma,
+    ObterRvesSemAssinatura,
     CriarCampoTexto,
     AllCamposTextoRve,
     EditarCampoTexto,
