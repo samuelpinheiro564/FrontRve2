@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "../RenderSuasRve/styles.module.css";
-import { CriarCampoTexto, AllCamposTextoRve } from "../../Data/server";
+import { CriarCampoTexto, AllCamposTextoRve, assinarRve } from "../../Data/server";
 import userData from "../../Data/dadosUser";
 import rveData from "../../Data/DadosRve";
+import { useNavigate } from "react-router-dom";
 
 const RenderSuasRve = () => {
   const [campotexto, setCampoTexto] = useState("");
@@ -11,7 +12,7 @@ const RenderSuasRve = () => {
   const [currentPage, setCurrentPage] = useState(1); // Página atual
   const MESSAGES_PER_PAGE = 70; // Limite de mensagens visíveis por vez
   const rveDados = rveData.getRve()[0][0];
-  console.log(rveDados);
+ const navigate = useNavigate();
   const userDados = userData.getUsers()[0];
 
   const handleCampoTexto = async (e) => {
@@ -82,7 +83,19 @@ const RenderSuasRve = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
- 
+ const handleAssinarRve = async () => {
+    try {
+      const id = rveDados.id;
+      console.log("ID RVE:", id);
+      const assinatura = userDados.nome;
+      console.log("NIF Usuario:", assinatura);
+      await assinarRve(String(assinatura),id);
+      console.log("RVE assinado com sucesso!");
+      navigate("/SuasRve");
+    } catch (error) {
+      console.error("Erro ao assinar RVE:", error);
+    }
+  };
 
   return (
     <>
@@ -124,7 +137,7 @@ const RenderSuasRve = () => {
         ))}
       </div>
 
-      {/* Input para campo de texto */}
+     
       <div className={styles.formGroup}>
         <input
           type="text"
@@ -141,6 +154,14 @@ const RenderSuasRve = () => {
         onClick={handleCampoTexto}
       >
         Enviar mensagem
+      </button>
+
+      <button
+        type="button"
+        className={styles.button}
+        onClick={handleAssinarRve}
+      >
+ assinar
       </button>
     </>
   );

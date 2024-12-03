@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import userData from "../../Data/dadosUser";
-import { getAllUsersrve_usuarios, RveById } from "../../Data/server";
+import { getAllUsersrve_usuarios, ObterRvePorID, ObterRvesSemAssinatura  } from "../../Data/server";
 import styles from "../SuasRve/styles.module.css"; // Importando o CSS
 import { useNavigate } from "react-router-dom";
 import rveData from "../../Data/DadosRve";
@@ -17,23 +17,20 @@ const SuasRve = () => {
   useEffect(() => {
     const handleRves = async () => {
       const userNif = userData.getUsers();
-      console.log("User NIF:", userNif[0].nif); // Log user NIF for debugging
+      console.log("User NIF:", userNif[0].nif);
+      console.log("Nome User", userNif[0].nome); // Log user NIF for debugging
       const rves = await getAllUsersrve_usuarios(userNif[0].nif);
       console.log("Fetched RVE data:", rves); // Log fetched data
+      try {
+        const assinatura = userNif[0].nome;
+        console.log("Assinatura:", assinatura); // Log user signature for debugging
+        const rveDetails = await ObterRvesSemAssinatura(assinatura);
 
-      if (Array.isArray(rves)) {
-        const detailedRves = await Promise.all(
-          rves.map(async (rve) => {
-            const rveDetails = await RveById(rve.id_rve);
-            return { ...rve, ...rveDetails };
-          })
-        );
-        setListRve(detailedRves);
-        setFilteredRve(detailedRves);
-        console.log("Detailed RVE data:", detailedRves); // Log detailed RVE data for debugging
-      } else {
-        setListRve([]);
-        setFilteredRve([]);
+        setListRve(rveDetails);
+        setFilteredRve(rveDetails);
+        console.log("Detailed RVE data:", rveDetails); // Log detailed RVE data for debugging
+      } catch (error) {
+        console.error("Erro ao buscar RVEs:", error);
       }
     };
     handleRves();
@@ -45,30 +42,27 @@ const SuasRve = () => {
       if (filtro !== "") {
         switch (tipoFiltro) {
           case "estudante":
-            console.log("List RVE data:", listRve); // Log list RVE data for debugging
             filtered = listRve.filter(
               (rve) =>
-                rve[0].estudante &&
-                rve[0].estudante.toLowerCase().includes(filtro.toLowerCase())
+                rve.estudante &&
+                rve.estudante.toLowerCase().includes(filtro.toLowerCase())
             );
-            console.log("Filtered RVE data:", filtered); // Log filtered RVE data for debugging
             break;
           case "curso":
             filtered = listRve.filter(
               (rve) =>
-                rve[0].curso &&
-                rve[0].curso.toLowerCase().includes(filtro.toLowerCase())
+                rve.curso &&
+                rve.curso.toLowerCase().includes(filtro.toLowerCase())
             );
-            console.log("Filtered RVE data:", filtered); // Log filtered RVE data for debugging
             break;
           case "turma":
             filtered = listRve.filter(
               (rve) =>
-                rve[0].turma &&
-                rve[0].turma.toLowerCase().includes(filtro.toLowerCase())
+                rve.turma &&
+                rve.turma.toLowerCase().includes(filtro.toLowerCase())
             );
-            console.log("Filtered RVE data:", filtered); // Log filtered RVE data for debugging
             break;
+   
           default:
         }
       }
@@ -79,7 +73,7 @@ const SuasRve = () => {
 
   const handleOrdenarPorDataeHoraMaisRecente = () => {
     const sorted = [...filteredRve].sort(
-      (a, b) => new Date(b[0].data) - new Date(a[0].data)
+      (a, b) => new Date(b.data) - new Date(a.data)
     );
     setFilteredRve(sorted);
     console.log("Sorted RVE data:", sorted); // Log sorted RVE data for debugging
@@ -96,9 +90,13 @@ const SuasRve = () => {
   };
 
   const handleRve = async (id) => {
+    if (!id) {
+      console.error("ID is null or undefined");
+      return;
+    }
     localStorage.setItem("selectedRveId", id);
     console.log("Selected RVE ID:", id); // Log selected RVE ID for debugging
-    const rveSelected = await RveById(id);
+    const rveSelected = await ObterRvePorID(id);
     console.log("Selected RVE:", rveSelected); // Log selected RVE for debugging
     rveData.addRve(rveSelected); // Wrap the result in an array
     navigate("/RenderSuasRve"); // o chatAtivo é um parâmetro que indica que o chat está ativo
@@ -108,6 +106,7 @@ const SuasRve = () => {
     currentIndex,
     currentIndex + ITEMS_PER_PAGE
   );
+  console.log("Current RVE data:", currentItems); // Log current RVE data for debugging
 
   return (
     <div className={styles.container}>
@@ -140,22 +139,24 @@ const SuasRve = () => {
           {currentItems.map((rveItem, index) => (
             <button
               key={index}
-              onClick={() => handleRve(rveItem.id_rve)}
+              onClick={() => handleRve(rveItem.id)}
               className={styles.cardButton}
             >
+            
               <div className={styles.card}>
                 <p className={styles.cardText}>
-                  Estudante: {rveItem[0].estudante}
+                  Estudante: {rveItem.estudante}
                 </p>
-                <p className={styles.cardText}>Curso: {rveItem[0].curso}</p>
+                <p className={styles.cardText}>Curso: {rveItem.curso}</p>
                 <p className={styles.cardText}>
-                  Data: {new Date(rveItem[0].data).toLocaleDateString()}
+                  Data: {new Date(rveItem.data).toLocaleDateString()}
                 </p>
-                <p className={styles.cardText}>Hora: {rveItem[0].hora}</p>
+                <p className={styles.cardText}>Hora: {rveItem.hora}</p>
                 <p className={styles.cardText}>
-                  Descrição: {rveItem[0].descricaoocorrido}
+                  Descrição: {rveItem.descricaoocorrido}
                 </p>
-                <p className={styles.cardText}>Motivo: {rveItem[0].motivo}</p>
+                <p className={styles.cardText}>Motivo: {rveItem.motivo}</p>
+                <p className={styles.cardText}>Assinaturas: {rveItem.assinaturas}</p>
               </div>
             </button>
           ))}
