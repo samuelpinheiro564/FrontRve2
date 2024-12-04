@@ -29,9 +29,17 @@ const CadastroUsuarios = () => {
 
     const handleCadastro = async (e) => {
         e.preventDefault();
+        const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{1,8}$/;
+        if (!senhaRegex.test(senha)) {
+            setMessage('A senha deve ter no máximo 8 caracteres, incluindo pelo menos um símbolo, uma letra minúscula, uma letra maiúscula e um número.');
+            setTimeout(() => {
+                setMessage('');
+            }, 3000);
+            return;
+        }
         try {
             if (userToEdit) {
-                await AtualizaUser(nif, {  nome, email, senha, telefone, tipo });
+                await AtualizaUser(nif, { nome, email, senha, telefone, tipo });
                 setMessage('Usuário atualizado com sucesso!');
             } else {
                 await CriarUser({ nif, nome, email, senha, telefone, tipo });
@@ -106,11 +114,7 @@ const CadastroUsuarios = () => {
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Senha"
                         value={senha}
-                        onChange={(e) => {
-                            // Filtra para garantir que apenas números sejam digitados
-                            const value = e.target.value.replace(/\D/g, '').slice(0, 8); // Remove caracteres não numéricos e limita a 9
-                            setSenha(value);
-                          }}
+                        onChange={(e) => setSenha(e.target.value)}
                         required
                         className={styles.input}
                     />

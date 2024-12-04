@@ -364,9 +364,9 @@ const ObterRvesPorTurma = async (turma, nifautor) => {
         throw error;
     }
 };
-const ObterUltimaRveCriada = async (nifautor) => {
+const ObterUltimaRveCriada = async (nifsusuarios) => {
     try {
-        const response = await axios.get(`${URL}/rve/ultima/criada/${nifautor}`);
+        const response = await axios.get(`${URL}/rve/ultima/criada/${nifsusuarios}`);
         return response.data;
     } catch (error) {
         console.error('Erro ao obter a última RVE criada:', error);
