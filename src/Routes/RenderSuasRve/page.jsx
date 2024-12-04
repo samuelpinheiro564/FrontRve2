@@ -119,7 +119,7 @@ const RenderSuasRve = () => {
             <p className={styles.input}>Elogios : {rveDados.elogios}</p>
             <p className={styles.input}>Orientações para o estudante : {rveDados.orientacoesestudante}</p>
             <p className={styles.input}>Turma : {rveDados.turma}</p>
-            <p className={styles.input}>Presença : {rveDados.presenca}</p>
+            
           </div>
         </div>
       </div>

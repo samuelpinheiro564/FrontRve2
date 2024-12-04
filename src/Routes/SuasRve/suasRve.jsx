@@ -11,7 +11,7 @@ const SuasRve = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [filtro, setFiltro] = useState("");
   const [tipoFiltro, setTipoFiltro] = useState("estudante");
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 2;
   const navigate = useNavigate(); // Inicializa o hook useNavigate
 
   useEffect(() => {
@@ -35,6 +35,16 @@ const SuasRve = () => {
     };
     handleRves();
   }, []); // Empty dependency array ensures this runs only once
+
+  const Assinadas = async () => {
+ 
+    const assinatura = userData.getUsers()[0].nome;
+    console.log("Assinatura:", assinatura); // Log user signature for debugging
+    const rvesautor = await ObterRvesCompletascomoautor(assinatura);
+    console.log("Rves autor:", rvesautor);
+    setListRve(rvesautor);
+    setFilteredRve(rvesautor);
+  };
 
   useEffect(() => {
     const filterRves = () => {
@@ -62,28 +72,13 @@ const SuasRve = () => {
                 rve.turma.toLowerCase().includes(filtro.toLowerCase())
             );
             break;
-            case "assinadas":
-             
-              break;
           default:
         }
       }
       setFilteredRve(filtered);
     };
     filterRves();
-  }, [filtro, tipoFiltro, listRve]);
-  
-
-  const Assinadas = async (e) => {
-    const assinatura = userData.getUsers()[0].nome;
-    console.log("Assinatura:", assinatura); // Log user signature for debugging
-    const rvesautor = await ObterRvesCompletascomoautor(assinatura);
-    console.log("Rves autor:", rvesautor)
-    setListRve(rvesautor);
-    setFilteredRve(rvesautor);
-  };
-
-
+  });
 
   const handleOrdenarPorDataeHoraMaisRecente = () => {
     const sorted = [...filteredRve].sort(
@@ -140,6 +135,7 @@ const SuasRve = () => {
           <option value="estudante">Estudante</option>
           <option value="curso">Curso</option>
           <option value="turma">Turma</option>
+          <option value="assinadas">Assinadas</option>
         </select>
         <button
           onClick={handleOrdenarPorDataeHoraMaisRecente}
@@ -147,13 +143,11 @@ const SuasRve = () => {
         >
           Ordenar por Data e Hora (Mais Recente)
         </button>
-
-
         <button
           onClick={Assinadas}
           className={styles.button}
         >
-         RVES já Assinadas
+          Rves Assinadas
         </button>
       </div>
       {filteredRve.length > 0 ? (
@@ -164,7 +158,6 @@ const SuasRve = () => {
               onClick={() => handleRve(rveItem.id)}
               className={styles.cardButton}
             >
-            
               <div className={styles.card}>
                 <p className={styles.cardText}>
                   Estudante: {rveItem.estudante}
