@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import userData from "../../Data/dadosUser";
-import { getAllUsersrve_usuarios, ObterRvePorID, ObterRvesSemAssinatura  } from "../../Data/server";
+import { getAllUsersrve_usuarios, ObterRvePorID, ObterRvesSemAssinatura, ObterRvesCompletascomoautor } from "../../Data/server";
 import styles from "../SuasRve/styles.module.css"; // Importando o CSS
 import { useNavigate } from "react-router-dom";
 import rveData from "../../Data/DadosRve";
@@ -62,7 +62,9 @@ const SuasRve = () => {
                 rve.turma.toLowerCase().includes(filtro.toLowerCase())
             );
             break;
-   
+            case "assinadas":
+             
+              break;
           default:
         }
       }
@@ -70,6 +72,18 @@ const SuasRve = () => {
     };
     filterRves();
   }, [filtro, tipoFiltro, listRve]);
+  
+
+  const Assinadas = async (e) => {
+    const assinatura = userData.getUsers()[0].nome;
+    console.log("Assinatura:", assinatura); // Log user signature for debugging
+    const rvesautor = await ObterRvesCompletascomoautor(assinatura);
+    console.log("Rves autor:", rvesautor)
+    setListRve(rvesautor);
+    setFilteredRve(rvesautor);
+  };
+
+
 
   const handleOrdenarPorDataeHoraMaisRecente = () => {
     const sorted = [...filteredRve].sort(
@@ -133,6 +147,14 @@ const SuasRve = () => {
         >
           Ordenar por Data e Hora (Mais Recente)
         </button>
+
+
+        <button
+          onClick={Assinadas}
+          className={styles.button}
+        >
+         RVES já Assinadas
+        </button>
       </div>
       {filteredRve.length > 0 ? (
         <div>
@@ -156,7 +178,9 @@ const SuasRve = () => {
                   Descrição: {rveItem.descricaoocorrido}
                 </p>
                 <p className={styles.cardText}>Motivo: {rveItem.motivo}</p>
-                <p className={styles.cardText}>Assinaturas: {rveItem.assinaturas}</p>
+                <p className={styles.cardText}>
+                  Assinaturas: {rveItem.assinaturas.join(", ")}
+                </p>
               </div>
             </button>
           ))}

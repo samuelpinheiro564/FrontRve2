@@ -12,7 +12,7 @@ const RenderSuasRve = () => {
   const [currentPage, setCurrentPage] = useState(1); // Página atual
   const MESSAGES_PER_PAGE = 70; // Limite de mensagens visíveis por vez
   const rveDados = rveData.getRve()[0][0];
- const navigate = useNavigate();
+  const navigate = useNavigate();
   const userDados = userData.getUsers()[0];
 
   const handleCampoTexto = async (e) => {
@@ -47,14 +47,19 @@ const RenderSuasRve = () => {
       try {
         const idrve = rveDados.id;
         const allMessages = await AllCamposTextoRve(Number(idrve));
-        setMsgs(allMessages);
-        setVisibleMsgs(allMessages.slice(0, MESSAGES_PER_PAGE));
+        const messagesWithAuthorFlag = allMessages.map(msg => ({
+          ...msg,
+          isAuthor: msg.nifusuario === userDados.nif
+        }));
+
+        setMsgs(messagesWithAuthorFlag);
+        setVisibleMsgs(messagesWithAuthorFlag.slice(0, MESSAGES_PER_PAGE));
       } catch (error) {
         console.error("Erro ao buscar mensagens:", error);
       }
     };
     fetchAllMsg();
-  });
+  }, [rveDados.id, userDados.nif]); // Adicionei rveDados.id e userDados.nif como dependências para garantir que o efeito seja executado corretamente
 
   // Scroll Handler para carregar mais mensagens
   const handleScroll = (e) => {
@@ -83,13 +88,13 @@ const RenderSuasRve = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
- const handleAssinarRve = async () => {
+  const handleAssinarRve = async () => {
     try {
       const id = rveDados.id;
       console.log("ID RVE:", id);
       const assinatura = userDados.nome;
       console.log("NIF Usuario:", assinatura);
-      await assinarRve(String(assinatura),id);
+      await assinarRve(String(assinatura), id);
       console.log("RVE assinado com sucesso!");
       navigate("/SuasRve");
     } catch (error) {
@@ -98,7 +103,7 @@ const RenderSuasRve = () => {
   };
 
   return (
-    <>
+    <section className={styles.conteiner}>
       <h1 className={styles.testeh1}>Chat</h1>
       <div>
         <h2 className={styles.h2}>{rveDados.estudante}</h2>
@@ -120,24 +125,19 @@ const RenderSuasRve = () => {
       </div>
       <div
         className={styles.messagesContainer}
-        style={{
-          height: "500px", 
-          overflowY: "auto",
-        }}
         onScroll={handleScroll}
       >
         {visibleMsgs.map((msg) => (
-          <div key={msg.id} className={styles.msg}>
+          <div key={msg.id} className={msg.isAuthor ? styles.msgAutor : styles.msgOthers}>
             <div className={styles.div2}>
-           <p className={styles.p2}>{msg.nomeusuario}</p> 
-           <p className={styles.p}>{msg.hora}</p>  
+              <p className={styles.p2}>{msg.nomeusuario}</p>
+              <p className={styles.p}>{msg.hora}</p>
             </div>
             <text className={styles.text}>{msg.campotexto}</text>
           </div>
         ))}
       </div>
 
-     
       <div className={styles.formGroup}>
         <input
           type="text"
@@ -161,9 +161,9 @@ const RenderSuasRve = () => {
         className={styles.button}
         onClick={handleAssinarRve}
       >
- assinar
+        Assinar
       </button>
-    </>
+    </section>
   );
 };
 

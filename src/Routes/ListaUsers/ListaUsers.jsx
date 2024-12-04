@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { UserName, UserType, AllUsers } from '../../Data/server';
+import { UserName, UserType, AllUsers, DeleteUser } from '../../Data/server';
 import styles from '../ListaUsers/styles.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const ListaUsers = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -8,6 +9,7 @@ const ListaUsers = () => {
     const [tipoFiltro, setTipoFiltro] = useState('nome');
     const [currentPage, setCurrentPage] = useState(1);
     const ITEMS_PER_PAGE = 10;
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUsuarios = async () => {
@@ -22,11 +24,11 @@ const ListaUsers = () => {
                 }
                 setUsuarios(result);
             } catch (error) {
-                console.error('Erro ao buscar usuários:', error);
+                
             }
         };
         fetchUsuarios();
-    }, [filtro, tipoFiltro]);
+    });
 
     const handlePrevPage = () => {
         setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
@@ -36,13 +38,12 @@ const ListaUsers = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(usuarios.length / ITEMS_PER_PAGE)));
     };
 
-    const handleEdit = (nif) => {
-        // Lógica de edição
-        console.log(`Editar usuário com NIF: ${nif}`);
+    const handleEdit = (usuario) => {
+        navigate('/CadastroUsuarios', { state: { user: usuario } });
     };
 
-    const handleDelete = (nif) => {
-        // Lógica de exclusão
+    const handleDelete = async (nif) => {
+       await DeleteUser(nif);
         console.log(`Excluir usuário com NIF: ${nif}`);
         // Aqui você poderia fazer uma chamada para um API para deletar o usuário
     };
@@ -73,10 +74,8 @@ const ListaUsers = () => {
             <table className={styles.table}>
                 <thead>
                     <tr>
-                        <th>NIF</th>
                         <th>Nome</th>
                         <th>Email</th>
-                        <th>Telefone</th>
                         <th>Tipo</th>
                         <th>Ações</th>
                     </tr>
@@ -84,14 +83,12 @@ const ListaUsers = () => {
                 <tbody>
                     {currentUsuarios.map((usuario) => (
                         <tr key={usuario.nif}>
-                            <td>{usuario.nif}</td>
                             <td>{usuario.nome}</td>
                             <td>{usuario.email}</td>
-                            <td>{usuario.telefone}</td>
                             <td>{usuario.tipo}</td>
                             <td>
-                                <button onClick={() => handleEdit(usuario.nif)} className={styles.editar}>Editar</button>
-                                <button onClick={() => handleDelete(usuario.nif) } className={styles.excluir}>Excluir</button>
+                                <button onClick={() => handleEdit(usuario)} className={styles.editar}>Editar</button>
+                                <button onClick={() => handleDelete(usuario.nif)} className={styles.excluir}>Excluir</button>
                             </td>
                         </tr>
                     ))}

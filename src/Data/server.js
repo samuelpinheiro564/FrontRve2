@@ -374,9 +374,9 @@ const ObterUltimaRveCriada = async (nifautor) => {
     }
 };
 
-const ObterRvesCompletascomoautor = async (nifsusuarios) => {
+const ObterRvesCompletascomoautor = async (assinatura) => {
     try {
-        const response = await axios.get(`${URL}/rve/completa/${nifsusuarios}`);
+        const response = await axios.get(`${URL}/rve/completa/${assinatura}`);
         return response.data;
     } catch (error) {
         console.error('Erro ao obter RVEs completas:', error);
