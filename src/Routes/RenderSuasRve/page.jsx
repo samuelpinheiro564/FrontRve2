@@ -59,7 +59,7 @@ const RenderSuasRve = () => {
       }
     };
     fetchAllMsg();
-  }, [rveDados.id, userDados.nif]); // Adicionei rveDados.id e userDados.nif como dependências para garantir que o efeito seja executado corretamente
+  }); // Adicionei rveDados.id e userDados.nif como dependências para garantir que o efeito seja executado corretamente
 
   // Scroll Handler para carregar mais mensagens
   const handleScroll = (e) => {
@@ -139,7 +139,7 @@ const RenderSuasRve = () => {
       </div>
 
       <div className={styles.formGroup}>
-        <input
+        <textarea
           type="text"
           name="campoTexto"
           placeholder="Escreva comentário aqui"
